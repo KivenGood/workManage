@@ -1,0 +1,86 @@
+package com.xawl.Pojo;
+
+public class Testwork {
+
+  private long id;
+  private long uid;
+  private long type;
+  private long num;
+  private String lnames;
+  private long classhours;
+  private long pass;
+  private java.sql.Timestamp starteddate;
+
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
+
+
+  public long getUid() {
+    return uid;
+  }
+
+  public void setUid(long uid) {
+    this.uid = uid;
+  }
+
+
+  public long getType() {
+    return type;
+  }
+
+  public void setType(long type) {
+    this.type = type;
+  }
+
+
+  public long getNum() {
+    return num;
+  }
+
+  public void setNum(long num) {
+    this.num = num;
+  }
+
+
+  public String getLnames() {
+    return lnames;
+  }
+
+  public void setLnames(String lnames) {
+    this.lnames = lnames;
+  }
+
+
+  public long getClasshours() {
+    return classhours;
+  }
+
+  public void setClasshours(long classhours) {
+    this.classhours = classhours;
+  }
+
+
+  public long getPass() {
+    return pass;
+  }
+
+  public void setPass(long pass) {
+    this.pass = pass;
+  }
+
+
+  public java.sql.Timestamp getStarteddate() {
+    return starteddate;
+  }
+
+  public void setStarteddate(java.sql.Timestamp starteddate) {
+    this.starteddate = starteddate;
+  }
+
+}

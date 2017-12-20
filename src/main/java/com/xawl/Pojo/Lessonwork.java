@@ -3,51 +3,51 @@ package com.xawl.Pojo;
 
 public class Lessonwork {
 
-    private long id;
-    private long uid;
-    private long cid;
-    private long type;
+    private int id;
+    private int uid;
+    private int cid;
+    private int type;
     private String lname;
-    private long pclasshours;
+    private int pclasshours;
     private String part;
     private double coe;
-    private long classhours;
-    private long pass;
+    private int classhours;
+    private int pass;
     private java.sql.Timestamp starteddate;
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
 
-    public long getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
 
-    public long getCid() {
+    public int getCid() {
         return cid;
     }
 
-    public void setCid(long cid) {
+    public void setCid(int cid) {
         this.cid = cid;
     }
 
 
-    public long getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(long type) {
+    public void setType(int type) {
         this.type = type;
     }
 
@@ -61,11 +61,11 @@ public class Lessonwork {
     }
 
 
-    public long getPclasshours() {
+    public int getPclasshours() {
         return pclasshours;
     }
 
-    public void setPclasshours(long pclasshours) {
+    public void setPclasshours(int pclasshours) {
         this.pclasshours = pclasshours;
     }
 
@@ -88,20 +88,20 @@ public class Lessonwork {
     }
 
 
-    public long getClasshours() {
+    public int getClasshours() {
         return classhours;
     }
 
-    public void setClasshours(long classhours) {
+    public void setClasshours(int classhours) {
         this.classhours = classhours;
     }
 
 
-    public long getPass() {
+    public int getPass() {
         return pass;
     }
 
-    public void setPass(long pass) {
+    public void setPass(int pass) {
         this.pass = pass;
     }
 

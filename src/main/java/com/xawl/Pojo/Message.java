@@ -3,47 +3,47 @@ package com.xawl.Pojo;
 
 public class Message {
 
-  private long id;
-  private long uid;
-  private long fromid;
-  private long type;
+  private int id;
+  private int uid;
+  private int fromid;
+  private int type;
   private String data;
-  private long dataid;
+  private int dataid;
   private java.sql.Timestamp starteddate;
 
 
-  public long getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(long id) {
+  public void setId(int id) {
     this.id = id;
   }
 
 
-  public long getUid() {
+  public int getUid() {
     return uid;
   }
 
-  public void setUid(long uid) {
+  public void setUid(int uid) {
     this.uid = uid;
   }
 
 
-  public long getFromid() {
+  public int getFromid() {
     return fromid;
   }
 
-  public void setFromid(long fromid) {
+  public void setFromid(int fromid) {
     this.fromid = fromid;
   }
 
 
-  public long getType() {
+  public int getType() {
     return type;
   }
 
-  public void setType(long type) {
+  public void setType(int type) {
     this.type = type;
   }
 
@@ -57,11 +57,11 @@ public class Message {
   }
 
 
-  public long getDataid() {
+  public int getDataid() {
     return dataid;
   }
 
-  public void setDataid(long dataid) {
+  public void setDataid(int dataid) {
     this.dataid = dataid;
   }
 

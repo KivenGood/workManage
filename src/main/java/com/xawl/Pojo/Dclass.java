@@ -3,29 +3,29 @@ package com.xawl.Pojo;
 
 class DClass {
 
-    private long id;
-    private long uid;
+    private int id;
+    private int uid;
     private String cname;
-    private long pnum;
-    private long series;
+    private int pnum;
+    private int series;
     private String sdept;
     private java.sql.Timestamp starteddate;
 
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
 
-    public long getUid() {
+    public int getUid() {
         return uid;
     }
 
-    public void setUid(long uid) {
+    public void setUid(int uid) {
         this.uid = uid;
     }
 
@@ -39,20 +39,20 @@ class DClass {
     }
 
 
-    public long getPnum() {
+    public int getPnum() {
         return pnum;
     }
 
-    public void setPnum(long pnum) {
+    public void setPnum(int pnum) {
         this.pnum = pnum;
     }
 
 
-    public long getSeries() {
+    public int getSeries() {
         return series;
     }
 
-    public void setSeries(long series) {
+    public void setSeries(int series) {
         this.series = series;
     }
 

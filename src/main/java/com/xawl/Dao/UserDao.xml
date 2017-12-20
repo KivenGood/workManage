@@ -18,7 +18,7 @@
         </where>
     </select>
   <update id="updateUserById" parameterType="com.xawl.Pojo.User">
-          update set pass=#{pass} from db_user where id=#{id}
+          update db_user set pass=#{pass} where id=#{id}
 </update>
     <delete id="deleteUserById">
         DELETE from db_userr WHERE id = #{id}

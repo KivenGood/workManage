@@ -8,10 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
-
 import javax.servlet.http.HttpSession;
-
-
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by doter on 2017/7/14.
@@ -69,6 +69,41 @@ public class UserController {
     ResultData exit(HttpSession session){
         session.setAttribute("uid",null);
         session.setAttribute("type",null);
+        return new ResultData(1);
+    }
+    @RequestMapping("/admin/batchUsers.action")
+    @ResponseBody
+    ResultData batchUsers(HttpSession session, List<User> userList){
+       if(userList==null)
+           return new ResultData(23);
+        User user =new User();
+
+
+        for(int i=0;i<userList.size();i++)
+        {
+            user=userList.get(i);
+            if(user.getTechno()==null)
+            {
+                return new ResultData(i+1,"Techno");
+            }
+            if(user.getSdept()==null)
+            {
+                return new ResultData(i+1,"Sdept");
+            }
+            if(user.getLevel()==null)
+            {
+                return new ResultData(i+1,"Level");
+            }
+            if(user.getName()==null)
+            {
+                return new ResultData(i+1,"Name");
+            }
+            user.setPass(user.getTechno());
+            user.setStarteddate(new Timestamp(new Date().getTime()));
+            user.setType(1);
+            userService.insertUser(user);
+
+        }
         return new ResultData(1);
     }
 }

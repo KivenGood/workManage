@@ -8,5 +8,6 @@ import com.xawl.Pojo.User;
 public interface UserService {
     User getUser(User user);
     void updateUserById(User user);
+    void insertUser(User user);
 
 }

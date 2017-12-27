@@ -10,4 +10,6 @@ import org.mybatis.spring.annotation.MapperScan;
 public interface UserDao {
     User getUser(User user);
    void  updateUserById(User user);
+   void insertUser(User user);
+   void delectUserById(int id);
 }

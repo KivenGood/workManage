@@ -70,6 +70,7 @@ public class UserController {
         session.setAttribute("uid",null);
         session.setAttribute("type",null);
         return new ResultData(1);
+
     }
     @RequestMapping("/admin/batchUsers.action")
     @ResponseBody

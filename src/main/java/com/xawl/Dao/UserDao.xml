@@ -12,7 +12,7 @@
         from db_user
         <where>
             <if test="id!=null and id>0 ">id=#{id}</if>
-            <if test="techno!=null">and techno=#{techno}</if>
+            <if test="techno!=null and techno!=''">and techno=#{techno}</if>
             <if test="emil!=null and emil!='' ">and emil=#{emil}</if>
             <if test="name!=null and name!=''">and name=#{name}</if>
         </where>
@@ -20,12 +20,12 @@
   <update id="updateUserById" parameterType="com.xawl.Pojo.User">
     update db_user set pass=#{pass} where id=#{id}
 </update>
-    <insert id="insertUser" parameterType="User">
+    <insert id="insertUser" parameterType="com.xawl.Pojo.User">
             insert into db_user (techno,pass,name,sdept,level,startedDate,type)
     values(#{techno},#{pass},#{name},#{sdept},#{level},#{startedDate},#{type})
     </insert>
     <delete id="delectUserById">
-        DELETE from db_userr WHERE id = #{id}
+        DELETE from db_user WHERE id = #{id}
     </delete>
 
 </mapper>

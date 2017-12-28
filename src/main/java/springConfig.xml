@@ -14,9 +14,9 @@
     <!--配置数据源-->
     <bean id="jdbcDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost/workmanage?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="url" value="jdbc:mysql://119.29.150.141/workmanage?useUnicode=true&amp;characterEncoding=UTF-8"/>
         <property name="username" value="root"/>
-        <property name="password" value="1234"/>
+        <property name="password" value="root"/>
     </bean>
     <!--配置sessionFactory-->
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -24,7 +24,7 @@
         <!--<property name="mapperLocations" value="classpath:com/wlxk/Dao/**/*.xml"/>-->
         <property name="mapperLocations">
             <array>
-                <value>classpath:com/xawl/Dao/**/*.xml</value>
+                <value>classpath:com/xawl/Dao/*.xml</value>
             </array>
         </property>
         <property name="typeAliasesPackage" value="com.isea533.mybatis.model"/>

@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.xawl.Pojo.UserList;
 import com.xawl.Pojo.*;
 import com.xawl.Service.UserService;
 import com.xawl.Vo.ResultData;
@@ -30,15 +31,11 @@ public class UserController {
     ResultData login(User user, HttpSession session) throws Exception {
         if(user==null)
             return new ResultData(23);
-        System.out.println(11);
-        System.out.println("user.techno:"+user.getTechno());
-        System.out.println("user.pass:"+user.getPass());
         if(user.getPass()==null||user.getTechno()==null)
             return new ResultData(26);
         User user1=new User();
         user1.setTechno(user.getTechno());
         User user2=userService.getUser(user1);
-        System.out.println("user.pass1:"+user.getPass());
         if(user2==null)
             return new ResultData(-19,"user is not exist");
         if(user.getPass().equals(user2.getPass())) {
@@ -72,17 +69,17 @@ public class UserController {
         return new ResultData(1);
 
     }
+
     @RequestMapping("/admin/batchUsers.action")
     @ResponseBody
-    ResultData batchUsers(HttpSession session, List<User> userList){
+    ResultData batchUsers(HttpSession session, UserList userList){
        if(userList==null)
            return new ResultData(23);
         User user =new User();
-
-
-        for(int i=0;i<userList.size();i++)
+        List<User> list = userList.getList();
+        for(int i=0;i<list.size();i++)
         {
-            user=userList.get(i);
+            user=list.get(i);
             if(user.getTechno()==null)
             {
                 return new ResultData(i+1,"Techno");

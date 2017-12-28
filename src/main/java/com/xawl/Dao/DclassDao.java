@@ -1,4 +1,9 @@
 package com.xawl.Dao;
 
-public class DclassDao {
+import com.xawl.Pojo.Dclass;
+import org.mybatis.spring.annotation.MapperScan;
+import java.util.List;
+@MapperScan
+public interface DclassDao {
+    List<Dclass> getDclass(Dclass dclass);
 }

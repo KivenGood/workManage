@@ -10,7 +10,7 @@ public class User {
   private String head;
   private int sex;
   private String name;
-  private java.sql.Timestamp starteddate;
+  private java.sql.Timestamp startedDate;
   private int type;
   private String sdept;
   private String level;
@@ -90,11 +90,11 @@ public class User {
 
 
   public java.sql.Timestamp getStarteddate() {
-    return starteddate;
+    return startedDate;
   }
 
   public void setStarteddate(java.sql.Timestamp starteddate) {
-    this.starteddate = starteddate;
+    this.startedDate = starteddate;
   }
 
 

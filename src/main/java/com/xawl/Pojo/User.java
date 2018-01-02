@@ -2,26 +2,26 @@ package com.xawl.Pojo;
 
 public class User {
 
-  private int id;
+  private Integer id;
   private String techno;
   private String emil;
   private String phone;
   private String pass;
   private String head;
-  private int sex;
+  private Integer sex;
   private String name;
   private java.sql.Timestamp startedDate;
-  private int type;
+  private Integer type;
   private String sdept;
   private String level;
   private String _2;
 
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
@@ -71,11 +71,11 @@ public class User {
   }
 
 
-  public int getSex() {
+  public Integer getSex() {
     return sex;
   }
 
-  public void setSex(int sex) {
+  public void setSex(Integer sex) {
     this.sex = sex;
   }
 
@@ -98,11 +98,11 @@ public class User {
   }
 
 
-  public int getType() {
+  public Integer getType() {
     return type;
   }
 
-  public void setType(int type) {
+  public void setType(Integer type) {
     this.type = type;
   }
 

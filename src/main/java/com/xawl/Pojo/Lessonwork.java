@@ -3,51 +3,51 @@ package com.xawl.Pojo;
 
 public class Lessonwork {
 
-    private int id;
-    private int uid;
-    private int cid;
-    private int type;
+    private Integer id;
+    private Integer uid;
+    private Integer cid;
+    private Integer type;
     private String lname;
-    private int pclasshours;
+    private Integer pclasshours;
     private String part;
-    private double coe;
-    private int classhours;
-    private int pass;
+    private Double coe;
+    private Integer classhours;
+    private Integer pass;
     private java.sql.Timestamp starteddate;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
-    public int getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 
 
-    public int getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(int cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -61,11 +61,11 @@ public class Lessonwork {
     }
 
 
-    public int getPclasshours() {
+    public Integer getPclasshours() {
         return pclasshours;
     }
 
-    public void setPclasshours(int pclasshours) {
+    public void setPclasshours(Integer pclasshours) {
         this.pclasshours = pclasshours;
     }
 
@@ -79,29 +79,29 @@ public class Lessonwork {
     }
 
 
-    public double getCoe() {
+    public Double getCoe() {
         return coe;
     }
 
-    public void setCoe(double coe) {
+    public void setCoe(Double coe) {
         this.coe = coe;
     }
 
 
-    public int getClasshours() {
+    public Integer getClasshours() {
         return classhours;
     }
 
-    public void setClasshours(int classhours) {
+    public void setClasshours(Integer classhours) {
         this.classhours = classhours;
     }
 
 
-    public int getPass() {
+    public Integer getPass() {
         return pass;
     }
 
-    public void setPass(int pass) {
+    public void setPass(Integer pass) {
         this.pass = pass;
     }
 

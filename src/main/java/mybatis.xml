@@ -7,6 +7,6 @@
         <typeAlias type="com.xawl.Pojo.User" alias="User"/>
     </typeAliases>
      <mappers>
-         <mapper resource="cn/xawl/Dao/UserDao.xml"/>
+         <mapper resource="com/xawl/Dao/UserDao.xml"/>
      </mappers>
  </configuration> 

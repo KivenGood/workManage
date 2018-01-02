@@ -43,8 +43,12 @@ public class UserController {
             session.setAttribute("level",user2.getLevel());
             session.setAttribute("uname",user2.getName());
             session.setAttribute("type",user2.getType());
-            return new ResultData(user2.getId());
+            String data=null;
+            if(user2.getTechno()==user2.getPass())
+              data="pass is init";
+            return new ResultData(user2.getId(),data);
         }
+
         else return new ResultData(-20,"pass is wrong");
     }
     @RequestMapping("/user/updatePass.action")
@@ -80,19 +84,19 @@ public class UserController {
         for(int i=0;i<list.size();i++)
         {
             user=list.get(i);
-            if(user.getTechno()==null)
+            if(user.getTechno()==null&&user.getTechno()=="")
             {
                 return new ResultData(i+1,"Techno");
             }
-            if(user.getSdept()==null)
+            if(user.getSdept()==null&&user.getSdept()=="")
             {
                 return new ResultData(i+1,"Sdept");
             }
-            if(user.getLevel()==null)
+            if(user.getLevel()==null&&user.getLevel()=="")
             {
                 return new ResultData(i+1,"Level");
             }
-            if(user.getName()==null)
+            if(user.getName()==null&&user.getName()=="")
             {
                 return new ResultData(i+1,"Name");
             }

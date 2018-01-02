@@ -6,4 +6,7 @@ import java.util.List;
 @MapperScan
 public interface DclassDao {
     List<Dclass> getDclass(Dclass dclass);
+    void insertDclass(Dclass dclass);
+    void updateDclassById(Dclass dclass);
+    void delectDclassById(Dclass dclass);
 }

@@ -2,48 +2,48 @@ package com.xawl.Pojo;
 
 public class Testwork {
 
-  private int id;
-  private int uid;
-  private int type;
-  private int num;
+  private Integer id;
+  private Integer uid;
+  private Integer type;
+  private Integer num;
   private String lnames;
-  private int classhours;
-  private int pass;
+  private Integer classhours;
+  private Integer pass;
   private java.sql.Timestamp starteddate;
 
 
-  public int getId() {
+  public Integer getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Integer id) {
     this.id = id;
   }
 
 
-  public int getUid() {
+  public Integer getUid() {
     return uid;
   }
 
-  public void setUid(int uid) {
+  public void setUid(Integer uid) {
     this.uid = uid;
   }
 
 
-  public int getType() {
+  public Integer getType() {
     return type;
   }
 
-  public void setType(int type) {
+  public void setType(Integer type) {
     this.type = type;
   }
 
 
-  public int getNum() {
+  public Integer getNum() {
     return num;
   }
 
-  public void setNum(int num) {
+  public void setNum(Integer num) {
     this.num = num;
   }
 
@@ -57,20 +57,20 @@ public class Testwork {
   }
 
 
-  public int getClasshours() {
+  public Integer getClasshours() {
     return classhours;
   }
 
-  public void setClasshours(int classhours) {
+  public void setClasshours(Integer classhours) {
     this.classhours = classhours;
   }
 
 
-  public int getPass() {
+  public Integer getPass() {
     return pass;
   }
 
-  public void setPass(int pass) {
+  public void setPass(Integer pass) {
     this.pass = pass;
   }
 

@@ -17,15 +17,24 @@
             <if test="sdept!=null and sdept!=''">and sdept=#{sdept}</if>
         </where>
     </select>
-    <!--<update id="updateDclassById" parameterType="com.xawl.Pojo.Dclass">
-        update db_class set pass=#{pass} where id=#{id}
-    </update>
     <insert id="insertDclass" parameterType="Dclass">
-        insert into db_class (techno,pass,name,sdept,level,startedDate,type)
-        values(#{techno},#{pass},#{name},#{sdept},#{level},#{startedDate},#{type})
+        insert into db_class (cname,pnum,series,sdept,startedDate)
+        values(#{cname},#{pnum},#{series},#{sdept},#{startedDate})
     </insert>
+    <update id="updateDclassById" parameterType="com.xawl.Pojo.Dclass">
+        update db_class
+         <set>
+             <if test="cname!=null and cname!=''">and cname=#{cname}</if>
+             <if test="pnum!=null and pnum>0">and pnum=#{pnum}</if>
+             <if test="series!=null and series!='' ">and series=#{series}</if>
+             <if test="sdept!=null and sdept!=''">and sdept=#{sdept}</if>
+         </set>
+         where id=#{id}
+    </update>
+
+
     <delete id="delectDclassById">
         DELETE from db_class WHERE id = #{id}
-    </delete>-->
+    </delete>
 
 </mapper>

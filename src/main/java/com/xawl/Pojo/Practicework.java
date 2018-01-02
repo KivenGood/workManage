@@ -2,58 +2,58 @@ package com.xawl.Pojo;
 
 public class Practicework {
 
-    private int id;
-    private int uid;
-    private int type;
-    private int cid;
-    private int num;
+    private Integer id;
+    private Integer uid;
+    private Integer type;
+    private Integer cid;
+    private Integer num;
     private String lname;
-    private int classhours;
-    private int pass;
+    private Integer classhours;
+    private Integer pass;
     private java.sql.Timestamp starteddate;
 
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
 
-    public int getUid() {
+    public Integer getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(Integer uid) {
         this.uid = uid;
     }
 
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
 
-    public int getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(int cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 
 
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(Integer num) {
         this.num = num;
     }
 

@@ -19,4 +19,19 @@ public class DclassServiceImp implements DclassService {
         List<Dclass> DclassList=dclassDao.getDclass(dclass);
         return DclassList;
     }
+
+    @Override
+    public void insertDclass(Dclass dclass) {
+        dclassDao.insertDclass(dclass);
+    }
+
+    @Override
+    public void updateDclassById(Dclass dclass) {
+        dclassDao.updateDclassById(dclass);
+    }
+
+    @Override
+    public void delectDclassById(Dclass dclass) {
+        dclassDao.delectDclassById(dclass);
+    }
 }

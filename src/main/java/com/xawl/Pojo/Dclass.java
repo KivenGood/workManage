@@ -1,16 +1,16 @@
 package com.xawl.Pojo;
 
 public class Dclass {
-        private int id;
+        private Integer id;
 
         private String cname;
-        private int pnum;
-        private int series;
+        private Integer pnum;
+        private Integer series;
         private String sdept;
         private java.sql.Timestamp starteddate;
 
 
-        public int getId() {
+        public Integer getId() {
             return id;
         }
 
@@ -31,20 +31,20 @@ public class Dclass {
         }
 
 
-        public int getPnum() {
+        public Integer getPnum() {
             return pnum;
         }
 
-        public void setPnum(int pnum) {
+        public void setPnum(Integer pnum) {
             this.pnum = pnum;
         }
 
 
-        public int getSeries() {
+        public Integer getSeries() {
             return series;
         }
 
-        public void setSeries(int series) {
+        public void setSeries(Integer series) {
             this.series = series;
         }
 

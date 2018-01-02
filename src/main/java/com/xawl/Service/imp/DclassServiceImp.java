@@ -31,7 +31,7 @@ public class DclassServiceImp implements DclassService {
     }
 
     @Override
-    public void delectDclassById(Dclass dclass) {
-        dclassDao.delectDclassById(dclass);
+    public void delectDclassById(Integer id) {
+        dclassDao.delectDclassById(id);
     }
 }

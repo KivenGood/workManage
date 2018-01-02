@@ -17,7 +17,7 @@
             <if test="sdept!=null and sdept!=''">and sdept=#{sdept}</if>
         </where>
     </select>
-    <insert id="insertDclass" parameterType="Dclass">
+    <insert id="insertDclass" parameterType="com.xawl.Pojo.Dclass">
         insert into db_class (cname,pnum,series,sdept,startedDate)
         values(#{cname},#{pnum},#{series},#{sdept},#{startedDate})
     </insert>
@@ -33,7 +33,7 @@
     </update>
 
 
-    <delete id="delectDclassById">
+    <delete id="delectDclassById" parameterType="Integer">
         DELETE from db_class WHERE id = #{id}
     </delete>
 

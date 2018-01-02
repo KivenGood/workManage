@@ -43,13 +43,12 @@ public class DclassController {
     }
     @RequestMapping("/admin/delectDclass.action")
     @ResponseBody
-    ResultData delectDclass(Dclass dclass){
-        if(dclass==null)
+    ResultData delectDclass(Integer id){
+        if(id==null)
             return new ResultData(23);
-        if(dclass.getId()==null)
-            return new ResultData(26);
 
-        dclassService.delectDclassById(dclass);
+
+        dclassService.delectDclassById(id);
 
         return  new ResultData(1);
     }

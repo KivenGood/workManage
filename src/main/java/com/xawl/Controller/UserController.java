@@ -8,11 +8,21 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by doter on 2017/7/14.
@@ -24,7 +34,6 @@ public class UserController {
     /**
      * 登录接口
      *
-
      */
     @RequestMapping("/login.action")
     @ResponseBody
@@ -40,8 +49,8 @@ public class UserController {
             return new ResultData(-19,"user is not exist");
         if(user.getPass().equals(user2.getPass())) {
             session.setAttribute("uid",user2.getId());
-            session.setAttribute("level",user2.getLevel());
-            session.setAttribute("uname",user2.getName());
+           /* session.setAttribute("level",user2.getLevel());
+            session.setAttribute("uname",user2.getName());*/
             session.setAttribute("type",user2.getType());
             String data=null;
             if(user2.getTechno()==user2.getPass())
@@ -108,4 +117,6 @@ public class UserController {
         }
         return new ResultData(1);
     }
+
+
 }

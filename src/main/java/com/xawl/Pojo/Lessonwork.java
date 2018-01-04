@@ -11,7 +11,7 @@ public class Lessonwork {
     private Integer pclasshours;
     private String part;
     private Double coe;
-    private Integer classhours;
+    private Double classhours;
     private Integer pass;
     private java.sql.Timestamp starteddate;
 
@@ -88,11 +88,11 @@ public class Lessonwork {
     }
 
 
-    public Integer getClasshours() {
+    public Double getClasshours() {
         return classhours;
     }
 
-    public void setClasshours(Integer classhours) {
+    public void setClasshours(Double classhours) {
         this.classhours = classhours;
     }
 

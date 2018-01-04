@@ -8,7 +8,7 @@ public class Practicework {
     private Integer cid;
     private Integer num;
     private String lname;
-    private Integer classhours;
+    private Double classhours;
     private Integer pass;
     private java.sql.Timestamp starteddate;
 
@@ -67,11 +67,11 @@ public class Practicework {
     }
 
 
-    public int getClasshours() {
+    public Double getClasshours() {
         return classhours;
     }
 
-    public void setClasshours(int classhours) {
+    public void setClasshours(Double classhours) {
         this.classhours = classhours;
     }
 

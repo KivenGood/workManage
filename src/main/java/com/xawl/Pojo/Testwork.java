@@ -7,7 +7,7 @@ public class Testwork {
   private Integer type;
   private Integer num;
   private String lnames;
-  private Integer classhours;
+  private Double classhours;
   private Integer pass;
   private java.sql.Timestamp starteddate;
 
@@ -57,11 +57,11 @@ public class Testwork {
   }
 
 
-  public Integer getClasshours() {
+  public Double getClasshours() {
     return classhours;
   }
 
-  public void setClasshours(Integer classhours) {
+  public void setClasshours(Double classhours) {
     this.classhours = classhours;
   }
 

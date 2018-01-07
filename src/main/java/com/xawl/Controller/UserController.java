@@ -49,13 +49,18 @@ public class UserController {
             return new ResultData(-19,"user is not exist");
         if(user.getPass().equals(user2.getPass())) {
             session.setAttribute("uid",user2.getId());
-           /* session.setAttribute("level",user2.getLevel());
-            session.setAttribute("uname",user2.getName());*/
+          /*  System.out.println("techno:"+user2.getTechno());
+            System.out.println("user2.getPass:"+user2.getPass());*/
+           session.setAttribute("level",user2.getLevel());
+            session.setAttribute("uname",user2.getName());
             session.setAttribute("type",user2.getType());
             String data=null;
-            if(user2.getTechno()==user2.getPass())
-              data="pass is init";
-            return new ResultData(user2.getId(),data);
+            if(user.getTechno().equals(user.getPass()))
+            {
+                data="pass is init";
+       //       System.out.println("pass is init");
+            }
+            return new ResultData(1,data);
         }
 
         else return new ResultData(-20,"pass is wrong");

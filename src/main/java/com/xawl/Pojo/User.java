@@ -93,8 +93,8 @@ public class User {
     return startedDate;
   }
 
-  public void setStarteddate(java.sql.Timestamp starteddate) {
-    this.startedDate = starteddate;
+  public void setStarteddate(java.sql.Timestamp startedDate) {
+    this.startedDate = startedDate;
   }
 
 

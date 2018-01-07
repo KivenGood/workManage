@@ -1,12 +1,12 @@
 package com.xawl.Controller;
 
+import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Testwork;
 import com.xawl.Service.TestworkService;
 import com.xawl.Vo.ResultData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
@@ -27,15 +27,16 @@ public class TestworkController {
             return new ResultData(26);
         testwork.setPass(0);
         testwork.setUid((Integer) session.getAttribute("uid"));
+        System.out.println("uid:"+testwork.getUid());
         testwork.setStarteddate(new Timestamp(new Date().getTime()));
         if(testwork.getType()==1||testwork.getType()==2)
-            testwork.setClasshours((double)testwork.getNum()*6);
+            testwork.setClasshours((double)testwork.getNum()* Coe.testPaper);
         if(testwork.getType()==3)
-            testwork.setClasshours((double)testwork.getNum()*2);
+            testwork.setClasshours((double)testwork.getNum()*Coe.invigilate);
         if (testwork.getType()==4||testwork.getType()==5||testwork.getType()==6||testwork.getType()==7)
-            testwork.setClasshours((double)testwork.getNum()/5);
+            testwork.setClasshours((double)testwork.getNum()*Coe.inspectTest);
         //查询是否已经插入过
-        Testwork testwork1=null;
+        Testwork testwork1=new Testwork();
         testwork1.setUid(testwork.getUid());
         testwork1.setType(testwork.getType());
         List<Testwork> testworksList= testworkService.getTestwork(testwork1);
@@ -44,7 +45,7 @@ public class TestworkController {
             if(testworksList.get(i).getPass()==4);
             else return new ResultData(24,"existed");
         }
-
+        System.out.println("testwork.getLnames()"+testwork.getLnames());
         testworkService.insertTestwork(testwork);
         return new ResultData(1);
     }

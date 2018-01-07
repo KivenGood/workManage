@@ -24,10 +24,10 @@
     <update id="updateDclassById" parameterType="com.xawl.Pojo.Dclass">
         update db_class
          <set>
-             <if test="cname!=null and cname!=''">and cname=#{cname}</if>
-             <if test="pnum!=null and pnum>0">and pnum=#{pnum}</if>
-             <if test="series!=null and series!='' ">and series=#{series}</if>
-             <if test="sdept!=null and sdept!=''">and sdept=#{sdept}</if>
+             <if test="cname!=null and cname!=''">cname=#{cname},</if>
+             <if test="pnum!=null and pnum>0">pnum=#{pnum},</if>
+             <if test="series!=null and series!='' ">series=#{series},</if>
+             <if test="sdept!=null and sdept!=''">sdept=#{sdept},</if>
          </set>
          where id=#{id}
     </update>

@@ -9,7 +9,7 @@ public class Message {
   private Integer type;
   private String data;
   private Integer dataid;
-  private java.sql.Timestamp starteddate;
+  private java.sql.Timestamp startedDate;
 
 
   public Integer getId() {
@@ -67,11 +67,11 @@ public class Message {
 
 
   public java.sql.Timestamp getStarteddate() {
-    return starteddate;
+    return startedDate;
   }
 
-  public void setStarteddate(java.sql.Timestamp starteddate) {
-    this.starteddate = starteddate;
+  public void setStarteddate(java.sql.Timestamp startedDate) {
+    this.startedDate = startedDate;
   }
 
 }

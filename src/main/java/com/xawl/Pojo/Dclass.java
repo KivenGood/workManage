@@ -7,7 +7,7 @@ public class Dclass {
         private Integer pnum;
         private Integer series;
         private String sdept;
-        private java.sql.Timestamp starteddate;
+        private java.sql.Timestamp startedDate;
 
 
         public Integer getId() {
@@ -59,11 +59,11 @@ public class Dclass {
 
 
         public java.sql.Timestamp getStarteddate() {
-            return starteddate;
+            return startedDate;
         }
 
-        public void setStarteddate(java.sql.Timestamp starteddate) {
-            this.starteddate = starteddate;
+        public void setStarteddate(java.sql.Timestamp startedDate) {
+            this.startedDate = startedDate;
         }
 
     }

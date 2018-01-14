@@ -28,7 +28,7 @@ public class TestworkServiceImp implements TestworkService{
     }
 
     @Override
-    public void delectTestworkById(Testwork testwork) {
-
+    public void delectTestworkById(Integer id) {
+        testworkDao.delectTestworkById(id);
     }
 }

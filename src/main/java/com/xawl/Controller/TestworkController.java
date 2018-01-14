@@ -29,12 +29,13 @@ public class TestworkController {
         testwork.setUid((Integer) session.getAttribute("uid"));
         System.out.println("uid:"+testwork.getUid());
         testwork.setStarteddate(new Timestamp(new Date().getTime()));
-        if(testwork.getType()==1||testwork.getType()==2)
+    /*    if(testwork.getType()==1||testwork.getType()==2)
             testwork.setClasshours((double)testwork.getNum()* Coe.testPaper);
         if(testwork.getType()==3)
             testwork.setClasshours((double)testwork.getNum()*Coe.invigilate);
         if (testwork.getType()==4||testwork.getType()==5||testwork.getType()==6||testwork.getType()==7)
-            testwork.setClasshours((double)testwork.getNum()*Coe.inspectTest);
+            testwork.setClasshours((double)testwork.getNum()*Coe.inspectTest);*/
+    testwork.setClasshours(calculateClasshours(testwork.getType(),testwork.getNum()));
         //查询是否已经插入过
         Testwork testwork1=new Testwork();
         testwork1.setUid(testwork.getUid());
@@ -49,14 +50,52 @@ public class TestworkController {
         testworkService.insertTestwork(testwork);
         return new ResultData(1);
     }
+    /*
+    * 计算标准课时
+    * */
+    Double calculateClasshours(Integer type,Integer num){
+        Double Classhours=0.0;
+         if(type==1||type==2)
+             Classhours= (double)num* Coe.testPaper;
+        if(type==3)
+                Classhours=(double)num*Coe.invigilate;
+        if (type==4||type==5||type==6||type==7)
+                Classhours=(double)num*Coe.inspectTest;
+            return Classhours;
+    }
     @RequestMapping("/user/updateTestworkById.action")
     @ResponseBody
     ResultData updateTestworkById(Testwork testwork){
-        if(testwork==null)
+        if(testwork==null&&testwork.getId()==null)
             return new ResultData(23);
+        if(testwork.getNum()!=null&&testwork.getNum()>0)
+        {
+            if(testwork.getType()==null||testwork.getType()<=0)
+                return new ResultData(23,"Type is null");
+            testwork.setClasshours(calculateClasshours(testwork.getType(),testwork.getNum()));
+        }
         testworkService.updateTestworkById(testwork);
         return new ResultData(1);
     }
+    @RequestMapping("/user/getTestwork.action")
+    @ResponseBody
+    ResultData getTestwork(Testwork testwork){
+        if(testwork==null)
+            return new ResultData(23);
+        if(testwork.getId()==null&&testwork.getType()==null&&testwork.getUid()==null&&testwork.getPass()==null)
+            return new ResultData(26);
 
+        return new ResultData(1, testworkService.getTestwork(testwork));
+    }
+    @RequestMapping("/admin/delectTestwork.action")
+    @ResponseBody
+    ResultData delectTestwork(Integer id){
+        if(id==null||id<=0){
+            return new ResultData(23);
+        }
+        testworkService.delectTestworkById(id);
+        return new ResultData(1);
+
+    }
 }
 

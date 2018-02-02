@@ -87,13 +87,13 @@ public class TestworkController {
 
         return new ResultData(1, testworkService.getTestwork(testwork));
     }
-    @RequestMapping("/admin/delectTestwork.action")
+    @RequestMapping("/admin/deleteTestwork.action")
     @ResponseBody
     ResultData delectTestwork(Integer id){
         if(id==null||id<=0){
             return new ResultData(23);
         }
-        testworkService.delectTestworkById(id);
+        testworkService.deleteTestworkById(id);
         return new ResultData(1);
 
     }

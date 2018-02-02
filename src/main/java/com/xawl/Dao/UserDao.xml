@@ -24,7 +24,7 @@
             insert into db_user (techno,pass,name,sdept,level,startedDate,type)
     values(#{techno},#{pass},#{name},#{sdept},#{level},#{startedDate},#{type})
     </insert>
-    <delete id="delectUserById">
+    <delete id="deleteUserById">
         DELETE from db_user WHERE id = #{id}
     </delete>
 

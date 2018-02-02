@@ -1,4 +1,13 @@
 package com.xawl.Dao;
 
-public class LessonworkDao {
+import com.xawl.Pojo.Lessonwork;
+import org.mybatis.spring.annotation.MapperScan;
+
+import java.util.List;
+@MapperScan
+public interface LessonworkDao {
+    List<Lessonwork> getLessonwork(Lessonwork lessonwork);
+    void insertLessonwork(Lessonwork lessonwork);
+    void updateLessonworkById(Lessonwork lessonwork);
+    void deleteLessonworkById(Integer id);
 }

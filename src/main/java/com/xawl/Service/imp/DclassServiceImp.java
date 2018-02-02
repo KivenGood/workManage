@@ -20,6 +20,8 @@ public class DclassServiceImp implements DclassService {
         return DclassList;
     }
 
+
+
     @Override
     public void insertDclass(Dclass dclass) {
         dclassDao.insertDclass(dclass);
@@ -31,7 +33,7 @@ public class DclassServiceImp implements DclassService {
     }
 
     @Override
-    public void delectDclassById(Integer id) {
-        dclassDao.delectDclassById(id);
+    public void deleteDclassById(Integer id) {
+        dclassDao.deleteDclassById(id);
     }
 }

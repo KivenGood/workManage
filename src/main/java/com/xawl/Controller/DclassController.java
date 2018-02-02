@@ -29,6 +29,7 @@ public class DclassController {
 
         return  new ResultData(1,dclassList);
     }
+
     @RequestMapping("/admin/updateDclass.action")
     @ResponseBody
     ResultData updateDclass(Dclass dclass){
@@ -41,14 +42,14 @@ public class DclassController {
 
         return  new ResultData(1);
     }
-    @RequestMapping("/admin/delectDclass.action")
+    @RequestMapping("/admin/deleteDclass.action")
     @ResponseBody
     ResultData delectDclass(Integer id){
         if(id==null)
             return new ResultData(23);
 
 
-        dclassService.delectDclassById(id);
+        dclassService.deleteDclassById(id);
 
         return  new ResultData(1);
     }

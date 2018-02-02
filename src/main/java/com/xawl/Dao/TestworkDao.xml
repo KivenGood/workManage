@@ -28,12 +28,12 @@
         <set>
             <if test="num!=null and num>0">num=#{num},</if>
             <if test="lnames!=null and lnames!='' ">lnames=#{lnames},</if>
-            <if test="pass!=null and pass>0">pass=#{pass},</if>
+            <if test="pass!=null and pass>=0">pass=#{pass},</if>
             <if test="classhours!=null">classhours=#{classhours},</if>
         </set>
          where id=#{id}
     </update>
-    <delete id="delectTestworkById">
+    <delete id="deleteTestworkById">
         DELETE from db_testwork WHERE id = #{id}
     </delete>
 

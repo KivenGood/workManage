@@ -33,7 +33,7 @@
     </update>
 
 
-    <delete id="delectDclassById" parameterType="Integer">
+    <delete id="deleteDclassById" parameterType="Integer">
         DELETE from db_class WHERE id = #{id}
     </delete>
 

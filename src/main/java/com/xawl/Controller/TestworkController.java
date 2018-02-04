@@ -35,17 +35,22 @@ public class TestworkController {
             testwork.setClasshours((double)testwork.getNum()*Coe.invigilate);
         if (testwork.getType()==4||testwork.getType()==5||testwork.getType()==6||testwork.getType()==7)
             testwork.setClasshours((double)testwork.getNum()*Coe.inspectTest);*/
-    testwork.setClasshours(calculateClasshours(testwork.getType(),testwork.getNum()));
         //查询是否已经插入过
         Testwork testwork1=new Testwork();
         testwork1.setUid(testwork.getUid());
         testwork1.setType(testwork.getType());
         List<Testwork> testworksList= testworkService.getTestwork(testwork1);
-        for(int i=0;i<testworksList.size();i++)
+
+        if(testworksList!=null&&testworksList.size()>0)
+            return new ResultData(24,"existed");
+        //计算标准课时
+    testwork.setClasshours(calculateClasshours(testwork.getType(),testwork.getNum()));
+
+        /*for(int i=0;i<testworksList.size();i++)
         {
             if(testworksList.get(i).getPass()==4);
             else return new ResultData(24,"existed");
-        }
+        }*/
         System.out.println("testwork.getLnames()"+testwork.getLnames());
         testworkService.insertTestwork(testwork);
         return new ResultData(1);

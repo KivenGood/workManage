@@ -13,8 +13,9 @@
         <where>
             <if test="id!=null and id>0 ">id=#{id}</if>
             <if test="techno!=null and techno!=''">and techno=#{techno}</if>
-            <if test="emil!=null and emil!='' ">and emil=#{emil}</if>
+            <!--<if test="emil!=null and emil!='' ">and emil=#{emil}</if>-->
             <if test="name!=null and name!=''">and name=#{name}</if>
+            <if test="type!=null and type>0 ">and type=#{type}</if>
         </where>
     </select>
   <update id="updateUserById" parameterType="com.xawl.Pojo.User">

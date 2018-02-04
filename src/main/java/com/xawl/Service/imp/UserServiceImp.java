@@ -6,6 +6,7 @@ import com.xawl.Service.UserService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by doter on 2017/7/16.
@@ -15,9 +16,9 @@ public class UserServiceImp implements UserService {
     @Resource
     UserDao userDao;
 
-    public User getUser(User user) {
+    public List<User> getUser(User user) {
 
-        User user1=userDao.getUser(user);
+        List<User> user1=userDao.getUser(user);
         return user1;
     }
 

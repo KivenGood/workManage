@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 public class LessonworkController {
@@ -33,6 +34,15 @@ public class LessonworkController {
     ResultData insertLesswork(Lessonwork lessonwork, HttpSession session) {
         if (lessonwork == null)
             return new ResultData(23);
+        lessonwork.setUid((Integer) session.getAttribute("uid"));
+        //查询是否已经插入过
+        Lessonwork lessonwork1=new Lessonwork();
+        lessonwork1.setUid(lessonwork.getUid());
+        lessonwork1.setType(lessonwork1.getType());
+        lessonwork1.setCid(lessonwork1.getCid());
+        List<Lessonwork> lessonworksList= lessonworkService.getLessonwork(lessonwork1);
+        if(lessonworksList!=null&&lessonworksList.size()>0)
+            return new ResultData(24,"existed");
         if (lessonwork.getCid() == null || lessonwork.getCid() <= 0)
             return new ResultData(23, "Cid is null or worong");
         if (lessonwork.getLname() == null || lessonwork.getLname() == "")
@@ -41,15 +51,17 @@ public class LessonworkController {
             return new ResultData(23, "Pclasshours is null or worong");
         if (lessonwork.getClasshours() == null || lessonwork.getClasshours() <= 0)
             return new ResultData(23, "Classhours is null or worong");
-        lessonwork.setUid((Integer) session.getAttribute("uid"));
+
         lessonwork.setPass(0);
         Dclass dclass = new Dclass();
-        dclass.setId(lessonwork.getId());
-        Integer pnum = dclassService.getDclass(dclass).get(1).getPnum();//班级的人数
+        dclass.setId(lessonwork.getCid());
+        Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
         //实验课,实验课没有合班课
         if (lessonwork.getType() == 3)
             lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum / 15);
-        if (lessonwork.getType() == 2 || lessonwork.getType() == 1) {
+        lessonwork.setClasshours(calculateClasshours(pnum,lessonwork.getPart()));
+
+  /*      if (lessonwork.getType() == 2 || lessonwork.getType() == 1) {
             //若不是合班课
             if (lessonwork.getPart() == null || lessonwork.getPart() == "") {
                 if (pnum <= 50)
@@ -64,15 +76,32 @@ public class LessonworkController {
                     pnum += Integer.parseInt(pnums[i]);
                     System.out.println("pnum:" + pnum);
                 }
-                lessonwork.setClasshours(calculateClasshours(pnum, lessonwork.getPclasshours()));
+                lessonwork.setClasshours(calculateClasshours(pnum, lessonwork.getPclasshours(),lessonwork.getPart()));
             }
-        }
+        }*/
 
         lessonworkService.insertLessonwork(lessonwork);
         return new ResultData(1);
 
 
     }
+    @RequestMapping("/user/updateLessworkById.action")
+    @ResponseBody
+    ResultData updateTestworkById(Lessonwork lessonwork){
+        if(lessonwork==null&&lessonwork.getId()==null)
+            return new ResultData(23);
+        if(lessonwork.getCid()!=null||lessonwork.getPart()!=null||lessonwork.getPclasshours()!=null)
+        {
+            Dclass dclass = new Dclass();
+            dclass.setId(lessonwork.getCid());
+            Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
+            lessonwork.setCoe(calculateClasshours(pnum, lessonwork.getPart()));
+            lessonwork.setClasshours(lessonwork.getCoe()*lessonwork.getPclasshours());
+        }
+        lessonworkService.updateLessonworkById(lessonwork);
+        return new ResultData(1);
+    }
+
     @RequestMapping("/admin/deleteLessonworkById.action")
     @ResponseBody
     ResultData deleteLessonworkById(Integer id) {
@@ -86,26 +115,54 @@ public class LessonworkController {
 
 
     /*
-    * 计算计划学时
+    * 计算计划学时,先进行合班和拆班的区分
     * */
-    Double calculateClasshours(Integer pnum, Integer pclasshours) {
-        Double classhours = 0.0;
-        if (pnum <= 50)
-            classhours = pclasshours * Coe.up40_50;
-        else if (pnum <= 60)
-            classhours = pclasshours * Coe.up51_60;
-        else if (pnum <= 70)
-            classhours = pclasshours * Coe.up61_70;
-        else if (pnum <= 80)
-            classhours = pclasshours * Coe.up71_80;
-        else if (pnum <= 90)
-            classhours = pclasshours * Coe.up81_90;
-        else if (pnum <= 100)
-            classhours = pclasshours * Coe.up91_100;
-        else if (pnum <= 110)
-            classhours = pclasshours * Coe.up101_110;
-        else
-            classhours = pclasshours * Coe.up111;
-        return classhours;
+    Double calculateClasshours(Integer pnum, String part) {
+        //若不是合班课
+        Double coe = 0.0;
+        if (part == null || part == "") {
+            if (pnum <= 50)
+                coe = 1.0;
+            else {
+                coe = compute(pnum);
+            }
+        } else {//合班课
+            String[] pnums = part.split("/");
+            for (int i = 0; i < pnums.length; i++) {
+                System.out.println("pnums[" + i + "]:" + pnums[i]);
+                pnum += Integer.parseInt(pnums[i]);
+                System.out.println("pnum:" + pnum);
+            }
+            coe = compute(pnum);
+        }
+        return coe;
     }
+    /*
+     * 具体计算计划学时
+     * */
+    Double compute(Integer pnum
+            /*, Integer pclasshours*/
+            ) {
+        /*Double classhours = 0.0;*/
+        Double coe=0.0;
+            if (pnum <= 50)
+                coe=Coe.up40_50;
+                //classhours = pclasshours *coe ;
+            else if (pnum <= 60)
+                coe= Coe.up51_60;
+            else if (pnum <= 70)
+                coe= Coe.up61_70;
+            else if (pnum <= 80)
+                coe= Coe.up71_80;
+            else if (pnum <= 90)
+                coe= Coe.up81_90;
+            else if (pnum <= 100)
+                coe= Coe.up91_100;
+            else if (pnum <= 110)
+                coe= Coe.up101_110;
+            else
+                coe= Coe.up111;
+            return coe;
+        }
+
 }

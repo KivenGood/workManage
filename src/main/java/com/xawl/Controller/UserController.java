@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -44,7 +45,7 @@ public class UserController {
             return new ResultData(26);
         User user1=new User();
         user1.setTechno(user.getTechno());
-        User user2=userService.getUser(user1);
+        User user2=userService.getUser(user1).get(0);
         if(user2==null)
             return new ResultData(-19,"user is not exist");
         if(user.getPass().equals(user2.getPass())) {
@@ -121,6 +122,18 @@ public class UserController {
 
         }
         return new ResultData(1);
+    }
+    @RequestMapping("/admin/SelectUsers.action")
+    @ResponseBody
+    ResultData SelectUsers(){
+        List<User> userList=new ArrayList();
+        User user =new User();
+        user.setType(1);
+        userList=userService.getUser(user);
+        for(int i=0;i<userList.size();i++)
+            userList.get(i).setPass(null);
+
+        return new ResultData(1,userList);
     }
 
 

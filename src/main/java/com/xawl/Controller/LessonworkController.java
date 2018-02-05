@@ -12,18 +12,21 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class LessonworkController {
     @Resource
     LessonworkService lessonworkService;
+    @Resource
     DclassService dclassService;
 
     @RequestMapping("/user/getLessonwork.action")
     @ResponseBody
     ResultData getLessonwork(Lessonwork lessonwork, HttpSession session) {
-        if (lessonwork.getUid() != 0)
+        if (lessonwork.getUid()==null)
             lessonwork.setUid((Integer) session.getAttribute("uid"));
         return new ResultData(1, lessonworkService.getLessonwork(lessonwork));
 
@@ -36,31 +39,44 @@ public class LessonworkController {
             return new ResultData(23);
         lessonwork.setUid((Integer) session.getAttribute("uid"));
         //查询是否已经插入过
+        System.out.println("lessonwork1.getType():"+lessonwork.getType());
         Lessonwork lessonwork1=new Lessonwork();
         lessonwork1.setUid(lessonwork.getUid());
-        lessonwork1.setType(lessonwork1.getType());
-        lessonwork1.setCid(lessonwork1.getCid());
+        lessonwork1.setType(lessonwork.getType());
+        lessonwork1.setCid(lessonwork.getCid());
+        lessonwork1.setPart(lessonwork.getPart());
         List<Lessonwork> lessonworksList= lessonworkService.getLessonwork(lessonwork1);
         if(lessonworksList!=null&&lessonworksList.size()>0)
             return new ResultData(24,"existed");
+
         if (lessonwork.getCid() == null || lessonwork.getCid() <= 0)
             return new ResultData(23, "Cid is null or worong");
         if (lessonwork.getLname() == null || lessonwork.getLname() == "")
             return new ResultData(23, "Lname is null");
         if (lessonwork.getPclasshours() == null || lessonwork.getPclasshours() <= 0)
             return new ResultData(23, "Pclasshours is null or worong");
-        if (lessonwork.getClasshours() == null || lessonwork.getClasshours() <= 0)
-            return new ResultData(23, "Classhours is null or worong");
+    /*    if (lessonwork.getClasshours() == null || lessonwork.getClasshours() <= 0)
+            return new ResultData(23, "Classhours is null or worong");*/
 
         lessonwork.setPass(0);
+        lessonwork.setStarteddate(new Timestamp(new Date().getTime()));
         Dclass dclass = new Dclass();
+
         dclass.setId(lessonwork.getCid());
+        System.out.println("1111c");
+        System.out.println("dclass.getId():"+dclass.getId());
+        dclassService.getDclass(dclass);
+     /*   System.out.println("pnum1"+ dclassService.getDclass(dclass));
+        System.out.println("pnum2"+ dclassService.getDclass(dclass).get(0).getPnum());*/
         Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
+        System.out.println("pnum3"+pnum);
         //实验课,实验课没有合班课
         if (lessonwork.getType() == 3)
             lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum / 15);
-        lessonwork.setClasshours(calculateClasshours(pnum,lessonwork.getPart()));
 
+    //    lessonwork.setClasshours(calculateClasshours(pnum,lessonwork.getPart()));
+        lessonwork.setCoe(calculateClasshours(pnum, lessonwork.getPart()));
+        lessonwork.setClasshours(lessonwork.getCoe()*lessonwork.getPclasshours());
   /*      if (lessonwork.getType() == 2 || lessonwork.getType() == 1) {
             //若不是合班课
             if (lessonwork.getPart() == null || lessonwork.getPart() == "") {

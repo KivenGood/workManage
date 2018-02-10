@@ -55,19 +55,15 @@ public class LessonworkController {
             return new ResultData(23, "Lname is null");
         if (lessonwork.getPclasshours() == null || lessonwork.getPclasshours() <= 0)
             return new ResultData(23, "Pclasshours is null or worong");
-    /*    if (lessonwork.getClasshours() == null || lessonwork.getClasshours() <= 0)
-            return new ResultData(23, "Classhours is null or worong");*/
+        if (lessonwork.getType() == null || lessonwork.getType() <= 0)
+            return new ResultData(23, "Type is null or worong");
+        if (lessonwork.getClasshours() == null || lessonwork.getClasshours() <= 0)
+            return new ResultData(23, "Classhours is null or worong");
 
         lessonwork.setPass(0);
         lessonwork.setStarteddate(new Timestamp(new Date().getTime()));
         Dclass dclass = new Dclass();
-
         dclass.setId(lessonwork.getCid());
-        System.out.println("1111c");
-        System.out.println("dclass.getId():"+dclass.getId());
-        dclassService.getDclass(dclass);
-     /*   System.out.println("pnum1"+ dclassService.getDclass(dclass));
-        System.out.println("pnum2"+ dclassService.getDclass(dclass).get(0).getPnum());*/
         Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
         System.out.println("pnum3"+pnum);
         //实验课,实验课没有合班课
@@ -104,7 +100,7 @@ public class LessonworkController {
     @RequestMapping("/user/updateLessworkById.action")
     @ResponseBody
     ResultData updateTestworkById(Lessonwork lessonwork){
-        if(lessonwork==null&&lessonwork.getId()==null)
+        if(lessonwork==null||lessonwork.getId()==null)
             return new ResultData(23);
         if(lessonwork.getCid()!=null||lessonwork.getPart()!=null||lessonwork.getPclasshours()!=null)
         {

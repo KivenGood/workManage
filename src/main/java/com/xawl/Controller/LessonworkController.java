@@ -45,6 +45,7 @@ public class LessonworkController {
         lessonwork1.setType(lessonwork.getType());
         lessonwork1.setCid(lessonwork.getCid());
         lessonwork1.setPart(lessonwork.getPart());
+
         List<Lessonwork> lessonworksList= lessonworkService.getLessonwork(lessonwork1);
         if(lessonworksList!=null&&lessonworksList.size()>0)
             return new ResultData(24,"existed");
@@ -67,12 +68,16 @@ public class LessonworkController {
         Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
         System.out.println("pnum3"+pnum);
         //实验课,实验课没有合班课
-        if (lessonwork.getType() == 3)
-            lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum / 15);
+        if (lessonwork.getType() == 3) {
+            lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum * Coe.testClass);
+            lessonwork.setCoe(Coe.testClass);
+        }
+        else
+        {
 
     //    lessonwork.setClasshours(calculateClasshours(pnum,lessonwork.getPart()));
         lessonwork.setCoe(calculateClasshours(pnum, lessonwork.getPart()));
-        lessonwork.setClasshours(lessonwork.getCoe()*lessonwork.getPclasshours());
+        lessonwork.setClasshours(lessonwork.getCoe()*lessonwork.getPclasshours());}
   /*      if (lessonwork.getType() == 2 || lessonwork.getType() == 1) {
             //若不是合班课
             if (lessonwork.getPart() == null || lessonwork.getPart() == "") {
@@ -106,9 +111,17 @@ public class LessonworkController {
         {
             Dclass dclass = new Dclass();
             dclass.setId(lessonwork.getCid());
+
             Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
+            if (lessonwork.getType() == 3) {
+                lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum * Coe.testClass);
+                lessonwork.setCoe(Coe.testClass);
+            }
+            else
+            {
             lessonwork.setCoe(calculateClasshours(pnum, lessonwork.getPart()));
-            lessonwork.setClasshours(lessonwork.getCoe()*lessonwork.getPclasshours());
+            lessonwork.setClasshours(lessonwork.getCoe()*lessonwork.getPclasshours());}
+
         }
         lessonworkService.updateLessonworkById(lessonwork);
         return new ResultData(1);

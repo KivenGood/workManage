@@ -9,8 +9,8 @@ public class Practicework {
     private Integer num;
     private String lname;
     private Double classhours;
-    private Integer pass;
     private java.sql.Timestamp startedDate;
+    private Integer pass;
 
 
     public Integer getId() {
@@ -76,11 +76,11 @@ public class Practicework {
     }
 
 
-    public int getPass() {
+    public Integer getPass() {
         return pass;
     }
 
-    public void setPass(int pass) {
+    public void setPass(Integer pass) {
         this.pass = pass;
     }
 

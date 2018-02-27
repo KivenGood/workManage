@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Practicework;
 import com.xawl.Service.DclassService;
@@ -33,9 +34,12 @@ public class PracticeworkController {
     ResultData insertLesswork(Practicework practicework, HttpSession session) {
         if (practicework == null)
             return new ResultData(23);
+        System.out.println("practicework:"+practicework);
         practicework.setUid((Integer) session.getAttribute("uid"));
+        if (practicework.getCid() == null || practicework.getCid() <= 0)
+            return new ResultData(23, "Cid is null or worong");
         //查询是否已经插入过
-        System.out.println("lessonwork1.getType():"+practicework.getType());
+        System.out.println("lessonwork.getType():"+practicework.getType());
         Practicework practicework1=new Practicework();
         practicework1.setUid(practicework.getUid());
         practicework1.setType(practicework.getType());
@@ -44,10 +48,6 @@ public class PracticeworkController {
         if(practiceworksList!=null&&practiceworksList.size()>0)
             return new ResultData(24,"existed");
 
-        if (practicework.getCid() == null || practicework.getCid() <= 0)
-            return new ResultData(23, "Cid is null or worong");
-        if (practicework.getClasshours() == null || practicework.getClasshours() <= 0)
-            return new ResultData(23, "classhours is null or worong");
         if (practicework.getType() == null || practicework.getType() <= 0)
             return new ResultData(23, "Type is null or worong");
         if (practicework.getNum() == null || practicework.getNum() <= 0)
@@ -56,19 +56,21 @@ public class PracticeworkController {
             if (practicework.getLname() == null || practicework.getLname() == "")
                 return new ResultData(23, "Lname is null");
             if (practicework.getCid() >=8)
-                return new ResultData(23, "Cid is null or worong When type=4");
+                return new ResultData(23, "Cid must <=8 When type=4");
         }
+
+
         practicework.setPass(0);
         practicework.setStarteddate(new Timestamp(new Date().getTime()));
-        Integer pnum=0;//班级的人数
-        if(practicework.getType()==1||practicework.getId()==2||practicework.getId()==4){
+        //班级的人数
+        Integer pnum=practicework.getCid();//当type=3时，cid就是指导人数；
+        if(practicework.getType()==1||practicework.getType()==2||practicework.getType()==4){
             Dclass dclass = new Dclass();
             dclass.setId(practicework.getCid());
             System.out.println("dclass.getId():"+dclass.getId());
             pnum = dclassService.getDclass(dclass).get(0).getPnum();
              System.out.println("cpnum:"+pnum);
         }
-        else pnum=practicework.getCid();//当type=3时，cid就是指导人数；
         practicework.setClasshours(calculateClasshours(practicework.getNum(),pnum,practicework.getType()));
         practiceworkService.insertPracticework(practicework);
         return new ResultData(1);
@@ -79,19 +81,20 @@ public class PracticeworkController {
     Double calculateClasshours(Integer num, Integer pnum,Integer type){
         Double classhours=0.0;
         if(type==1)
-            classhours=num*pnum+0.0;
+            classhours=num*pnum*Coe.practice;
         if(type==2)
-            classhours=(num*pnum+0.0)/5;
+            classhours=num*pnum*Coe.noviciate;
         if(type==3)
-            classhours=15*pnum+0.0+num/2;
+            classhours=pnum*Coe.thesisGuide+num*Coe.thesisReply;
         if(type==4)
-            classhours=num*pnum*0.6;
+            classhours=num*pnum*Coe.cthesisReply;
         return classhours;
     }
     @RequestMapping("/user/updatePracticeworkById.action")
     @ResponseBody
     ResultData updatePracticeworkById(Practicework practicework){
-        if(practicework==null||practicework.getId()==null||practicework.getType()==null)
+        System.out.println("practicework.getLname():"+practicework.getLname());
+        if(practicework==null||practicework.getId()==null)
             return new ResultData(23);
         if(practicework.getCid()!=null||practicework.getNum()!=null)
         {   Dclass dclass = new Dclass();

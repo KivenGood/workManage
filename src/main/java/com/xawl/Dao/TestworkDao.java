@@ -10,4 +10,5 @@ public interface TestworkDao {
     void insertTestwork(Testwork testwork);
     void updateTestworkById(Testwork testwork);
     void deleteTestworkById(Integer id);
+    void updateTestworkByPass(Integer pass);
 }

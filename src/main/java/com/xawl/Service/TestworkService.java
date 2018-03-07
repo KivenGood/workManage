@@ -2,6 +2,7 @@ package com.xawl.Service;
 
 import com.xawl.Pojo.Testwork;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface TestworkService {
@@ -9,4 +10,5 @@ public interface TestworkService {
     void insertTestwork(Testwork testwork);
     void updateTestworkById(Testwork testwork);
     void deleteTestworkById(Integer id);
+    void exportTestwork(HttpServletRequest request);
 }

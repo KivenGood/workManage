@@ -96,7 +96,12 @@
             <artifactId>mybatis-spring</artifactId>
             <version>${mybatisspring.version}</version>
         </dependency>
-
+<!--Java导入到Excel-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.15</version>
+        </dependency>
         <!-- web jar -->
         <dependency>
             <groupId>javax.servlet</groupId>

@@ -100,6 +100,8 @@ public class PracticeworkController {
         {   Dclass dclass = new Dclass();
             dclass.setId(practicework.getCid());
             Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
+            Practicework practicework1=new Practicework();
+            practicework.setType(practiceworkService.getPracticework(practicework1).get(1).getType());
             practicework.setClasshours(calculateClasshours(practicework.getNum(),pnum,practicework.getType()));
         }
         practiceworkService.updatePracticeworkById(practicework);

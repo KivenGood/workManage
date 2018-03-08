@@ -79,8 +79,9 @@ public class TestworkController {
         if (testwork == null && testwork.getId() == null)
             return new ResultData(23);
         if (testwork.getNum() != null && testwork.getNum() > 0) {
-            if (testwork.getType() == null || testwork.getType() <= 0)
-                return new ResultData(23, "Type is null");
+            Testwork testwork1=new Testwork();
+            testwork1.setId(testwork.getId());
+            testwork.setType(testworkService.getTestwork(testwork1).get(1).getType());
             testwork.setClasshours(calculateClasshours(testwork.getType(), testwork.getNum()));
         }
         testworkService.updateTestworkById(testwork);

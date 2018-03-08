@@ -3,6 +3,7 @@ package com.xawl.Controller;
 import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Lessonwork;
+import com.xawl.Pojo.Testwork;
 import com.xawl.Service.DclassService;
 import com.xawl.Service.LessonworkService;
 import com.xawl.Vo.ResultData;
@@ -111,11 +112,13 @@ public class LessonworkController {
         {
             Dclass dclass = new Dclass();
             dclass.setId(lessonwork.getCid());
-
             Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
+            Lessonwork lessonwork1=new Lessonwork();
+            lessonwork1.setId(lessonwork.getId());
+            lessonwork.setType(lessonworkService.getLessonwork(lessonwork1).get(1).getType());
             if (lessonwork.getType() == 3) {
-                lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum * Coe.testClass);
                 lessonwork.setCoe(Coe.testClass);
+                lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum * lessonwork.getCoe());
             }
             else
             {
@@ -140,12 +143,12 @@ public class LessonworkController {
 
 
     /*
-    * 计算计划学时,先进行合班和拆班的区分
+    * 计算计划学时第一步,先进行合班和拆班的区分
     * */
     Double calculateClasshours(Integer pnum, String part) {
-        //若不是合班课
+
         Double coe = 0.0;
-        if (part == null || part == "") {
+        if (part == null || part == "") {  //若不是合班课
             if (pnum <= 50)
                 coe = 1.0;
             else {

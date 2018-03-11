@@ -13,8 +13,16 @@ public class Lessonwork {
     private Double coe;
     private Double classhours;
     private Integer pass;
-    private java.sql.Timestamp startedDate;
 
+    private java.sql.Timestamp startedDate;
+    private int term;
+    public int getTerm() {
+        return term;
+    }
+
+    public void setTerm(int term) {
+        this.term = term;
+    }
 
     public Integer getId() {
         return id;

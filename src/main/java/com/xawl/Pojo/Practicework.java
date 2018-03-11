@@ -11,6 +11,15 @@ public class Practicework {
     private Double classhours;
     private java.sql.Timestamp startedDate;
     private Integer pass;
+    private int term;
+
+    public int getTerm() {
+        return term;
+    }
+
+    public void setTerm(int term) {
+        this.term = term;
+    }
 
 
     public Integer getId() {

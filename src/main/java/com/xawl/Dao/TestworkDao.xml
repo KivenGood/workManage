@@ -13,24 +13,37 @@
         <where>
             <if test="id!=null and id>0 ">id=#{id}</if>
             <if test="uid!=null and uid>0">and uid=#{uid}</if>
-            <if test="type!=null and type>0">and type=#{type}</if>
+            <if test="term!=null and term>0">and term=#{term}</if>
+            <if test="lname!=null and lname!=''">and lname=#{lname}</if>
             <if test="pass!=null and pass!='' ">and pass=#{pass}</if>
         </where>
-        order by uid
+        ORDER BY
+        uid ASC ,db_testwork.statedDate	DESC
     </select>
 
     <insert id="insertTestwork" parameterType="com.xawl.Pojo.Testwork">
-        insert into db_testwork (uid,type,num,lnames,classhours,startedDate,pass)
-        values(#{uid},#{type},#{num},#{lnames},#{classhours},#{startedDate},#{pass})
+        insert into db_testwork (uid,lname,Mpclass,Qpclass,Jnum,Jpclass,paperNum,BpaperNum,
+        QpaperNum,CpaperNum,paperSum,paperPclass,pclassNum,pass,statedDate,term)
+        values(#{uid},#{lname},#{Mpclass},#{Qpclass},#{Jnum},#{Jpclass},#{paperNum},#{BpaperNum},
+        #{QpaperNum},#{CpaperNum},#{paperSum},#{paperPclass},#{pclassNum},#{pass},#{statedDate},#{term})
     </insert>
 
     <update id="updateTestworkById" parameterType="com.xawl.Pojo.Testwork">
     update db_testwork
     <set>
-        <if test="num!=null and num>0">num=#{num},</if>
         <if test="lnames!=null and lnames!='' ">lnames=#{lnames},</if>
-        <if test="pass!=null and pass>=0">pass=#{pass},</if>
-        <if test="classhours!=null">classhours=#{classhours},</if>
+        <if test="Mpclass!=null and Mpclass>0">Mpclass=#{Mpclass},</if>
+        <if test="Qpclass!=null and Qpclass>0">Qpclass=#{Qpclass},</if>
+        <if test="Jnum!=null and Jnum>0">Jnum=#{Jnum},</if>
+        <if test="paperNum!=null and paperNum>0">paperNum=#{paperNum},</if>
+        <if test="BpaperNum!=null and BpaperNum>=0">BpaperNum=#{BpaperNum},</if>
+        <if test="QpaperNum!=null and QpaperNum>=0">QpaperNum=#{QpaperNum},</if>
+        <if test="CpaperNum!=null and CpaperNum>=0">CpaperNum=#{CpaperNum},</if>
+        <if test="paperSum!=null and paperSum>=0">paperSum=#{paperSum},</if>
+        <if test="paperPclass!=null and paperPclass>=0">paperPclass=#{paperPclass},</if>
+        <if test="pclassNum!=null and pclassNum>=0">pclassNum=#{pclassNum},</if>
+        <if test="pass!=null and pass">=0>pass=#{pass},</if>
+        <if test="term!=null and term>0">term=#{term},</if>
     </set>
     where id=#{id}
 </update>

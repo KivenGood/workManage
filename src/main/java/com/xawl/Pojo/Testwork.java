@@ -4,22 +4,37 @@ public class Testwork {
 
     private Integer id;
     private Integer uid;
-    private Integer type;
-    private Integer num;
-    private String lnames;
-    private Double classhours;
+    private String lname;
+    private Double Mpclass;
+    private Double Qpclass;
+    private Integer Jnum;
+    private Double Jpclass;
+    private Integer paperNum;
+    private Integer BpaperNum;
+    private Integer QpaperNum;
+    private Integer CpaperNum;
+    private Integer paperSum;
+    private Double paperPclass;
+    private Double pclassNum;
     private Integer pass;
-    private java.sql.Timestamp startedDate;
-    private int term;
+    private java.sql.Timestamp statedDate;
+    private Integer term;
 
-    public int getTerm() {
+    public Integer getTerm() {
         return term;
     }
 
-    public void setTerm(int term) {
+    public void setTerm(Integer term) {
         this.term = term;
     }
 
+    public Double getJpclass() {
+        return Jpclass;
+    }
+
+    public void setJpclass(Double jpclass) {
+        Jpclass = jpclass;
+    }
 
     public Integer getId() {
         return id;
@@ -39,39 +54,102 @@ public class Testwork {
     }
 
 
-    public Integer getType() {
-        return type;
+    public String getLname() {
+        return lname;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
-    }
-
-
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
 
-    public String getLnames() {
-        return lnames;
+    public Double getMpclass() {
+        return Mpclass;
     }
 
-    public void setLnames(String lnames) {
-        this.lnames = lnames;
+    public void setMpclass(Double mpclass) {
+        this.Mpclass = mpclass;
     }
 
 
-    public Double getClasshours() {
-        return classhours;
+    public Double getQpclass() {
+        return Qpclass;
     }
 
-    public void setClasshours(Double classhours) {
-        this.classhours = classhours;
+    public void setQpclass(Double qpclass) {
+        this.Qpclass = qpclass;
+    }
+
+
+    public Integer getJnum() {
+        return Jnum;
+    }
+
+    public void setJnum(Integer jnum) {
+        this.Jnum = jnum;
+    }
+
+
+    public Integer getPaperNum() {
+        return paperNum;
+    }
+
+    public void setPaperNum(Integer paperNum) {
+        this.paperNum = paperNum;
+    }
+
+
+    public Integer getBpaperNum() {
+        return BpaperNum;
+    }
+
+    public void setBpaperNum(Integer bpaperNum) {
+        this.BpaperNum = bpaperNum;
+    }
+
+
+    public Integer getQpaperNum() {
+        return QpaperNum;
+    }
+
+    public void setQpaperNum(Integer qpaperNum) {
+        this.QpaperNum = qpaperNum;
+    }
+
+
+    public Integer getCpaperNum() {
+        return CpaperNum;
+    }
+
+    public void setCpaperNum(Integer cpaperNum) {
+        this.CpaperNum = cpaperNum;
+    }
+
+
+    public Integer getPaperSum() {
+        return paperSum;
+    }
+
+    public void setPaperSum(Integer paperSum) {
+        this.paperSum = paperSum;
+    }
+
+
+    public Double getPaperPclass() {
+        return paperPclass;
+    }
+
+    public void setPaperPclass(Double paperPclass) {
+        this.paperPclass = paperPclass;
+    }
+
+
+    public Double getPclassNum() {
+        return pclassNum;
+    }
+
+    public void setPclassNum(Double pclassNum) {
+        this.pclassNum = pclassNum;
     }
 
 
@@ -84,12 +162,12 @@ public class Testwork {
     }
 
 
-    public java.sql.Timestamp getStarteddate() {
-        return startedDate;
+    public java.sql.Timestamp getStatedDate() {
+        return statedDate;
     }
 
-    public void setStarteddate(java.sql.Timestamp startedDate) {
-        this.startedDate = startedDate;
+    public void setStatedDate(java.sql.Timestamp statedDate) {
+        this.statedDate = statedDate;
     }
 
 }

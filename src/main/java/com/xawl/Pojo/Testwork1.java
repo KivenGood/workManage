@@ -1,23 +1,25 @@
 package com.xawl.Pojo;
+/*
+废弃类，暂时无用
+*
+* */
+public class Testwork1 {
 
-public class Practicework {
-
-    private Integer id;
+  /*  private Integer id;
     private Integer uid;
     private Integer type;
-    private Integer cid;
     private Integer num;
-    private String lname;
+    private String lnames;
     private Double classhours;
-    private java.sql.Timestamp startedDate;
     private Integer pass;
-    private Integer term;
+    private java.sql.Timestamp startedDate;
+    private int term;
 
-    public Integer getTerm() {
+    public int getTerm() {
         return term;
     }
 
-    public void setTerm(Integer term) {
+    public void setTerm(int term) {
         this.term = term;
     }
 
@@ -49,15 +51,6 @@ public class Practicework {
     }
 
 
-    public Integer getCid() {
-        return cid;
-    }
-
-    public void setCid(Integer cid) {
-        this.cid = cid;
-    }
-
-
     public Integer getNum() {
         return num;
     }
@@ -67,12 +60,12 @@ public class Practicework {
     }
 
 
-    public String getLname() {
-        return lname;
+    public String getLnames() {
+        return lnames;
     }
 
-    public void setLname(String lname) {
-        this.lname = lname;
+    public void setLnames(String lnames) {
+        this.lnames = lnames;
     }
 
 
@@ -100,6 +93,6 @@ public class Practicework {
 
     public void setStarteddate(java.sql.Timestamp startedDate) {
         this.startedDate = startedDate;
-    }
+    }*/
 
 }

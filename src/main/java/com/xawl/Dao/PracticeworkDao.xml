@@ -18,10 +18,12 @@
             <if test="lname!=null and lname!=''">and lname=#{lname}</if>
            <if test="pass!=null and pass>0">and pass=#{pass}</if>
         </where>
+        ORDER BY
+        uid ASC ,db_testwork.statedDate	DESC
     </select>
     <insert id="insertPracticework" parameterType="com.xawl.Pojo.Practicework">
-        insert into db_practicework (uid,cid,type,lname,num,classhours,pass,startedDate)
-        values(#{uid},#{cid},#{type},#{lname},#{num},#{classhours},#{pass},#{startedDate})
+        insert into db_practicework (uid,cid,type,lname,num,classhours,pass,startedDate,term)
+        values(#{uid},#{cid},#{type},#{lname},#{num},#{classhours},#{pass},#{startedDate},#{term})
     </insert>
     <update id="updatePracticeworkById" parameterType="com.xawl.Pojo.Practicework">
         update db_practicework

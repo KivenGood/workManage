@@ -15,7 +15,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,7 +23,6 @@ public class TestworkServiceImp implements TestworkService {
     TestworkDao testworkDao;
     @Resource
     UserDao userDao;
-
     @Override
     public List<Testwork> getTestwork(Testwork testwork) {
 
@@ -48,7 +46,7 @@ public class TestworkServiceImp implements TestworkService {
 
     @Override
     public void exportTestwork(HttpServletRequest request) {
-        Testwork testwork = new Testwork();
+  /*      Testwork testwork = new Testwork();
         testwork.setPass(2);
         List<Testwork> testworkList = testworkDao.getTestwork(testwork);
 
@@ -155,7 +153,7 @@ public class TestworkServiceImp implements TestworkService {
             if(i==testworkList.size())
                 break;
         }
-        /*for (int row = 0; row < 10; row++)
+       *//* for (int row = 0; row < 10; row++)
         {
             HSSFRow rows = sheet.createRow(row);
             for (int col = 0; col < 10; col++)
@@ -163,8 +161,8 @@ public class TestworkServiceImp implements TestworkService {
                 // 向工作表中添加数据
                 rows.createCell(col).setCellValue("data" + row + col);
             }
-        }*/
-        try {
+        }
+        try {*//*
             String path =request.getSession().getServletContext().getRealPath("files");
             System.out.println("path："+path);
             File xlsFile = new File(path,"考试工作量统计.xls");
@@ -175,6 +173,6 @@ public class TestworkServiceImp implements TestworkService {
         }
 
 
-      testworkDao.updateTestworkByPass(4);
+      testworkDao.updateTestworkByPass(4);*/
     }
 }

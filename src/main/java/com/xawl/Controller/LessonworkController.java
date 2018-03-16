@@ -3,7 +3,6 @@ package com.xawl.Controller;
 import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Lessonwork;
-import com.xawl.Pojo.Testwork;
 import com.xawl.Service.DclassService;
 import com.xawl.Service.LessonworkService;
 import com.xawl.Vo.ResultData;
@@ -36,6 +35,7 @@ public class LessonworkController {
     @RequestMapping("/user/insertLesswork.action")
     @ResponseBody
     ResultData insertLesswork(Lessonwork lessonwork, HttpSession session) {
+        System.out.println("uid:"+session.getAttribute("uid"));
         if (lessonwork == null)
             return new ResultData(23);
         lessonwork.setUid((Integer) session.getAttribute("uid"));
@@ -45,10 +45,11 @@ public class LessonworkController {
         lessonwork1.setUid(lessonwork.getUid());
         lessonwork1.setType(lessonwork.getType());
         lessonwork1.setCid(lessonwork.getCid());
-        lessonwork1.setPart(lessonwork.getPart());
+        lessonwork1.setTerm(lessonwork.getTerm());
+       // lessonwork1.setPart(lessonwork.getPart());
 
         List<Lessonwork> lessonworksList = lessonworkService.getLessonwork(lessonwork1);
-        if (lessonworksList != null && lessonworksList.size() > 0)
+        if (lessonworksList != null && lessonworksList.size() > 0&&lessonworksList.get(0).getPass()!=4)
             return new ResultData(24, "existed");
 
         if (lessonwork.getCid() == null || lessonwork.getCid() <= 0)
@@ -59,8 +60,6 @@ public class LessonworkController {
             return new ResultData(23, "Pclasshours is null or worong");
         if (lessonwork.getType() == null || lessonwork.getType() <= 0)
             return new ResultData(23, "Type is null or worong");
-        if (lessonwork.getClasshours() == null || lessonwork.getClasshours() <= 0)
-            return new ResultData(23, "Classhours is null or worong");
 
         lessonwork.setPass(0);
         lessonwork.setStarteddate(new Timestamp(new Date().getTime()));

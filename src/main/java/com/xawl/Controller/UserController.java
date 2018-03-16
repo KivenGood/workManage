@@ -61,7 +61,7 @@ public class UserController {
                 data="pass is init";
        //       System.out.println("pass is init");
             }
-            return new ResultData(1,data);
+            return new ResultData(user2.getType(),data);
         }
 
         else return new ResultData(-20,"pass is wrong");

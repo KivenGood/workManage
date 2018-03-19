@@ -31,9 +31,9 @@
     <update id="updateTestworkById" parameterType="com.xawl.Pojo.Testwork">
     update db_testwork
     <set>
-        <if test="lnames!=null and lnames!='' ">lnames=#{lnames},</if>
-        <if test="Mpclass!=null and Mpclass>0">Mpclass=#{Mpclass},</if>
-        <if test="Qpclass!=null and Qpclass>0">Qpclass=#{Qpclass},</if>
+        <if test="lname!=null and lname!='' ">lname=#{lname},</if>
+        <if test="Mpclass!=null and Mpclass>=0">Mpclass=#{Mpclass},</if>
+        <if test="Qpclass!=null and Qpclass>=0">Qpclass=#{Qpclass},</if>
         <if test="Jnum!=null and Jnum>0">Jnum=#{Jnum},</if>
         <if test="paperNum!=null and paperNum>0">paperNum=#{paperNum},</if>
         <if test="BpaperNum!=null and BpaperNum>=0">BpaperNum=#{BpaperNum},</if>

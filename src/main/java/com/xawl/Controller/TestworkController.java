@@ -24,7 +24,7 @@ public class TestworkController {
     @RequestMapping("/user/insertTestworkJnum.action")
     @ResponseBody
     ResultData insertTestworkJnum(HttpSession session, Testwork testwork) {
-        if (testwork == null || testwork.getJnum() == null)
+        if (testwork == null || testwork.getJnum() == null||testwork.getTerm()==null)
             return new ResultData(23);
         Testwork testwork1 = new Testwork();
         testwork1.setUid((Integer) session.getAttribute("uid"));
@@ -33,6 +33,7 @@ public class TestworkController {
 
         testwork.setUid(testwork1.getUid());
         testwork.setJpclass(testwork.getJnum() * Coe.invigilate);
+        System.out.println();
         testwork.setPclassNum(testwork.getJpclass());
         testwork.setPass(0);
         testwork.setStatedDate(new Timestamp(new Date().getTime()));
@@ -43,6 +44,11 @@ public class TestworkController {
             else {//如果已存在课程名插入就得更新总学时了
                 testwork.setId(testworkList.get(0).getId());
                 testwork.setPclassNum(testwork.getJpclass() + testworkList.get(0).getPclassNum());
+                testworkService.updateTestworkById(testwork);
+                System.out.println("uid1:" + testwork.getUid());
+                System.out.println("getJnum1:" + testwork.getJnum());
+                System.out.println("getJpclass1:" + testwork.getJpclass());
+                System.out.println("getPclassNum1:" + testwork.getPclassNum());
                 testworkService.updateTestworkById(testwork);
                 return new ResultData(1);
             }
@@ -131,6 +137,7 @@ public class TestworkController {
         if (testwork.getJnum() != null && testwork.getJnum() >= 0) {
             testwork.setJpclass(testwork.getJnum() * Coe.invigilate);
             pclassNum += testwork.getJpclass();
+            System.out.println("Jpclass：" + testwork.getJpclass());
             System.out.println("pclassNum：" + pclassNum);
         }
         if (testwork.getMpclass() != null && testwork.getMpclass() > 0) {
@@ -197,9 +204,12 @@ public class TestworkController {
     @RequestMapping("/admin/exportTestwork.action")
     @ResponseBody
     ResultData exportTestwork(HttpServletRequest request,
-                              HttpServletResponse response) {
-        testworkService.exportTestwork(request);
-        return new ResultData(1);
+                              Testwork testwork) {
+        if(testwork.getTerm()==null||testwork.getTerm()<=0){
+            return new ResultData(23);
+        }
+
+        return new ResultData(1,  testworkService.exportTestwork(request,testwork));
     }
 }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -136,6 +137,16 @@ public class LessonworkController {
         lessonworkService.deleteLessonworkById(id);
         return new ResultData(1);
 
+    }
+    @RequestMapping("/admin/exportLessonwork.action")
+    @ResponseBody
+    ResultData exportLessonwork(HttpServletRequest request,
+                                Lessonwork lessonwork) {
+        if(lessonwork.getTerm()==null||lessonwork.getTerm()<=0){
+            return new ResultData(23);
+        }
+
+        return new ResultData(1, lessonworkService.exportTestwork(request,lessonwork));
     }
 
 

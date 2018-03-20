@@ -16,6 +16,8 @@
             <if test="term!=null and term>0">and term=#{term}</if>
             <if test="lname!=null and lname!=''">and lname=#{lname}</if>
             <if test="pass!=null and pass!='' ">and pass=#{pass}</if>
+            <if test="term!=null and term>0">and term=#{term}</if>
+            <if test="pass!=null and pass>=0 ">and  pass=#{pass}</if>
         </where>
         ORDER BY
         uid ASC ,db_testwork.statedDate	DESC
@@ -35,6 +37,7 @@
         <if test="Mpclass!=null and Mpclass>=0">Mpclass=#{Mpclass},</if>
         <if test="Qpclass!=null and Qpclass>=0">Qpclass=#{Qpclass},</if>
         <if test="Jnum!=null and Jnum>0">Jnum=#{Jnum},</if>
+        <if test="Jpclass!=null and Jpclass>0">Jpclass=#{Jpclass},</if>
         <if test="paperNum!=null and paperNum>0">paperNum=#{paperNum},</if>
         <if test="BpaperNum!=null and BpaperNum>=0">BpaperNum=#{BpaperNum},</if>
         <if test="QpaperNum!=null and QpaperNum>=0">QpaperNum=#{QpaperNum},</if>
@@ -42,8 +45,8 @@
         <if test="paperSum!=null and paperSum>=0">paperSum=#{paperSum},</if>
         <if test="paperPclass!=null and paperPclass>=0">paperPclass=#{paperPclass},</if>
         <if test="pclassNum!=null and pclassNum>=0">pclassNum=#{pclassNum},</if>
-        <if test="pass!=null and pass">=0>pass=#{pass},</if>
-        <if test="term!=null and term>0">term=#{term},</if>
+        <if test="pass!=null and pass>=0">pass=#{pass},</if>
+        <if test="term!=null and term>0">term=#{term}</if>
     </set>
     where id=#{id}
 </update>

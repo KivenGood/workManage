@@ -88,10 +88,30 @@ public class UserController {
         return new ResultData(1);
 
     }
+    @RequestMapping("/root/insertAdmin.action")
+    @ResponseBody
+    ResultData insertAdmin(User user){
+        if(user==null)
+            return new ResultData(23);
+        if(user.getTechno()==null&&user.getTechno()=="")
+            return new ResultData(23,"techno is null");
+        if(user.getName()==null&&user.getName()=="")
+            return new ResultData(23,"name is null");
+        user.setPass(user.getTechno());
+        user.setType(2);
+        user.setLevel("Admin");
+        user.setSdept("Admin");
+        user.setStarteddate(new Timestamp(new Date().getTime()));
+        userService.insertUser(user);
+        return new ResultData(1);
+
+
+
+    }
 
     @RequestMapping("/admin/batchUsers.action")
     @ResponseBody
-    ResultData batchUsers(HttpSession session, UserList userList){
+    ResultData batchUsers(UserList userList){
        if(userList==null)
            return new ResultData(23);
         User user =new User();
@@ -103,6 +123,7 @@ public class UserController {
             {
                 return new ResultData(i+1,"Techno");
             }
+
             if(user.getSdept()==null&&user.getSdept()=="")
             {
                 return new ResultData(i+1,"Sdept");

@@ -30,6 +30,14 @@
     <filter-name>AdminFilter</filter-name>
     <url-pattern>/admin/*</url-pattern>
   </filter-mapping>
+  <filter>
+    <filter-name>rootFilter</filter-name>
+    <filter-class>com.xawl.Filteres.rootFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>rootFilter</filter-name>
+    <url-pattern>/root/*</url-pattern>
+  </filter-mapping>
   <servlet>
     <servlet-name>Dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

@@ -16,11 +16,12 @@
             <if test="cid!=null and cid>0">and cid=#{cid}</if>
             <if test="type!=null and type>0">and type=#{type}</if>
             <if test="lname!=null and lname!=''">and lname=#{lname}</if>
-            <if test="pass!=null and pass>0">and pass=#{pass}</if>
+            <if test="pass!=null and pass>=0">and pass=#{pass}</if>
             <if test="part!=null and pass!=''">and part=#{part}</if>
+            <if test="term!=null and term>0">and term=#{term}</if>
         </where>
         ORDER BY
-        uid ASC ,db_testwork.statedDate	DESC
+        uid ASC ,db_lessonwork.startedDate	DESC
     </select>
     <insert id="insertLessonwork" parameterType="com.xawl.Pojo.Lessonwork">
         insert into db_lessonwork (uid,cid,type,lname,pclasshours,part,coe,classhours,pass,startedDate,term)
@@ -37,6 +38,7 @@
             <if test="part!=null and part!=''">part=#{part},</if>
             <if test="coe!=null and coe>=0">coe=#{coe},</if>
             <if test="pass!=null and pass>=0">pass=#{pass}</if>
+            <if test="term!=null and term>0">and term=#{term}</if>
         </set>
         where id=#{id}
     </update>

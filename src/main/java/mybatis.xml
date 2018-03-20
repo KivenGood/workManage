@@ -6,6 +6,7 @@
     <typeAliases>
         <typeAlias type="com.xawl.Pojo.User" alias="User"/>
     </typeAliases>
+
      <mappers>
          <mapper resource="com/xawl/Dao/UserDao.xml"/>
      </mappers>

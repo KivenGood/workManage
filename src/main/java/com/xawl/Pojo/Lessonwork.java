@@ -14,13 +14,14 @@ public class Lessonwork {
     private Double classhours;
     private Integer pass;
 
+
     private java.sql.Timestamp startedDate;
-    private int term;
-    public int getTerm() {
+    private Integer term;
+    public Integer getTerm() {
         return term;
     }
 
-    public void setTerm(int term) {
+    public void setTerm(Integer term) {
         this.term = term;
     }
 

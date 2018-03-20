@@ -9,5 +9,5 @@ public interface TestworkService {
     void insertTestwork(Testwork testwork);
     void updateTestworkById(Testwork testwork);
     void deleteTestworkById(Integer id);
-    void exportTestwork(HttpServletRequest request);
+    String  exportTestwork(HttpServletRequest request,Testwork testwork);
 }

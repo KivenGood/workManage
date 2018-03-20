@@ -17,6 +17,7 @@
         <!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
         <!--<property name="validationMessageSource" ref="messageSource"/>-->
     </bean>
+
     <!-- 设置Converter转换器 -->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <!-- 设置多个转换器 -->

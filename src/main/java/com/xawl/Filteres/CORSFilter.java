@@ -20,7 +20,8 @@ public class CORSFilter implements Filter {
         res.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         res.setHeader("Access-Control-Max-Age", "3628800");
         res.setHeader("Access-Control-Allow-Headers",
-                "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
+                "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma," +
+                        " Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
         res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
         logger.info("请求的IP：" + getIpAddress(req));
         Integer uid= (Integer) req.getSession().getAttribute("uid");

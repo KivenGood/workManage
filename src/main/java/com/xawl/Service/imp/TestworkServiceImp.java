@@ -103,20 +103,18 @@ public class TestworkServiceImp implements TestworkService {
             rows.createCell(10).setCellValue(testworkList.get(row - 1).getPaperSum());
             rows.createCell(11).setCellValue(testworkList.get(row - 1).getPaperPclass());
             rows.createCell(12).setCellValue(testworkList.get(row - 1).getPclassNum());
-            try {
-                String path = request.getSession().getServletContext().getRealPath("files");
-                System.out.println("path：" + path);
-                File xlsFile = new File(path, fileName);
-                FileOutputStream xlsStream = new FileOutputStream(xlsFile);
-                workbook.write(xlsStream);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-
           //  testworkDao.updateTestworkByPass(4);
         }
-        return fileName;
+        String path = request.getSession().getServletContext().getRealPath("files");
+        System.out.println("path：" + path);
+        try {
+            File xlsFile = new File(path, fileName);
+            FileOutputStream xlsStream = new FileOutputStream(xlsFile);
+            workbook.write(xlsStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return path+fileName;
     }
 }
 /*

@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.xawl.Dao.DclassDao;
 import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Lessonwork;
@@ -163,10 +164,12 @@ public class LessonworkController {
                 coe = compute(pnum);
             }
         } else {//合班课
-            String[] pnums = part.split("/");
+            String[] pnums = part.split(",");
+            Dclass dclass=new Dclass();
             for (int i = 0; i < pnums.length; i++) {
                 System.out.println("pnums[" + i + "]:" + pnums[i]);
-                pnum += Integer.parseInt(pnums[i]);
+                dclass.setId(Integer.parseInt(pnums[i]));
+                pnum += dclassService.getDclass(dclass).get(0).getPnum() ;
                 System.out.println("pnum:" + pnum);
             }
             coe = compute(pnum);

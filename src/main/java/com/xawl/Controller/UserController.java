@@ -32,46 +32,46 @@ import java.util.Random;
 public class UserController {
     @Resource
     UserService userService;
+
     /**
      * 登录接口
-     *
      */
     @RequestMapping("/login.action")
     @ResponseBody
     ResultData login(User user, HttpSession session) throws Exception {
-        if(user==null)
+        if (user == null)
             return new ResultData(23);
-        if(user.getPass()==null||user.getTechno()==null)
+        if (user.getPass() == null || user.getTechno() == null)
             return new ResultData(26);
-        User user1=new User();
+        User user1 = new User();
         user1.setTechno(user.getTechno());
-        User user2=userService.getUser(user1).get(0);
-        if(user2==null)
-            return new ResultData(-19,"user is not exist");
-        if(user.getPass().equals(user2.getPass())) {
-            session.setAttribute("uid",user2.getId());
+        User user2 = userService.getUser(user1).get(0);
+        if (user2 == null)
+            return new ResultData(-19, "user is not exist");
+        if (user.getPass().equals(user2.getPass())) {
+            session.setAttribute("uid", user2.getId());
           /*  System.out.println("techno:"+user2.getTechno());
             System.out.println("user2.getPass:"+user2.getPass());*/
-           session.setAttribute("level",user2.getLevel());
-            session.setAttribute("uname",user2.getName());
-            session.setAttribute("type",user2.getType());
-            String data=null;
-            if(user.getTechno().equals(user.getPass()))
-            {
-                data="pass is init";
-       //       System.out.println("pass is init");
+            session.setAttribute("level", user2.getLevel());
+            session.setAttribute("uname", user2.getName());
+            session.setAttribute("type", user2.getType());
+            System.out.println("level"+session.getAttribute("level"));
+            System.out.println("uname"+session.getAttribute("uname"));
+            System.out.println("type"+session.getAttribute("type"));
+            String data = null;
+            if (user.getTechno().equals(user.getPass())) {
+                data = "pass is init";
+                //       System.out.println("pass is init");
             }
-            return new ResultData(user2.getType(),data);
-        }
-
-        else return new ResultData(-20,"pass is wrong");
+            return new ResultData(user2.getType(), data);
+        } else return new ResultData(-20, "pass is wrong");
     }
+
     @RequestMapping("/user/updatePass.action")
     @ResponseBody
-    ResultData updatePass(HttpSession session,String pass)
-    {
-        Integer uid=(Integer)session.getAttribute("uid");
-        if(pass==null||pass=="")
+    ResultData updatePass(HttpSession session, String pass) {
+        Integer uid = (Integer) session.getAttribute("uid");
+        if (pass == null || pass == "")
             return new ResultData(23);
         User user = new User();
         user.setId(uid);
@@ -82,21 +82,22 @@ public class UserController {
 
     @RequestMapping("/user/exit.action")
     @ResponseBody
-    ResultData exit(HttpSession session){
-        session.setAttribute("uid",null);
-        session.setAttribute("type",null);
+    ResultData exit(HttpSession session) {
+        session.setAttribute("uid", null);
+        session.setAttribute("type", null);
         return new ResultData(1);
 
     }
+
     @RequestMapping("/root/insertAdmin.action")
     @ResponseBody
-    ResultData insertAdmin(User user){
-        if(user==null)
+    ResultData insertAdmin(User user) {
+        if (user == null)
             return new ResultData(23);
-        if(user.getTechno()==null&&user.getTechno()=="")
-            return new ResultData(23,"techno is null");
-        if(user.getName()==null&&user.getName()=="")
-            return new ResultData(23,"name is null");
+        if (user.getTechno() == null && user.getTechno() == "")
+            return new ResultData(23, "techno is null");
+        if (user.getName() == null && user.getName() == "")
+            return new ResultData(23, "name is null");
         user.setPass(user.getTechno());
         user.setType(2);
         user.setLevel("Admin");
@@ -106,35 +107,29 @@ public class UserController {
         return new ResultData(1);
 
 
-
     }
 
     @RequestMapping("/admin/batchUsers.action")
     @ResponseBody
-    ResultData batchUsers(UserList userList){
-       if(userList==null)
-           return new ResultData(23);
-        User user =new User();
+    ResultData batchUsers(UserList userList) {
+        if (userList == null)
+            return new ResultData(23);
+        User user = new User();
         List<User> list = userList.getList();
-        for(int i=0;i<list.size();i++)
-        {
-            user=list.get(i);
-            if(user.getTechno()==null&&user.getTechno()=="")
-            {
-                return new ResultData(i+1,"Techno");
+        for (int i = 0; i < list.size(); i++) {
+            user = list.get(i);
+            if (user.getTechno() == null && user.getTechno() == "") {
+                return new ResultData(i + 1, "Techno");
             }
 
-            if(user.getSdept()==null&&user.getSdept()=="")
-            {
-                return new ResultData(i+1,"Sdept");
+            if (user.getSdept() == null && user.getSdept() == "") {
+                return new ResultData(i + 1, "Sdept");
             }
-            if(user.getLevel()==null&&user.getLevel()=="")
-            {
-                return new ResultData(i+1,"Level");
+            if (user.getLevel() == null && user.getLevel() == "") {
+                return new ResultData(i + 1, "Level");
             }
-            if(user.getName()==null&&user.getName()=="")
-            {
-                return new ResultData(i+1,"Name");
+            if (user.getName() == null && user.getName() == "") {
+                return new ResultData(i + 1, "Name");
             }
             user.setPass(user.getTechno());
             user.setStarteddate(new Timestamp(new Date().getTime()));
@@ -144,17 +139,28 @@ public class UserController {
         }
         return new ResultData(1);
     }
+
     @RequestMapping("/admin/SelectUsers.action")
     @ResponseBody
-    ResultData SelectUsers(){
-        List<User> userList=new ArrayList();
-        User user =new User();
+    ResultData SelectUsers() {
+        List<User> userList = new ArrayList();
+        User user = new User();
         user.setType(1);
-        userList=userService.getUser(user);
-        for(int i=0;i<userList.size();i++)
+        userList = userService.getUser(user);
+        for (int i = 0; i < userList.size(); i++)
             userList.get(i).setPass(null);
 
-        return new ResultData(1,userList);
+        return new ResultData(1, userList);
+    }
+
+    @RequestMapping("/admin/delectUserById.action")
+    @ResponseBody
+    ResultData delectUserById(Integer id) {
+        if (id == null)
+            return new ResultData(23);
+        userService.deleteUser(id);
+
+        return new ResultData(1);
     }
 
 

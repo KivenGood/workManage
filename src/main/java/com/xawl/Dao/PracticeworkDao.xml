@@ -47,6 +47,17 @@
         </set>
         where pass=2
     </update>
+
+    <update id="updatePassByPassAndType" parameterType="java.lang.Integer">
+        update db_practicework
+        <set>
+            <if test="_parameter !=null and _parameter >=0">pass=#{pass},</if>
+        </set>
+        where pass=2
+        <where>
+            <if test="type!=null and type>0">and type=#{type}</if>
+        </where>
+    </update>
     <delete id="deletePracticeworkById" parameterType="Integer">
         DELETE from db_practicework WHERE id = #{id}
     </delete>

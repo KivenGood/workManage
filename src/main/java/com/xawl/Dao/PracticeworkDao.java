@@ -11,4 +11,6 @@ public interface PracticeworkDao {
     void updatePracticeworkById(Practicework practicework);
     void deletePracticeworkById(Integer id);
     void updatePracticeworkByPass(Integer pass);
+    void updatePassByPassAndType(Integer pass,Integer type);
+
 }

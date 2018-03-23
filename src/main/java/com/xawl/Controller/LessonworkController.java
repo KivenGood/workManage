@@ -62,6 +62,8 @@ public class LessonworkController {
             return new ResultData(23, "Pclasshours is null or worong");
         if (lessonwork.getType() == null || lessonwork.getType() <= 0)
             return new ResultData(23, "Type is null or worong");
+        if (lessonwork.getTerm() == null || lessonwork.getTerm() <= 0)
+            return new ResultData(23, "Term is null or worong");
 
         lessonwork.setPass(0);
         lessonwork.setStarteddate(new Timestamp(new Date().getTime()));

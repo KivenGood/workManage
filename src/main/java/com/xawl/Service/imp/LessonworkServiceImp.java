@@ -82,7 +82,7 @@ public class LessonworkServiceImp implements LessonworkService {
         rows.createCell(14).setCellValue("课时合计");
         //  int uid;//用户id
         System.out.println("testworkList.size():" + lessonworkList.size());
-        Integer uid = null;//用户id，控制excl何时进行下一行
+        //Integer uid = null;//用户id，控制excl何时进行下一行
         int i = 0;//控制lessonList的行
         for (int row = 1; row <= lessonworkList.size(); row++) {//控制行
             Double pclassSum = 0.0;//总课时

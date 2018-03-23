@@ -69,6 +69,8 @@ public class TestworkController {
             return new ResultData(23);
         if (testwork.getLname() == null || testwork.getLname() == "")
             return new ResultData(26, "课程名字为空");
+        if (testwork.getTerm() == null || testwork.getTerm() <= 0)
+            return new ResultData(23, "Term is null or worong");
         testwork.setPass(0);//pass设置为未审核
         testwork.setUid((Integer) session.getAttribute("uid"));
         System.out.println("uid:" + testwork.getUid());

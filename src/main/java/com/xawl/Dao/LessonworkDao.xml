@@ -27,6 +27,13 @@
         insert into db_lessonwork (uid,cid,type,lname,pclasshours,part,coe,classhours,pass,startedDate,term)
         values(#{uid},#{cid},#{type},#{lname},#{pclasshours},#{part},#{coe},#{classhours},#{pass},#{startedDate},#{term})
     </insert>
+    <update id="updateLessonworkByPass" parameterType="java.lang.Integer">
+        update db_lessonwork
+        <set>
+            <if test="_parameter !=null and _parameter >=0">pass=#{pass},</if>
+        </set>
+        where pass=2
+    </update>
     <update id="updateLessonworkById" parameterType="com.xawl.Pojo.Lessonwork">
         update db_lessonwork
         <set>

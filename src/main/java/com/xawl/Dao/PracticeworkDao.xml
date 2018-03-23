@@ -40,7 +40,13 @@
         where id=#{id}
     </update>
 
-
+    <update id="updatePracticeworkByPass" parameterType="java.lang.Integer">
+        update db_practicework
+        <set>
+            <if test="_parameter !=null and _parameter >=0">pass=#{pass},</if>
+        </set>
+        where pass=2
+    </update>
     <delete id="deletePracticeworkById" parameterType="Integer">
         DELETE from db_practicework WHERE id = #{id}
     </delete>

@@ -103,7 +103,7 @@ public class TestworkServiceImp implements TestworkService {
             rows.createCell(10).setCellValue(testworkList.get(row - 1).getPaperSum());
             rows.createCell(11).setCellValue(testworkList.get(row - 1).getPaperPclass());
             rows.createCell(12).setCellValue(testworkList.get(row - 1).getPclassNum());
-          //  testworkDao.updateTestworkByPass(4);
+
         }
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
@@ -111,6 +111,7 @@ public class TestworkServiceImp implements TestworkService {
             File xlsFile = new File(path, fileName);
             FileOutputStream xlsStream = new FileOutputStream(xlsFile);
             workbook.write(xlsStream);
+            testworkDao.updateTestworkByPass(4);
         } catch (Exception e) {
             e.printStackTrace();
         }

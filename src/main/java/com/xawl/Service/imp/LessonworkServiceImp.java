@@ -164,6 +164,7 @@ public class LessonworkServiceImp implements LessonworkService {
             File xlsFile = new File(path, fileName);
             FileOutputStream xlsStream = new FileOutputStream(xlsFile);
             workbook.write(xlsStream);
+            lessonworkDao.updateLessonworkByPass(4);
         } catch (Exception e) {
             e.printStackTrace();
         }

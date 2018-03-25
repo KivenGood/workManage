@@ -27,7 +27,7 @@ public class PracticeworkController {
     @RequestMapping("/user/getPracticework.action")
     @ResponseBody
     ResultData getLessonwork(Practicework practicework, HttpSession session) {
-        if (practicework.getUid() == null)
+        if (practicework==null)
             practicework.setUid((Integer) session.getAttribute("uid"));
         return new ResultData(1, practiceworkService.getPracticework(practicework));
     }

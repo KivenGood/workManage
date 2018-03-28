@@ -6,8 +6,15 @@
     <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
         resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
     <!-- 根据id查询得到一个user对象 -->
-
-    <select id="getTestwork" parameterType="com.xawl.Pojo.Testwork" resultType="com.xawl.Pojo.Testwork">
+    <resultMap id="TestworkResult" type="com.xawl.Pojo.Testwork">
+        <id column="uid" property="id" javaType="int"/>
+        <association property="user" column="uid"  select="queryUser" />
+    </resultMap>
+    <select id="queryUser" parameterType="int" resultType="com.xawl.Pojo.User">
+        SELECT NAME ,LEVEL FROM db_user
+        WHERE id = #{uid}
+    </select>
+    <select id="getTestwork" parameterType="com.xawl.Pojo.Testwork" resultMap="TestworkResult">
         select *
         from db_testwork
         <where>
@@ -18,6 +25,7 @@
             <if test="pass!=null and pass!='' ">and pass=#{pass}</if>
             <if test="term!=null and term>0">and term=#{term}</if>
             <if test="pass!=null and pass>=0 ">and  pass=#{pass}</if>
+            <if test="pass==null">and pass!=4</if>
         </where>
         ORDER BY
         uid ASC ,db_testwork.statedDate	DESC

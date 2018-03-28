@@ -22,8 +22,6 @@ import java.util.List;
 public class PracticeworkServiceImp implements PracticeworkService {
     @Resource
     PracticeworkDao practiceworkDao;
-    @Resource
-    UserDao userDao;
 
     @Override
     public List<Practicework> getPracticework(Practicework practicework) {
@@ -78,8 +76,10 @@ public class PracticeworkServiceImp implements PracticeworkService {
         System.out.println("practiceworkList.size():" + practiceworkList.size());
         //Integer uid = null;//用户id，控制excl何时进行下一行
         int i = 0;//控制lessonList的行
-        for(int row = 1; row <= practiceworkList.size(); row++){
-
+        for (int row = 1; row <= practiceworkList.size(); row++) {
+            System.out.println("User.name:" + practiceworkList.get(row - 1).getUser().getName());
+            rows.createCell(0).setCellValue(practiceworkList.get(row - 1).getUser().getName());//当前用户姓名
+            rows.createCell(1).setCellValue(practiceworkList.get(row - 1).getUser().getLevel());//当前用户职称
         }
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
@@ -119,11 +119,9 @@ public class PracticeworkServiceImp implements PracticeworkService {
         //  int i = 0;//控制lessonList的行
         for (int row = 1; row <= practiceworkList.size(); row++) {
             rows = sheet.createRow(row);
-            User user = new User();
-            user.setId(practiceworkList.get(row - 1).getUid());
-            System.out.println("User.id:" + user.getId());
-            rows.createCell(0).setCellValue(userDao.getUser(user).get(0).getName());//当前用户姓名
-            rows.createCell(1).setCellValue(userDao.getUser(user).get(0).getLevel());//当前用户职称
+            System.out.println("User.name:" + practiceworkList.get(row - 1).getUser().getName());
+            rows.createCell(0).setCellValue(practiceworkList.get(row - 1).getUser().getName());//当前用户姓名
+            rows.createCell(1).setCellValue(practiceworkList.get(row - 1).getUser().getLevel());//当前用户职称
             rows.createCell(2).setCellValue(practiceworkList.get(row - 1).getCid() + Integer.valueOf(practiceworkList.get(row - 1).getLname()));//指导答辩人数
             rows.createCell(3).setCellValue(practiceworkList.get(row - 1).getCid() + "*" + Coe.thesisGuide + "+" + practiceworkList.get(row - 1).getLname() + "*" + Coe.thesisGuideL);//指导论文课时系数,工科和理科带实验为15，理科为12
             rows.createCell(4).setCellValue(practiceworkList.get(row - 1).getCid() * Coe.thesisGuide + Integer.valueOf(practiceworkList.get(row - 1).getLname()) * Coe.thesisGuideL);//论文课时总数

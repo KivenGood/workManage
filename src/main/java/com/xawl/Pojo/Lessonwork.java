@@ -13,10 +13,28 @@ public class Lessonwork {
     private Double coe;
     private Double classhours;
     private Integer pass;
-
     private java.sql.Timestamp startedDate;
     private Integer term;
     private User user;
+    private String Cname;//班级姓名
+    private Integer Cnum;//班级人数
+
+    public Integer getCnum() {
+        return Cnum;
+    }
+
+    public void setCnum(Integer cnum) {
+        Cnum = cnum;
+    }
+
+    public String getCname() {
+        return Cname;
+    }
+
+    public void setCname(String cname) {
+        Cname = cname;
+    }
+
     public User getUser() {
         return user;
     }

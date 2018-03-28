@@ -23,9 +23,6 @@ import java.util.List;
 public class TestworkServiceImp implements TestworkService {
     @Resource
     TestworkDao testworkDao;
-    @Resource
-    UserDao userDao;
-
 
     @Override
     public List<Testwork> getTestwork(Testwork testwork) {
@@ -50,12 +47,12 @@ public class TestworkServiceImp implements TestworkService {
 
     @Transactional
     @Override
-    public String exportTestwork(HttpServletRequest request,Testwork testwork) {
+    public String exportTestwork(HttpServletRequest request, Testwork testwork) {
         testwork.setPass(2);
         List<Testwork> testworkList = testworkDao.getTestwork(testwork);
-        Calendar a=Calendar.getInstance();
+        Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
-        String fileName=a.get(Calendar.YEAR)+"第"+testwork.getTerm()+"学期考试工作量统计.xls";
+        String fileName = a.get(Calendar.YEAR) + "第" + testwork.getTerm() + "学期考试工作量统计.xls";
         // 创建工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
         // 创建工作表
@@ -76,21 +73,20 @@ public class TestworkServiceImp implements TestworkService {
         rows.createCell(12).setCellValue("总计课时");
         //  int uid;//用户id
         System.out.println("testworkList.size():" + testworkList.size());
-        for (int row = 1; row <=testworkList.size(); row++) {//控制行
+        for (int row = 1; row <= testworkList.size(); row++) {//控制行
             //  uid = testworkList.get(row - 1).getUid();
             rows = sheet.createRow(row);
-            User user = new User();
-            user.setId(testworkList.get(row - 1).getUid());
-            System.out.println("User.id:"+user.getId());
-            rows.createCell(0).setCellValue(userDao.getUser(user).get(0).getName());//当前用户姓名
+            System.out.println("User.name:" + testworkList.get(row - 1).getUser().getName());
+            rows.createCell(0).setCellValue(testworkList.get(row - 1).getUser().getName());//当前用户姓名
+            rows.createCell(1).setCellValue(testworkList.get(row - 1).getUser().getLevel());//当前用户职称
           /*  double classhoursNum=0;//总计课时
             int paperNum=0;//阅卷总份数*/
-          if(testworkList.get(row - 1).getJnum()==null){
-              System.out.println("aaa:"+row);
-              testworkList.get(row-1).setJnum(0);
-              testworkList.get(row-1).setJpclass(0.0);
-          }
-            System.out.println("aaa:"+row+":"+testworkList.get(row-1).getJpclass());
+            if (testworkList.get(row - 1).getJnum() == null) {
+                System.out.println("aaa:" + row);
+                testworkList.get(row - 1).setJnum(0);
+                testworkList.get(row - 1).setJpclass(0.0);
+            }
+            System.out.println("aaa:" + row + ":" + testworkList.get(row - 1).getJpclass());
             rows.createCell(1).setCellValue(testworkList.get(row - 1).getLname());
             rows.createCell(2).setCellValue(testworkList.get(row - 1).getMpclass());
             rows.createCell(3).setCellValue(testworkList.get(row - 1).getQpclass());
@@ -115,7 +111,7 @@ public class TestworkServiceImp implements TestworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path+fileName;
+        return path + fileName;
     }
 }
 /*

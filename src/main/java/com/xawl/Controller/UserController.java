@@ -52,10 +52,10 @@ public class UserController {
             session.setAttribute("uid", user2.getId());
           /*  System.out.println("techno:"+user2.getTechno());
             System.out.println("user2.getPass:"+user2.getPass());*/
-            session.setAttribute("level", user2.getLevel());
+            //session.setAttribute("level", user2.getLevel());
             session.setAttribute("uname", user2.getName());
             session.setAttribute("type", user2.getType());
-            System.out.println("level"+session.getAttribute("level"));
+           // System.out.println("level"+session.getAttribute("level"));
             System.out.println("uname"+session.getAttribute("uname"));
             System.out.println("type"+session.getAttribute("type"));
             String data = null;

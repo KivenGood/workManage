@@ -186,9 +186,8 @@ public class TestworkController {
     @RequestMapping("/user/getTestwork.action")
     @ResponseBody
     ResultData getTestwork(Testwork testwork, HttpSession session) {
-        if (testwork == null)
+        if((Integer) session.getAttribute("type")==1)
             testwork.setUid((Integer) session.getAttribute("uid"));
-
         return new ResultData(1, testworkService.getTestwork(testwork));
     }
 

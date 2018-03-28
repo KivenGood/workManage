@@ -28,7 +28,7 @@ public class LessonworkController {
     @RequestMapping("/user/getLessonwork.action")
     @ResponseBody
     ResultData getLessonwork(Lessonwork lessonwork, HttpSession session) {
-        if (lessonwork==null)
+        if((Integer) session.getAttribute("type")==1)
             lessonwork.setUid((Integer) session.getAttribute("uid"));
         return new ResultData(1, lessonworkService.getLessonwork(lessonwork));
 

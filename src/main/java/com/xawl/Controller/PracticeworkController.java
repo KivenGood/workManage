@@ -77,7 +77,7 @@ public class PracticeworkController {
             Dclass dclass = new Dclass();
             dclass.setId(practicework.getCid());
             System.out.println("dclass.getId():" + dclass.getId());
-            pnum = dclassService.getDclass(dclass).get(0).getPnum();
+            pnum = dclassService.getDclass(dclass).get(0).getPnum();//改正，此处只需传实际人数，导出表时才需要班级真正人数
             System.out.println("cpnum:" + pnum);
         }
 

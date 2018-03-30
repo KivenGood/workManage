@@ -31,7 +31,8 @@ public class LessonworkServiceImp implements LessonworkService {
     @Override
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
         List<Lessonwork> lessonworksList=lessonworkDao.getLessonwork(lessonwork);
-        for(int i=0;i<=lessonworksList.size();i++){
+        //if(lessonworksList.size()==0) return null;
+        for(int i=0;i<lessonworksList.size();i++){
             Dclass dclass = new Dclass();
             dclass.setId(lessonworksList.get(i).getCid());
             System.out.println("Dclass.id:" + dclass.getId());
@@ -41,6 +42,7 @@ public class LessonworkServiceImp implements LessonworkService {
             if(lessonworksList.get(i).getPart()!=null&&lessonworksList.get(i).getPart()!=""){
                 System.out.println("lessonworkList.get(" + i + ").getId():" + lessonworksList.get(i).getId());
                 String[] pnums = lessonworksList.get(i).getPart().split(",");
+                System.out.println("pnums.length:"+pnums.length);
                 for (int j = 0; j < pnums.length; j++) {
                     Dclass dclass1 = new Dclass();
                     System.out.println("pnums[" + j + "]:" + pnums[j]);
@@ -48,8 +50,8 @@ public class LessonworkServiceImp implements LessonworkService {
                     System.out.println("dclass1.getId:" + dclass1.getId());
                     System.out.println("dclassDao.getDclass(dclass1).get(0):" + dclassDao.getDclass(dclass1).get(0));
                     dclass1 = dclassDao.getDclass(dclass1).get(0);
-                    lessonworksList.get(i).setCname( lessonworksList.get(i).getCname()+","+dclass1.getCname());
-                    lessonworksList.get(i).setCnum(lessonworksList.get(i).getCid()+dclass1.getPnum());
+                    lessonworksList.get(i).setCname( lessonworksList.get(i).getCname()+","+dclass1.getCname());//班级姓名
+                    lessonworksList.get(i).setCnum(lessonworksList.get(i).getCid()+dclass1.getPnum());//班级人数
                 }
             }
         }
@@ -78,7 +80,7 @@ public class LessonworkServiceImp implements LessonworkService {
     @Override
     public String exportTestwork(HttpServletRequest request, Lessonwork lessonwork) {
         lessonwork.setPass(2);
-        List<Lessonwork> lessonworkList = lessonworkDao.getLessonwork(lessonwork);
+        List<Lessonwork> lessonworkList =getLessonwork(lessonwork);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + lessonwork.getTerm() + "学期课程工作量统计.xls";
@@ -114,14 +116,14 @@ public class LessonworkServiceImp implements LessonworkService {
             rows.createCell(0).setCellValue(lessonworkList.get(i).getUser().getName());//当前用户姓名
             rows.createCell(1).setCellValue(lessonworkList.get(i).getUser().getLevel());//当前用户职称
             //  uid = lessonworkList.get(i).getUid()
-            Dclass dclass = new Dclass();
-            dclass.setId(lessonworkList.get(i).getCid());
-            System.out.println("Dclass.id:" + dclass.getId());
-            dclass = dclassDao.getDclass(dclass).get(0);
-            String dclassName = dclass.getSeries() + dclass.getCname();//班级姓名
-            Integer dclassPNum = dclass.getPnum();//班级人数
-            System.out.println("dclassName:" + dclassName);
-            System.out.println("dclassPNum:" + dclassPNum);
+           // Dclass dclass = new Dclass();
+            //dclass.setId(lessonworkList.get(i).getCid());
+            //System.out.println("Dclass.id:" + dclass.getId());
+            //dclass = dclassDao.getDclass(dclass).get(0);
+           // String dclassName = dclass.getSeries() + dclass.getCname();//班级姓名
+            //Integer dclassPNum = dclass.getPnum();//班级人数
+            System.out.println("dclassName:" + lessonworkList.get(i).getCname());
+            System.out.println("dclassPNum:" + lessonworkList.get(i).getCnum());
             if (lessonworkList.get(i).getType() == 1 || lessonworkList.get(i).getType() == 2) {//如果不是实验课
                 rows.createCell(2).setCellValue(lessonworkList.get(i).getLname());//课程名
                 rows.createCell(5).setCellValue("拆班");
@@ -132,7 +134,7 @@ public class LessonworkServiceImp implements LessonworkService {
                     System.out.println("lessonworkList.get(" + i + ").getId():" + lessonworkList.get(i).getId());
                     String[] pnums = lessonworkList.get(i).getPart().split(",");
 
-                    for (int j = 0; j < pnums.length; j++) {
+                   /* for (int j = 0; j < pnums.length; j++) {
                         Dclass dclass1 = new Dclass();
                         System.out.println("pnums[" + j + "]:" + pnums[j]);
                         dclass1.setId(Integer.parseInt(pnums[j]));
@@ -141,13 +143,13 @@ public class LessonworkServiceImp implements LessonworkService {
                         dclass1 = dclassDao.getDclass(dclass1).get(0);
                         dclassPNum += dclass1.getPnum();
                         dclassName += "," + dclass1.getSeries() + dclass1.getCname();
-                    }
-                    System.out.println("dclassName和:" + dclassName);
-                    System.out.println("dclassPNum和:" + dclassPNum);
+                    }*/
+                    System.out.println("dclassName和:" + lessonworkList.get(i).getCname());
+                    System.out.println("dclassPNum和:" + lessonworkList.get(i).getCnum());
                     rows.createCell(5).setCellValue("合班");//班级名
                 }
-                rows.createCell(3).setCellValue(dclassName);//班级名
-                rows.createCell(4).setCellValue(dclassPNum);//班级人数
+                rows.createCell(3).setCellValue(lessonworkList.get(i).getCname());//班级名
+                rows.createCell(4).setCellValue(lessonworkList.get(i).getCnum());//班级人数
                 rows.createCell(6).setCellValue(lessonworkList.get(i).getPclasshours());//计划学时
                 rows.createCell(7).setCellValue(lessonworkList.get(i).getCoe());//系数
                 rows.createCell(8).setCellValue(lessonworkList.get(i).getClasshours());//标准学时
@@ -161,8 +163,8 @@ public class LessonworkServiceImp implements LessonworkService {
             }
             if (lessonworkList.get(i).getType() == 3) {
                 rows.createCell(9).setCellValue(lessonworkList.get(i).getLname());//课程名
-                rows.createCell(10).setCellValue(dclassName);//任课班级
-                rows.createCell(11).setCellValue(dclassPNum);//班级人数
+                rows.createCell(10).setCellValue(lessonworkList.get(i).getCname());//任课班级
+                rows.createCell(11).setCellValue(lessonworkList.get(i).getCnum());//班级人数
                 rows.createCell(12).setCellValue(lessonworkList.get(i).getPclasshours());//实验课时
                 rows.createCell(13).setCellValue(lessonworkList.get(i).getClasshours());//标准课时
                 pclassSum += lessonworkList.get(i).getClasshours();

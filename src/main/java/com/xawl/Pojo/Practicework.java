@@ -13,14 +13,35 @@ public class Practicework {
     private Integer pass;
     private Integer term;
     private User user;
+
+    public Integer getTerm() {
+        return term;
+    }
+    private String Cname;//班级姓名
+    private Integer Cnum;//班级人数
+
+    public String getCname() {
+        return Cname;
+    }
+
+    public void setCname(String cname) {
+        Cname = cname;
+    }
+
+    public Integer getCnum() {
+        return Cnum;
+    }
+
+    public void setCnum(Integer cnum) {
+        Cnum = cnum;
+    }
+
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
-    }
-    public Integer getTerm() {
-        return term;
     }
 
     public void setTerm(Integer term) {

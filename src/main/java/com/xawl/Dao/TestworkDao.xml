@@ -7,7 +7,7 @@
         resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
     <!-- 根据id查询得到一个user对象 -->
     <resultMap id="TestworkResult" type="com.xawl.Pojo.Testwork">
-        <!--<id column="uid" property="id" javaType="int"/>-->
+        <id column="uid" property="uid" javaType="int"/>
         <association property="user" column="uid"  select="queryUser" />
     </resultMap>
     <select id="queryUser" parameterType="int" resultType="com.xawl.Pojo.User">

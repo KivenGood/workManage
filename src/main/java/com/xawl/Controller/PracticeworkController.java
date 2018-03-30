@@ -47,16 +47,13 @@ public class PracticeworkController {
             return new ResultData(23, "Type is null or worong");
         if (practicework.getTerm() == null || practicework.getTerm() <= 0)
             return new ResultData(23, "Term is null or worong");
-        if (practicework.getType() == 3)
-            return new ResultData(23, "毕业论文的 term must is 2");
         if (practicework.getNum() == null || practicework.getNum() <= 0)
             return new ResultData(23, "Num is null or worong");
-        if (practicework.getType() == 4) {
-            if (practicework.getLname() == null || practicework.getLname() == "")
+        if (practicework.getType() !=3&&(practicework.getLname() == null || practicework.getLname() == "")) {
                 return new ResultData(23, "Lname is null");
-           /* if (practicework.getCid() >= 8)
-                return new ResultData(23, "Cid must <=8 When type=4");*/
         }
+        if (practicework.getType() == 3)
+            practicework.setTerm(2);
         //查询是否已经插入过
         System.out.println("lessonwork.getType():" + practicework.getType());
         Practicework practicework1 = new Practicework();

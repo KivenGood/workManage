@@ -105,8 +105,10 @@ public class LessonworkServiceImp implements LessonworkService {
         rows.createCell(14).setCellValue("课时合计");
         System.out.println("lessonworkList.size():" + lessonworkList.size());
         int i = 0;//控制lessonList的行
+        int uid=0;
         for (int row = 1; row <= lessonworkList.size(); row++) {//控制行
             Double pclassSum = 0.0;//总课时
+            uid=lessonworkList.get(i).getUid();
             rows = sheet.createRow(row);
             System.out.println("User.name:" + lessonworkList.get(i).getUser().getName());
             rows.createCell(0).setCellValue(lessonworkList.get(i).getUser().getName());//当前用户姓名
@@ -132,6 +134,10 @@ public class LessonworkServiceImp implements LessonworkService {
                     // row = i;
                     break;
                 }
+                if (uid!=lessonworkList.get(i).getUid()) {
+                    // row = i;
+                    continue;
+                }
             }
             if (lessonworkList.get(i).getType() == 3) {
                 rows.createCell(9).setCellValue(lessonworkList.get(i).getLname());//课程名
@@ -143,6 +149,10 @@ public class LessonworkServiceImp implements LessonworkService {
                 i++;
                 if (i >= lessonworkList.size()) {
                     break;
+                }
+                if (uid!=lessonworkList.get(i).getUid()) {
+                    // row = i;
+                    continue;
                 }
             }
             rows.createCell(14).setCellValue(pclassSum);
@@ -157,6 +167,6 @@ public class LessonworkServiceImp implements LessonworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path + fileName;
+        return path  + "\\"+ fileName;
     }
 }

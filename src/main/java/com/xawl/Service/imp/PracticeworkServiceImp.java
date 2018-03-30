@@ -91,17 +91,20 @@ public class PracticeworkServiceImp implements PracticeworkService {
         System.out.println("practiceworkList.size():" + practiceworkList.size());
         //Integer uid = null;//用户id，控制excl何时进行下一行
         int i = 0;//控制lessonList的行
+        int uid=0;
         for (int row = 1; row <= practiceworkList.size(); row++) {
+            rows = sheet.createRow(row);
             Double pclassSum = 0.0;//总课时
+            uid=practiceworkList.get(i).getUid();
             if (practiceworkList.get(i).getType() == 3) {
                 i++;
                 if (i >= practiceworkList.size())
                     break;
             }
+            System.out.println("User.name:" + practiceworkList.get(i).getUser().getName());
+            rows.createCell(0).setCellValue(practiceworkList.get(i).getUser().getName());//当前用户姓名
+            rows.createCell(1).setCellValue(practiceworkList.get(i).getUser().getLevel());//当前用户职称
             if (practiceworkList.get(i).getType() == 1) {
-                System.out.println("User.name:" + practiceworkList.get(i).getUser().getName());
-                rows.createCell(0).setCellValue(practiceworkList.get(i).getUser().getName());//当前用户姓名
-                rows.createCell(1).setCellValue(practiceworkList.get(i).getUser().getLevel());//当前用户职称
                 rows.createCell(2).setCellValue(practiceworkList.get(i).getLname());//实践名称
                 rows.createCell(3).setCellValue(practiceworkList.get(i).getCname()
                         + practiceworkList.get(i).getCnum());//班级姓名
@@ -112,6 +115,9 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 i++;
                 if (i >= practiceworkList.size()) {
                     break;
+                }
+                if (uid!=practiceworkList.get(i).getUid()) {
+                    continue;
                 }
             }
             if (practiceworkList.get(i).getType() == 2) {
@@ -126,6 +132,9 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 if (i >= practiceworkList.size()) {
                     break;
                 }
+                if (uid!=practiceworkList.get(i).getUid()) {
+                    continue;
+                }
             }
             if (practiceworkList.get(i).getType() == 4) {
                 rows.createCell(12).setCellValue(practiceworkList.get(i).getLname());
@@ -138,6 +147,9 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 i++;
                 if (i >= practiceworkList.size()) {
                     break;
+                }
+                if (uid!=practiceworkList.get(i).getUid()) {
+                    continue;
                 }
             }
             rows.createCell(17).setCellValue(pclassSum);
@@ -152,7 +164,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path + fileName;
+        return path + "\\"+fileName;
     }
 
     @Override
@@ -164,7 +176,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
         System.out.println("practiceworkList.size():" + practiceworkList.size());
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
-        String fileName = a.get(Calendar.YEAR) + "第" + practicework.getTerm() + "学期毕设工作量统计.xls";
+        String fileName = a.get(Calendar.YEAR) + "第" +2+ "学期毕设工作量统计.xls";
         HSSFWorkbook workbook = new HSSFWorkbook();
         // 创建工作表
         HSSFSheet sheet = workbook.createSheet("sheet1");
@@ -203,6 +215,6 @@ public class PracticeworkServiceImp implements PracticeworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path + fileName;
+        return path  + "\\"+ fileName;
     }
 }

@@ -27,7 +27,7 @@ public class PracticeworkController {
     @RequestMapping("/user/getPracticework.action")
     @ResponseBody
     ResultData getLessonwork(Practicework practicework, HttpSession session) {
-        if((Integer) session.getAttribute("type")==1)
+        if ((Integer) session.getAttribute("type") == 1)
             practicework.setUid((Integer) session.getAttribute("uid"));
         return new ResultData(1, practiceworkService.getPracticework(practicework));
     }
@@ -41,11 +41,13 @@ public class PracticeworkController {
         practicework.setUid((Integer) session.getAttribute("uid"));
         if (practicework.getCid() == null || practicework.getCid() <= 0)
             return new ResultData(23, "Cid is null or worong");
+        if (practicework.getSnum() == null || practicework.getSnum() < 0)
+            return new ResultData(23, "Cid is null or worong");
         if (practicework.getType() == null || practicework.getType() <= 0)
             return new ResultData(23, "Type is null or worong");
         if (practicework.getTerm() == null || practicework.getTerm() <= 0)
             return new ResultData(23, "Term is null or worong");
-        if (practicework.getType() == 3 && practicework.getTerm() != 2)
+        if (practicework.getType() == 3)
             return new ResultData(23, "毕业论文的 term must is 2");
         if (practicework.getNum() == null || practicework.getNum() <= 0)
             return new ResultData(23, "Num is null or worong");
@@ -70,17 +72,16 @@ public class PracticeworkController {
         practicework.setStarteddate(new Timestamp(new Date().getTime()));
         //班级的人数
         Integer pnum = practicework.getCid();//当type=3时，cid就是指导人数；
-        Double pclass = 0.0;//type=3时，lanme代表指导理工科不带实验的人数；
+        Double pclass = 0.0;
         if (practicework.getType() == 3) {
-            pclass = Integer.valueOf(practicework.getLname()) * Coe.thesisGuideL;
-        } else {/*(practicework.getType()==1||practicework.getType()==2||practicework.getType()==4)*/
+            pclass = practicework.getSnum() * Coe.thesisGuideL;//type=3时，snum代表指导理工科不带实验的人数
+        }/* else {*//*(practicework.getType()==1||practicework.getType()==2||practicework.getType()==4)*//*
             Dclass dclass = new Dclass();
             dclass.setId(practicework.getCid());
             System.out.println("dclass.getId():" + dclass.getId());
             pnum = dclassService.getDclass(dclass).get(0).getPnum();//改正，此处只需传实际人数，导出表时才需要班级真正人数
             System.out.println("cpnum:" + pnum);
-        }
-
+        }*/
         practicework.setClasshours(calculateClasshours(practicework.getNum(), pnum, practicework.getType()) + pclass);
         practiceworkService.insertPracticework(practicework);
         return new ResultData(1);
@@ -108,17 +109,16 @@ public class PracticeworkController {
         System.out.println("practicework.getLname():" + practicework.getLname());
         if (practicework == null || practicework.getId() == null)
             return new ResultData(23);
-        if (practicework.getCid() != null || practicework.getNum() != null ||
-                (practicework.getType() == 3 && practicework.getLname() != null && practicework.getLname() == "")) {
-            Dclass dclass = new Dclass();
+        if (practicework.getCid() != null || practicework.getNum() != null ||practicework.getSnum()!=null) {
+           /* Dclass dclass = new Dclass();
             dclass.setId(practicework.getCid());
             Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
             Practicework practicework1 = new Practicework();
-            practicework.setType(practiceworkService.getPracticework(practicework1).get(0).getType());
-            Double pclass = 0.0;//type=3时，lanme代表指导理工科不带实验的人数；
-            if (practicework.getType() == 3 && practicework.getLname() != null && practicework.getLname() == "")
-                pclass = Integer.valueOf(practicework.getLname()) * Coe.thesisGuideL;
-            practicework.setClasshours(calculateClasshours(practicework.getNum(), pnum, practicework.getType()) + pclass);
+            practicework.setType(practiceworkService.getPracticework(practicework1).get(0).getType());*/
+            Double pclass = 0.0;
+            if (practicework.getType() == 3)
+                pclass = practicework.getSnum() * Coe.thesisGuideL;
+            practicework.setClasshours(calculateClasshours(practicework.getNum(), practicework.getSnum(), practicework.getType()) + pclass);
         }
         practiceworkService.updatePracticeworkById(practicework);
         return new ResultData(1);
@@ -143,6 +143,7 @@ public class PracticeworkController {
         return new ResultData(1, practiceworkService.exportPracticework(request, practicework));
 
     }
+
     @RequestMapping("/admin/exportThesisework.action")
     @ResponseBody
     ResultData exportThesisework(HttpServletRequest request) {

@@ -9,16 +9,25 @@ public class Practicework {
     private Integer num;
     private String lname;
     private Double classhours;
-    private java.sql.Timestamp startedDate;
+        private java.sql.Timestamp startedDate;
     private Integer pass;
     private Integer term;
     private User user;
+    private Integer snum;//实际指导人数
 
     public Integer getTerm() {
         return term;
     }
     private String Cname;//班级姓名
     private Integer Cnum;//班级人数
+
+    public Integer getSnum() {
+        return snum;
+    }
+
+    public void setSnum(Integer snum) {
+        this.snum = snum;
+    }
 
     public String getCname() {
         return Cname;

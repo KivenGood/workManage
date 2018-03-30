@@ -61,7 +61,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
     @Override
     public String exportPracticework(HttpServletRequest request, Practicework practicework) {
         practicework.setPass(2);
-        List<Practicework> practiceworkList = practiceworkDao.getPracticework(practicework);
+        List<Practicework> practiceworkList =getPracticework(practicework);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + practicework.getTerm() + "学期实践工作量统计.xls";
@@ -73,12 +73,12 @@ public class PracticeworkServiceImp implements PracticeworkService {
         rows.createCell(1).setCellValue("职称");
         rows.createCell(2).setCellValue("实践名称");
         rows.createCell(3).setCellValue("班级");
-        rows.createCell(4).setCellValue("班级人数");
+        rows.createCell(4).setCellValue("人数");
         rows.createCell(5).setCellValue("周数");
         rows.createCell(6).setCellValue("课时");
         rows.createCell(7).setCellValue("见习名称");
         rows.createCell(8).setCellValue("班级");
-        rows.createCell(9).setCellValue("班级人数");
+        rows.createCell(9).setCellValue("人数");
         rows.createCell(10).setCellValue("天数");
         rows.createCell(11).setCellValue("课时");
         rows.createCell(12).setCellValue("名称（课程设计、学年论文）");
@@ -92,27 +92,55 @@ public class PracticeworkServiceImp implements PracticeworkService {
         //Integer uid = null;//用户id，控制excl何时进行下一行
         int i = 0;//控制lessonList的行
         for (int row = 1; row <= practiceworkList.size(); row++) {
-            if(practiceworkList.get(row-1).getType()==3)
-                continue;
-            System.out.println("User.name:" + practiceworkList.get(row - 1).getUser().getName());
-            rows.createCell(0).setCellValue(practiceworkList.get(row - 1).getUser().getName());//当前用户姓名
-            rows.createCell(1).setCellValue(practiceworkList.get(row - 1).getUser().getLevel());//当前用户职称
-            rows.createCell(2).setCellValue(practiceworkList.get(row - 1).getLname());//实践名称
-            rows.createCell(3).setCellValue(practiceworkList.get(row - 1).getCname());//班级姓名
-            rows.createCell(4).setCellValue(practiceworkList.get(row - 1).getCnum());//班级人数
-            rows.createCell(5).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(6).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(7).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(8).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(9).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(10).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(11).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(12).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(13).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(14).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(15).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(16).setCellValue(practiceworkList.get(row - 1).getLname());
-            rows.createCell(17).setCellValue(practiceworkList.get(row - 1).getLname());
+            Double pclassSum = 0.0;//总课时
+            if (practiceworkList.get(i).getType() == 3) {
+                i++;
+                if (i >= practiceworkList.size())
+                    break;
+            }
+            if (practiceworkList.get(i).getType() == 1) {
+                System.out.println("User.name:" + practiceworkList.get(i).getUser().getName());
+                rows.createCell(0).setCellValue(practiceworkList.get(i).getUser().getName());//当前用户姓名
+                rows.createCell(1).setCellValue(practiceworkList.get(i).getUser().getLevel());//当前用户职称
+                rows.createCell(2).setCellValue(practiceworkList.get(i).getLname());//实践名称
+                rows.createCell(3).setCellValue(practiceworkList.get(i).getCname()
+                        + practiceworkList.get(i).getCnum());//班级姓名
+                rows.createCell(4).setCellValue(practiceworkList.get(i).getSnum());//实际指导人数
+                rows.createCell(5).setCellValue(practiceworkList.get(i).getNum());
+                rows.createCell(6).setCellValue(practiceworkList.get(i).getClasshours());//课时
+                pclassSum += practiceworkList.get(i).getClasshours();
+                i++;
+                if (i >= practiceworkList.size()) {
+                    break;
+                }
+            }
+            if (practiceworkList.get(i).getType() == 2) {
+                rows.createCell(7).setCellValue(practiceworkList.get(i).getLname());
+                rows.createCell(8).setCellValue(practiceworkList.get(i).getCname()
+                        + practiceworkList.get(i).getCnum());//班级姓名
+                rows.createCell(9).setCellValue(practiceworkList.get(i).getSnum());//人数
+                rows.createCell(10).setCellValue(practiceworkList.get(i).getNum());
+                rows.createCell(11).setCellValue(practiceworkList.get(i).getClasshours());
+                pclassSum += practiceworkList.get(i).getClasshours();
+                i++;
+                if (i >= practiceworkList.size()) {
+                    break;
+                }
+            }
+            if (practiceworkList.get(i).getType() == 4) {
+                rows.createCell(12).setCellValue(practiceworkList.get(i).getLname());
+                rows.createCell(13).setCellValue(practiceworkList.get(i).getCname()
+                        + practiceworkList.get(i).getCnum());
+                rows.createCell(14).setCellValue(practiceworkList.get(i).getSnum());
+                rows.createCell(15).setCellValue(practiceworkList.get(i).getNum());
+                rows.createCell(16).setCellValue(practiceworkList.get(i).getClasshours());
+                pclassSum += practiceworkList.get(i).getClasshours();
+                i++;
+                if (i >= practiceworkList.size()) {
+                    break;
+                }
+            }
+            rows.createCell(17).setCellValue(pclassSum);
         }
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
@@ -132,7 +160,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
         Practicework practicework = new Practicework();
         practicework.setPass(2);
         practicework.setType(3);
-        List<Practicework> practiceworkList = practiceworkDao.getPracticework(practicework);
+        List<Practicework> practiceworkList =getPracticework(practicework);
         System.out.println("practiceworkList.size():" + practiceworkList.size());
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
@@ -149,20 +177,18 @@ public class PracticeworkServiceImp implements PracticeworkService {
         rows.createCell(5).setCellValue("指导答辩人数");
         rows.createCell(6).setCellValue("答辩课时");
         rows.createCell(7).setCellValue("标准课时");
-        //  int i = 0;//控制lessonList的行
         for (int row = 1; row <= practiceworkList.size(); row++) {
             rows = sheet.createRow(row);
             System.out.println("User.name:" + practiceworkList.get(row - 1).getUser().getName());
             rows.createCell(0).setCellValue(practiceworkList.get(row - 1).getUser().getName());//当前用户姓名
             rows.createCell(1).setCellValue(practiceworkList.get(row - 1).getUser().getLevel());//当前用户职称
             rows.createCell(2).setCellValue(practiceworkList.get(row - 1).getCid() +
-                    Integer.valueOf(practiceworkList.get(row - 1).getLname()));//指导答辩人数
+                    practiceworkList.get(row - 1).getSnum());//指导答辩人数
             rows.createCell(3).setCellValue(practiceworkList.get(row - 1).getCid() +
-                    "*" + Coe.thesisGuide + "+" + practiceworkList.get(row - 1).getLname() +
+                    "*" + Coe.thesisGuide + "+" + practiceworkList.get(row - 1).getSnum() +
                     "*" + Coe.thesisGuideL);//指导论文课时系数,工科和理科带实验为15，理科为12
             rows.createCell(4).setCellValue(practiceworkList.get(row - 1).getCid() *
-                    Coe.thesisGuide + Integer.valueOf(practiceworkList.get(row - 1).getLname())
-                    * Coe.thesisGuideL);//论文课时总数
+                    Coe.thesisGuide + practiceworkList.get(row - 1).getSnum() * Coe.thesisGuideL);//论文课时总数
             rows.createCell(5).setCellValue(practiceworkList.get(row - 1).getNum());//指导答辩人数
             rows.createCell(6).setCellValue(practiceworkList.get(row - 1).getNum() * Coe.thesisReply);//答辩课时
             rows.createCell(7).setCellValue(practiceworkList.get(row - 1).getClasshours());//标准课时

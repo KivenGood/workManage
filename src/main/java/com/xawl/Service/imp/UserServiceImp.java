@@ -57,7 +57,7 @@ public class UserServiceImp implements UserService {
     }
     public void batchUsersExcl(String xlsPath) throws IOException {
         List<User> userList = new ArrayList();
-        FileInputStream fileIn = new FileInputStream("C:\\Users\\Kiven\\Desktop\\批量导入用户样表.xlsx");
+        FileInputStream fileIn = new FileInputStream(xlsPath);
 //根据指定的文件输入流导入Excel从而产生Workbook对象
         Workbook wb0 = new XSSFWorkbook(fileIn);
 //获取Excel文档中的第一个表单

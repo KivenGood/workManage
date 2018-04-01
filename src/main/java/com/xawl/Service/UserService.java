@@ -2,6 +2,7 @@ package com.xawl.Service;
 
 import com.xawl.Pojo.User;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -11,6 +12,7 @@ public interface UserService {
     List<User> getUser(User user);
     void updateUserById(User user);
     void insertUser(User user);
+    void  batchUsers(List<User> userList);
     void deleteUser(Integer id);
-
+    void batchUsersExcl(String path) throws IOException;
 }

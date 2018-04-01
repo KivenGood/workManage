@@ -5,25 +5,15 @@ import com.xawl.Pojo.*;
 import com.xawl.Service.UserService;
 import com.xawl.Vo.ResultData;
 import org.springframework.stereotype.Controller;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
-import java.awt.*;
-import java.awt.font.FontRenderContext;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by doter on 2017/7/14.
@@ -108,35 +98,40 @@ public class UserController {
 
 
     }
+    @RequestMapping("/admin/batchUsersExcl.action")
+    @ResponseBody
+    ResultData batchUsersExcl(String path) throws IOException {
+        userService.batchUsersExcl(path);
+        return new ResultData(1);
 
+    }
     @RequestMapping("/admin/batchUsers.action")
     @ResponseBody
     ResultData batchUsers(UserList userList) {
         if (userList == null)
             return new ResultData(23);
-        User user = new User();
+       // User user = new User();
         List<User> list = userList.getList();
         for (int i = 0; i < list.size(); i++) {
-            user = list.get(i);
-            if (user.getTechno() == null && user.getTechno() == "") {
-                return new ResultData(i + 1, "Techno");
+           // user = list.get(i);
+            if (list.get(i).getTechno() == null && list.get(i).getTechno() == "") {
+                return new ResultData(i + 1, "Techno is null");
             }
 
-            if (user.getSdept() == null && user.getSdept() == "") {
-                return new ResultData(i + 1, "Sdept");
+            if (list.get(i).getSdept() == null && list.get(i).getSdept() == "") {
+                return new ResultData(i + 1, "Sdept is null");
             }
-            if (user.getLevel() == null && user.getLevel() == "") {
-                return new ResultData(i + 1, "Level");
+            if (list.get(i).getLevel() == null && list.get(i).getLevel() == "") {
+                return new ResultData(i + 1, "Level is null");
             }
-            if (user.getName() == null && user.getName() == "") {
-                return new ResultData(i + 1, "Name");
+            if (list.get(i).getName() == null && list.get(i).getName() == "") {
+                return new ResultData(i + 1, "Name is null");
             }
-            user.setPass(user.getTechno());
-            user.setStarteddate(new Timestamp(new Date().getTime()));
-            user.setType(1);
-            userService.insertUser(user);
-
+            list.get(i).setPass(list.get(i).getTechno());
+            list.get(i).setStarteddate(new Timestamp(new Date().getTime()));
+            list.get(i).setType(1);
         }
+        userService.batchUsers(list);
         return new ResultData(1);
     }
 
@@ -147,8 +142,8 @@ public class UserController {
         User user = new User();
         user.setType(1);
         userList = userService.getUser(user);
-        for (int i = 0; i < userList.size(); i++)
-            userList.get(i).setPass(null);
+     /*   for (int i = 0; i < userList.size(); i++)
+            userList.get(i).setPass(null);*/
 
         return new ResultData(1, userList);
     }

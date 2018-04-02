@@ -31,8 +31,8 @@
         uid ASC ,db_practicework.startedDate	DESC
     </select>
     <insert id="insertPracticework" parameterType="com.xawl.Pojo.Practicework">
-        insert into db_practicework (uid,cid,type,lname,num,classhours,pass,startedDate,term)
-        values(#{uid},#{cid},#{type},#{lname},#{num},#{classhours},#{pass},#{startedDate},#{term})
+        insert into db_practicework (uid,cid,type,lname,num,classhours,pass,startedDate,term,snum)
+        values(#{uid},#{cid},#{type},#{lname},#{num},#{classhours},#{pass},#{startedDate},#{term},#{snum})
     </insert>
     <update id="updatePracticeworkById" parameterType="com.xawl.Pojo.Practicework">
         update db_practicework
@@ -44,6 +44,7 @@
             <if test="classhours!=null and classhours!=''">classhours=#{classhours},</if>
             <if test="pass!=null and pass>=0">pass=#{pass}</if>
             <if test="term!=null and term>0">and term=#{term}</if>
+            <if test="snum!=null and snum>0">and snum=#{snum}</if>
         </set>
         where id=#{id}
     </update>

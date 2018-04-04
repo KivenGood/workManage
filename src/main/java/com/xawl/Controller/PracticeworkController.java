@@ -49,8 +49,8 @@ public class PracticeworkController {
             return new ResultData(23, "Term is null or worong");
         if (practicework.getNum() == null || practicework.getNum() <= 0)
             return new ResultData(23, "Num is null or worong");
-        if (practicework.getType() !=3&&(practicework.getLname() == null || practicework.getLname() == "")) {
-                return new ResultData(23, "Lname is null");
+        if (practicework.getType() != 3 && (practicework.getLname() == null || practicework.getLname() == "")) {
+            return new ResultData(23, "Lname is null");
         }
         if (practicework.getType() == 3)
             practicework.setTerm(2);
@@ -94,7 +94,7 @@ public class PracticeworkController {
         if (type == 2)
             classhours = num * pnum * Coe.noviciate;
         if (type == 3)
-            classhours = pnum * Coe.thesisGuide + num * Coe.thesisReply;
+            classhours = num * Coe.thesisReply;//答辩课时
         if (type == 4)
             classhours = num * pnum * Coe.cthesisReply;
         return classhours;
@@ -106,7 +106,8 @@ public class PracticeworkController {
         System.out.println("practicework.getLname():" + practicework.getLname());
         if (practicework == null || practicework.getId() == null)
             return new ResultData(23);
-        if (practicework.getCid() != null || practicework.getNum() != null ||practicework.getSnum()!=null) {
+        if (practicework.getCid() != null && practicework.getNum() != null
+                && practicework.getSnum() != null && practicework.getType() != null) {
            /* Dclass dclass = new Dclass();
             dclass.setId(practicework.getCid());
             Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
@@ -114,7 +115,11 @@ public class PracticeworkController {
             practicework.setType(practiceworkService.getPracticework(practicework1).get(0).getType());*/
             Double pclass = 0.0;
             if (practicework.getType() == 3)
-                pclass = practicework.getSnum() * Coe.thesisGuideL;
+                pclass = practicework.getSnum() * Coe.thesisGuideL + practicework.getCid() * Coe.thesisGuide;//指导论文课时(已包含理工科)
+            System.out.println("practicework.getNum():" + practicework.getNum());
+            System.out.println("practicework.getSnum():" + practicework.getSnum());
+            System.out.println("practicework.getType():" + practicework.getType());
+
             practicework.setClasshours(calculateClasshours(practicework.getNum(), practicework.getSnum(), practicework.getType()) + pclass);
         }
         practiceworkService.updatePracticeworkById(practicework);

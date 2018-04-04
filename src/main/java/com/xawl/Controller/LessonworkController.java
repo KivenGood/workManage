@@ -117,7 +117,7 @@ public class LessonworkController {
             Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
             Lessonwork lessonwork1 = new Lessonwork();
             lessonwork1.setId(lessonwork.getId());
-            lessonwork.setType(lessonworkService.getLessonwork(lessonwork1).get(1).getType());
+            lessonwork.setType(lessonworkService.getLessonwork(lessonwork1).get(0).getType());
             if (lessonwork.getType() == 3) {
                 lessonwork.setCoe(Coe.testClass);
                 lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum * lessonwork.getCoe());

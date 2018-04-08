@@ -111,28 +111,9 @@ public class UserController {
         if (userList == null)
             return new ResultData(23);
        // User user = new User();
-        List<User> list = userList.getList();
-        for (int i = 0; i < list.size(); i++) {
-           // user = list.get(i);
-            if (list.get(i).getTechno() == null && list.get(i).getTechno() == "") {
-                return new ResultData(i + 1, "Techno is null");
-            }
+      //  List<User> list = userList.getList();
 
-            if (list.get(i).getSdept() == null && list.get(i).getSdept() == "") {
-                return new ResultData(i + 1, "Sdept is null");
-            }
-            if (list.get(i).getLevel() == null && list.get(i).getLevel() == "") {
-                return new ResultData(i + 1, "Level is null");
-            }
-            if (list.get(i).getName() == null && list.get(i).getName() == "") {
-                return new ResultData(i + 1, "Name is null");
-            }
-            list.get(i).setPass(list.get(i).getTechno());
-            list.get(i).setStarteddate(new Timestamp(new Date().getTime()));
-            list.get(i).setType(1);
-        }
-        userService.batchUsers(list);
-        return new ResultData(1);
+        return new ResultData(1, userService.batchUsers((List<User>) userList));
     }
 
     @RequestMapping("/admin/SelectUsers.action")

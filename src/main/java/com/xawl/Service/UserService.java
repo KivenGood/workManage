@@ -12,7 +12,7 @@ public interface UserService {
     List<User> getUser(User user);
     void updateUserById(User user);
     void insertUser(User user);
-    void  batchUsers(List<User> userList);
+    String  batchUsers(List<User> userList);
     void deleteUser(Integer id);
-    void batchUsersExcl(String path) throws IOException;
+    String batchUsersExcl(String path) throws IOException;
 }

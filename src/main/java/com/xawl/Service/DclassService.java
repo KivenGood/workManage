@@ -9,5 +9,6 @@ public interface DclassService {
     void insertDclass(Dclass dclass);
     void updateDclassById(Dclass dclass);
     void deleteDclassById(Integer id);
-
+    String batchDclassExcl(String path) throws Exception;
+    String  batchDclass(List<Dclass> userList);
 }

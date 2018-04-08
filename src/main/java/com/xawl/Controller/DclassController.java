@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +29,6 @@ public class DclassController {
 
         return  new ResultData(1,dclassList);
     }
-
     @RequestMapping("/admin/updateDclass.action")
     @ResponseBody
     ResultData updateDclass(Dclass dclass){
@@ -54,34 +54,18 @@ public class DclassController {
     }
     @RequestMapping("/admin/batchDclass.action")
     @ResponseBody
-    ResultData batchUsers(HttpSession session, DclassList dclassList){
+    ResultData batchUsers(DclassList dclassList){
         if(dclassList==null)
             return new ResultData(23);
-        Dclass dclass =new Dclass();
-        List<Dclass> list = dclassList.getList();
-        for(int i=0;i<list.size();i++)
-        {
-            dclass=list.get(i);
-            if(dclass.getCname()==null&&dclass.getCname()=="")
-            {
-                return new ResultData(i+1,"Techno");
-            }
-            if(dclass.getPnum()==null&&dclass.getPnum()<=0)
-            {
-                return new ResultData(i+1,"Pnum");
-            }
+        //Dclass dclass =new Dclass();
+        return new ResultData(1,dclassService.batchDclass((List<Dclass>) dclassList));
+    }
+    @RequestMapping("/admin/batchDclassExcl.action")
+    @ResponseBody
+    ResultData batchUsersExcl(String path) throws Exception {
+        //dclassService.batchDclassExcl(path);
 
-            if(dclass.getSeries()==null&&dclass.getSeries()<=0)
-            {
-                return new ResultData(i+1,"Series");
-            }
-            if(dclass.getSdept()==null&&dclass.getSdept()=="")
-            {
-                return new ResultData(i+1,"Sdept");
-            }
-            dclass.setStarteddate(new Timestamp(new Date().getTime()));
-            dclassService.insertDclass(dclass);
-        }
-        return new ResultData(1);
+        return new ResultData(1, dclassService.batchDclassExcl("C:\\Users\\Kiven\\Desktop\\批量导入班级样表.xlsx"));
+
     }
 }

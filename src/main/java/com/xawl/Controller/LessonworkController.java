@@ -48,7 +48,8 @@ public class LessonworkController {
         lessonwork1.setType(lessonwork.getType());
         lessonwork1.setCid(lessonwork.getCid());
         lessonwork1.setTerm(lessonwork.getTerm());
-       // lessonwork1.setPart(lessonwork.getPart());
+        lessonwork1.setLname(lessonwork.getLname());
+        // lessonwork1.setPart(lessonwork.getPart());
 
         List<Lessonwork> lessonworksList = lessonworkService.getLessonwork(lessonwork1);
         if (lessonworksList != null && lessonworksList.size() > 0&&lessonworksList.get(0).getPass()!=4)

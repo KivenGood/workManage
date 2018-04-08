@@ -57,7 +57,6 @@ public class DclassController {
     ResultData batchUsers(DclassList dclassList){
         if(dclassList==null)
             return new ResultData(23);
-        //Dclass dclass =new Dclass();
         return new ResultData(1,dclassService.batchDclass((List<Dclass>) dclassList));
     }
     @RequestMapping("/admin/batchDclassExcl.action")

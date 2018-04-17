@@ -7,7 +7,6 @@ import com.xawl.Vo.ResultData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +29,6 @@ public class TestworkController {
         testwork1.setUid((Integer) session.getAttribute("uid"));
         //System.out.println("uid:"+testwork1.getUid());
         testwork1.setTerm(testwork.getTerm());
-
         testwork.setUid(testwork1.getUid());
         testwork.setJpclass(testwork.getJnum() * Coe.invigilate);
         System.out.println();

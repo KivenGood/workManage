@@ -13,6 +13,7 @@ public class ResultData {
 
     Integer status;
     Object data;
+    String data1;
 
     public ResultData(Integer status) {
         this.status = status;
@@ -22,6 +23,11 @@ public class ResultData {
         this.status = status;
         this.data = datas;
     }
+    public ResultData(Integer status, Object datas,String datas1) {
+        this.status = status;
+        this.data = datas;
+        this.data1 = datas1;
+    }
 
     public Integer getStatus() {
         return status;
@@ -29,6 +35,14 @@ public class ResultData {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getData1() {
+        return data1;
+    }
+
+    public void setData1(String data1) {
+        this.data1 = data1;
     }
 
     public Object getData() {

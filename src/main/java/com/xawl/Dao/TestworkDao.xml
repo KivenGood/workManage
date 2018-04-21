@@ -42,19 +42,20 @@
     update db_testwork
     <set>
         <if test="lname!=null and lname!='' ">lname=#{lname},</if>
-        <if test="Mpclass!=null and Mpclass>=0">Mpclass=#{Mpclass},</if>
-        <if test="Qpclass!=null and Qpclass>=0">Qpclass=#{Qpclass},</if>
-        <if test="Jnum!=null and Jnum>0">Jnum=#{Jnum},</if>
-        <if test="Jpclass!=null and Jpclass>0">Jpclass=#{Jpclass},</if>
-        <if test="paperNum!=null and paperNum>0">paperNum=#{paperNum},</if>
-        <if test="BpaperNum!=null and BpaperNum>=0">BpaperNum=#{BpaperNum},</if>
-        <if test="QpaperNum!=null and QpaperNum>=0">QpaperNum=#{QpaperNum},</if>
-        <if test="CpaperNum!=null and CpaperNum>=0">CpaperNum=#{CpaperNum},</if>
-        <if test="paperSum!=null and paperSum>=0">paperSum=#{paperSum},</if>
-        <if test="paperPclass!=null and paperPclass>=0">paperPclass=#{paperPclass},</if>
-        <if test="pclassNum!=null and pclassNum>=0">pclassNum=#{pclassNum},</if>
-        <if test="pass!=null and pass>=0">pass=#{pass},</if>
-        <if test="term!=null and term>0">term=#{term}</if>
+        <if test="Mpclass!=null and Mpclass>=0">and Mpclass=#{Mpclass},</if>
+        <if test="Qpclass!=null and Qpclass>=0">and Qpclass=#{Qpclass},</if>
+        <if test="Jnum!=null and Jnum>0">and Jnum=#{Jnum},</if>
+        <if test="Jpclass!=null and Jpclass>0">and Jpclass=#{Jpclass},</if>
+        <if test="paperNum!=null and paperNum>0">and paperNum=#{paperNum},</if>
+        <if test="BpaperNum!=null and BpaperNum>=0">and BpaperNum=#{BpaperNum},</if>
+        <if test="QpaperNum!=null and QpaperNum>=0">and QpaperNum=#{QpaperNum},</if>
+        <if test="CpaperNum!=null and CpaperNum>=0">and CpaperNum=#{CpaperNum},</if>
+        <if test="paperSum!=null and paperSum>=0">and paperSum=#{paperSum},</if>
+        <if test="paperPclass!=null and paperPclass>=0">and paperPclass=#{paperPclass},</if>
+        <if test="pclassNum!=null and pclassNum>=0">and pclassNum=#{pclassNum},</if>
+        <if test="pass!=null and pass>=0">and pass=#{pass},</if>
+        <if test="term!=null and term>0">and term=#{term}</if>
+        <if test="note!=null and term!=''">and note=#{note}</if>
     </set>
     where id=#{id}
 </update>

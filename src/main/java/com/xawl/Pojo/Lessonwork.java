@@ -18,7 +18,14 @@ public class Lessonwork {
     private User user;
     private String Cname;//班级姓名
     private Integer Cnum;//班级人数
+    private Integer note;//错误信息
+    public Integer getNote() {
+        return note;
+    }
 
+    public void setNote(Integer note) {
+        this.note = note;
+    }
     public Integer getCnum() {
         return Cnum;
     }

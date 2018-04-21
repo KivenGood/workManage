@@ -20,6 +20,14 @@ public class Testwork {
     private java.sql.Timestamp statedDate;
     private Integer term;
     private User user;
+    private Integer note;//错误信息
+    public Integer getNote() {
+        return note;
+    }
+
+    public void setNote(Integer note) {
+        this.note = note;
+    }
     public User getUser() {
         return user;
     }

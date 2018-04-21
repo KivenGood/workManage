@@ -14,7 +14,14 @@ public class Practicework {
     private Integer term;
     private User user;
     private Integer snum;//实际指导人数
+    private Integer note;//错误信息
+    public Integer getNote() {
+        return note;
+    }
 
+    public void setNote(Integer note) {
+        this.note = note;
+    }
     public Integer getTerm() {
         return term;
     }

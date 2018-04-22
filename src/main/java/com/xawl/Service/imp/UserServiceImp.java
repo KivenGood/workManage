@@ -1,5 +1,6 @@
 package com.xawl.Service.imp;
 
+import com.github.pagehelper.PageHelper;
 import com.xawl.Dao.UserDao;
 import com.xawl.Pojo.User;
 import com.xawl.Service.UserService;
@@ -28,7 +29,7 @@ public class UserServiceImp implements UserService {
     UserDao userDao;
 
     public List<User> getUser(User user) {
-
+        PageHelper.startPage(user.getPageNum(),user.getPageSize());
         return userDao.getUser(user);
     }
 

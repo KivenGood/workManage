@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xawl.Pojo.UserList;
 import com.xawl.Pojo.*;
 import com.xawl.Service.UserService;
@@ -126,8 +127,8 @@ public class UserController {
         userList = userService.getUser(user);
      /*   for (int i = 0; i < userList.size(); i++)
             userList.get(i).setPass(null);*/
-
-        return new ResultData(1, userList);
+        PageInfo page = new PageInfo(userList);
+        return new ResultData(1, page);
     }
 
     @RequestMapping("/admin/delectUserById.action")

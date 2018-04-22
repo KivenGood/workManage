@@ -1,5 +1,6 @@
 package com.xawl.Service.imp;
 
+import com.github.pagehelper.PageHelper;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Dao.UserDao;
 import com.xawl.Pojo.Dclass;
@@ -18,7 +19,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import com.github.pagehelper.PageInfo;
 @Service
 public class DclassServiceImp implements DclassService {
     @Resource
@@ -26,7 +27,7 @@ public class DclassServiceImp implements DclassService {
 
     @Override
     public List<Dclass> getDclass(Dclass dclass) {
-
+       PageHelper.startPage(dclass.getPageNum(),dclass.getPageSize());
         List<Dclass> DclassList = dclassDao.getDclass(dclass);
         return DclassList;
     }

@@ -1,8 +1,11 @@
 package com.xawl.Service.imp;
 
+import com.github.pagehelper.PageHelper;
+import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Dao.LessonworkDao;
 import com.xawl.Dao.UserDao;
+import com.xawl.Pojo.DbSum;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Lessonwork;
 import com.xawl.Pojo.User;
@@ -17,7 +20,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -27,9 +32,12 @@ public class LessonworkServiceImp implements LessonworkService {
     LessonworkDao lessonworkDao;
     @Resource
     DclassDao dclassDao;
+    @Resource
+    DbSumDao dbSumDao;
 
     @Override
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
+        PageHelper.startPage(lessonwork.getPageNum(),lessonwork.getPageSize());
         List<Lessonwork> lessonworksList=lessonworkDao.getLessonwork(lessonwork);
         System.out.println("lessonworksList.size()"+lessonworksList.size());
         //if(lessonworksList.size()==0) return null;
@@ -158,6 +166,13 @@ public class LessonworkServiceImp implements LessonworkService {
                     continue;
                 }
             }
+            DbSum dbSum=new DbSum();//给总表插入数据
+            dbSum.setUid(lessonworkList.get(i).getUid());
+            dbSum.setPass(1);
+            dbSum.setPclass(pclassSum);
+            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
+            dbSum.setType(0+lessonwork.getTerm());
+            dbSumDao.insertDbSum(dbSum);
             rows.createCell(14).setCellValue(pclassSum);
         }
         String path = request.getSession().getServletContext().getRealPath("files");
@@ -170,6 +185,6 @@ public class LessonworkServiceImp implements LessonworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path  + "\\"+ fileName;
+        return  "files/"+fileName;
     }
 }

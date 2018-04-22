@@ -1,8 +1,11 @@
 package com.xawl.Service.imp;
 
+import com.github.pagehelper.PageHelper;
+import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.TestworkDao;
 import com.xawl.Dao.UserDao;
 import com.xawl.Pojo.Coe;
+import com.xawl.Pojo.DbSum;
 import com.xawl.Pojo.Testwork;
 import com.xawl.Pojo.User;
 import com.xawl.Service.TestworkService;
@@ -16,17 +19,20 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class TestworkServiceImp implements TestworkService {
     @Resource
     TestworkDao testworkDao;
-
+    @Resource
+    DbSumDao dbSumDao;
     @Override
     public List<Testwork> getTestwork(Testwork testwork) {
-
+        PageHelper.startPage(testwork.getPageNum(),testwork.getPageSize());
         return testworkDao.getTestwork(testwork);
     }
 
@@ -98,6 +104,13 @@ public class TestworkServiceImp implements TestworkService {
             rows.createCell(9).setCellValue(testworkList.get(row - 1).getQpaperNum());
             rows.createCell(10).setCellValue(testworkList.get(row - 1).getPaperSum());
             rows.createCell(11).setCellValue(testworkList.get(row - 1).getPaperPclass());
+            DbSum dbSum=new DbSum();//给总表插入数据
+            dbSum.setUid(testworkList.get(row - 1).getUid());
+            dbSum.setPass(1);
+            dbSum.setPclass(testworkList.get(row - 1).getPclassNum());
+            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
+            dbSum.setType(4+testwork.getTerm());
+            dbSumDao.insertDbSum(dbSum);
             rows.createCell(12).setCellValue(testworkList.get(row - 1).getPclassNum());
 
         }
@@ -111,7 +124,7 @@ public class TestworkServiceImp implements TestworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path  + "\\"+ fileName;
+        return "files/"+fileName;
     }
 }
 /*

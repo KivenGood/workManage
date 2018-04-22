@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.DclassList;
 import com.xawl.Service.DclassService;
@@ -26,8 +27,8 @@ public class DclassController {
 
 
         List<Dclass> dclassList= dclassService.getDclass(dclass);
-
-        return  new ResultData(1,dclassList);
+        PageInfo page = new PageInfo(dclassList);
+        return  new ResultData(1,page);
     }
     @RequestMapping("/admin/updateDclass.action")
     @ResponseBody

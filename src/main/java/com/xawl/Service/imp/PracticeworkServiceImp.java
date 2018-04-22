@@ -1,8 +1,11 @@
 package com.xawl.Service.imp;
 
+import com.github.pagehelper.PageHelper;
+import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Dao.PracticeworkDao;
 import com.xawl.Pojo.Coe;
+import com.xawl.Pojo.DbSum;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Practicework;
 import com.xawl.Service.PracticeworkService;
@@ -14,7 +17,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 
@@ -24,9 +29,12 @@ public class PracticeworkServiceImp implements PracticeworkService {
     PracticeworkDao practiceworkDao;
     @Resource
     DclassDao dclassDao;
+    @Resource
+    DbSumDao dbSumDao;
 
     @Override
     public List<Practicework> getPracticework(Practicework practicework) {
+        PageHelper.startPage(practicework.getPageNum(),practicework.getPageSize());
         List<Practicework> practiceworkList = practiceworkDao.getPracticework(practicework);
         for (int i = 0; i < practiceworkList.size(); i++) {
             if (practiceworkList.get(i).getType() != 3) {
@@ -150,6 +158,13 @@ public class PracticeworkServiceImp implements PracticeworkService {
                     continue;
                 }
             }
+            DbSum dbSum=new DbSum();//给总表插入数据
+            dbSum.setUid(practiceworkList.get(i).getUid());
+            dbSum.setPass(1);
+            dbSum.setPclass(pclassSum);
+            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
+            dbSum.setType(2+practicework.getTerm());
+            dbSumDao.insertDbSum(dbSum);
             rows.createCell(17).setCellValue(pclassSum);
         }
         String path = request.getSession().getServletContext().getRealPath("files");
@@ -162,7 +177,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path + "\\"+fileName;
+        return "files/"+fileName;
     }
 
     @Override
@@ -201,6 +216,13 @@ public class PracticeworkServiceImp implements PracticeworkService {
                     Coe.thesisGuide + practiceworkList.get(row - 1).getSnum() * Coe.thesisGuideL);//论文课时总数
             rows.createCell(5).setCellValue(practiceworkList.get(row - 1).getNum());//指导答辩人数
             rows.createCell(6).setCellValue(practiceworkList.get(row - 1).getNum() * Coe.thesisReply);//答辩课时
+            DbSum dbSum=new DbSum();//给总表插入数据
+            dbSum.setUid(practiceworkList.get(row - 1).getUid());
+            dbSum.setPass(1);
+            dbSum.setPclass(practiceworkList.get(row - 1).getClasshours());
+            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
+            dbSum.setType(7);
+            dbSumDao.insertDbSum(dbSum);
             rows.createCell(7).setCellValue(practiceworkList.get(row - 1).getClasshours());//标准课时
         }
         String path = request.getSession().getServletContext().getRealPath("files");
@@ -213,7 +235,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return path  + "\\"+ fileName;
+        return "files/"+fileName;
     }
 
 }

@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Practicework;
@@ -29,7 +30,8 @@ public class PracticeworkController {
     ResultData getLessonwork(Practicework practicework, HttpSession session) {
         if ((Integer) session.getAttribute("type") == 1)
             practicework.setUid((Integer) session.getAttribute("uid"));
-        return new ResultData(1, practiceworkService.getPracticework(practicework));
+        PageInfo page = new PageInfo(practiceworkService.getPracticework(practicework));
+        return new ResultData(1, page);
     }
 
     @RequestMapping("/user/insertPracticework.action")

@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Dclass;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -30,10 +33,9 @@ public class LessonworkController {
     ResultData getLessonwork(Lessonwork lessonwork, HttpSession session) {
         if((Integer) session.getAttribute("type")==1)
             lessonwork.setUid((Integer) session.getAttribute("uid"));
-        return new ResultData(1, lessonworkService.getLessonwork(lessonwork));
-
+        PageInfo page = new PageInfo(lessonworkService.getLessonwork(lessonwork));
+        return new ResultData(1,page );
     }
-
     @RequestMapping("/user/insertLesswork.action")
     @ResponseBody
     ResultData insertLesswork(Lessonwork lessonwork, HttpSession session) {
@@ -133,24 +135,23 @@ public class LessonworkController {
     @RequestMapping("/admin/deleteLessonworkById.action")
     @ResponseBody
     ResultData deleteLessonworkById(Integer id) {
-
         if (id == null || id <= 0)
             return new ResultData(23);
         lessonworkService.deleteLessonworkById(id);
         return new ResultData(1);
-
     }
     @RequestMapping("/admin/exportLessonwork.action")
     @ResponseBody
-    ResultData exportLessonwork(HttpServletRequest request,
-                                Lessonwork lessonwork) {
+    ResultData exportLessonwork(HttpServletRequest request,HttpServletResponse resp,
+                                Lessonwork lessonwork) throws IOException {
         if(lessonwork.getTerm()==null||lessonwork.getTerm()<=0){
             return new ResultData(23);
         }
 
-        return new ResultData(1, lessonworkService.exportTestwork(request,lessonwork));
+       // String path="files/"+;
+        //System.out.println("pashh:"+path);
+        return new ResultData(1,lessonworkService.exportTestwork(request,lessonwork));
     }
-
 
     /*
      * 计算计划学时第一步,先进行合班和拆班的区分

@@ -1,5 +1,6 @@
 package com.xawl.Controller;
 
+import com.github.pagehelper.PageInfo;
 import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Testwork;
 import com.xawl.Service.TestworkService;
@@ -186,7 +187,8 @@ public class TestworkController {
     ResultData getTestwork(Testwork testwork, HttpSession session) {
         if((Integer) session.getAttribute("type")==1)
             testwork.setUid((Integer) session.getAttribute("uid"));
-        return new ResultData(1, testworkService.getTestwork(testwork));
+        PageInfo page = new PageInfo(testworkService.getTestwork(testwork));
+        return new ResultData(1,page);
     }
 
     @RequestMapping("/admin/deleteTestworkById.action")

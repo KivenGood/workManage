@@ -31,6 +31,7 @@ public class LessonworkServiceImp implements LessonworkService {
     @Override
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
         List<Lessonwork> lessonworksList=lessonworkDao.getLessonwork(lessonwork);
+        System.out.println("lessonworksList.size()"+lessonworksList.size());
         //if(lessonworksList.size()==0) return null;
         for(int i=0;i<lessonworksList.size();i++){
             Dclass dclass = new Dclass();
@@ -44,14 +45,16 @@ public class LessonworkServiceImp implements LessonworkService {
                 String[] pnums = lessonworksList.get(i).getPart().split(",");
                 System.out.println("pnums.length:"+pnums.length);
                 for (int j = 0; j < pnums.length; j++) {
-                    Dclass dclass1 = new Dclass();
-                    System.out.println("pnums[" + j + "]:" + pnums[j]);
-                    dclass1.setId(Integer.parseInt(pnums[j]));
-                    System.out.println("dclass1.getId:" + dclass1.getId());
-                    System.out.println("dclassDao.getDclass(dclass1).get(0):" + dclassDao.getDclass(dclass1).get(0));
-                    dclass1 = dclassDao.getDclass(dclass1).get(0);
-                    lessonworksList.get(i).setCname( lessonworksList.get(i).getCname()+","+dclass1.getCname());//班级姓名
-                    lessonworksList.get(i).setCnum(lessonworksList.get(i).getCid()+dclass1.getPnum());//班级人数
+                 if(pnums[j]!=null&&pnums[j]!=""){
+                     Dclass dclass1 = new Dclass();
+                     System.out.println("pnums[" + j + "]:" + pnums[j]);
+                     dclass1.setId(Integer.parseInt(pnums[j]));
+                     System.out.println("dclass1.getId:" + dclass1.getId());
+                     System.out.println("dclassDao.getDclass(dclass1).get(0):" + dclassDao.getDclass(dclass1).get(0));
+                     dclass1 = dclassDao.getDclass(dclass1).get(0);
+                     lessonworksList.get(i).setCname( lessonworksList.get(i).getCname()+","+dclass.getSeries()+dclass1.getCname());//班级姓名
+                     lessonworksList.get(i).setCnum(lessonworksList.get(i).getCid()+dclass1.getPnum());//班级人数
+                 }
                 }
             }
         }

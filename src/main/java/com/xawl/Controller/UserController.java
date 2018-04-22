@@ -35,9 +35,10 @@ public class UserController {
             return new ResultData(26);
         User user1 = new User();
         user1.setTechno(user.getTechno());
-        User user2 = userService.getUser(user1).get(0);
-        if (user2 == null)
+        List<User> userList=userService.getUser(user1);
+        if (userList == null||userList.size() <=0 )
             return new ResultData(-19, "user is not exist");
+       User user2 =userList.get(0);
         if (user.getPass().equals(user2.getPass())) {
             session.setAttribute("uid", user2.getId());
           /*  System.out.println("techno:"+user2.getTechno());

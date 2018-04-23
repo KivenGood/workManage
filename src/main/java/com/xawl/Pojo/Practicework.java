@@ -15,9 +15,9 @@ public class Practicework {
     private User user;
     private Integer snum;//实际指导人数
     private Integer note;//错误信息
-    private Integer pageNum;
-    private Integer pageSize;
-    public Integer getPageNum() {
+    //private Integer pageNum;
+    //private Integer pageSize;
+ /*   public Integer getPageNum() {
         return pageNum;
     }
 
@@ -31,7 +31,7 @@ public class Practicework {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
-    }
+    }*/
     public Integer getNote() {
         return note;
     }

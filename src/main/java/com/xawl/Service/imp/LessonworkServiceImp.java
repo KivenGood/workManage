@@ -152,11 +152,17 @@ public class LessonworkServiceImp implements LessonworkService {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
                     rows.createCell(14).setCellValue(pclassSum);
+//                    System.out.println("lessonworkList.get(i).getUser().getName():"+lessonworkList.get(i).getUser().getName());
+                    System.out.println("break pclassSum:"+pclassSum);
                     // row = i;
                     break;
                 }
                 if (uid!=lessonworkList.get(i).getUid()) {
                     // row = i;
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    System.out.println("break pclassSum:"+pclassSum);
+                    rows.createCell(14).setCellValue(pclassSum);
                     continue;
                 }
             }
@@ -171,16 +177,23 @@ public class LessonworkServiceImp implements LessonworkService {
                 if (i >= lessonworkList.size()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
+                //    System.out.println("lessonworkList.get(i).getUser().getName():"+lessonworkList.get(i).getUser().getName());
+                    System.out.println("break pclassSum:"+pclassSum);
                     rows.createCell(14).setCellValue(pclassSum);
                     break;
                 }
                 if (uid!=lessonworkList.get(i).getUid()) {
                     // row = i;
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    System.out.println("break pclassSum:"+pclassSum);
+                    rows.createCell(14).setCellValue(pclassSum);
                     continue;
                 }
             }
-
-            dbSum.setPclass(pclassSum);//这里执行的误区是break后不执行
+            System.out.println("lessonworkList.get(i).getUser().getName():"+lessonworkList.get(i).getUser().getName());
+            System.out.println("pclassSum:"+pclassSum);
+            dbSum.setPclass(pclassSum);//这里执行的误区是break和continue后不执行
             dbSumDao.insertDbSum(dbSum);
             rows.createCell(14).setCellValue(pclassSum);
         }

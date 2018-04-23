@@ -11,6 +11,7 @@ import com.xawl.Service.PracticeworkService;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.util.SystemOutLogger;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -114,6 +115,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 if (i >= practiceworkList.size()){
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
                     break;
                 }
             }
@@ -132,9 +134,13 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 if (i >= practiceworkList.size()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
                     break;
                 }
                 if (uid!=practiceworkList.get(i).getUid()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
                     continue;
                 }
             }
@@ -150,9 +156,13 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 if (i >= practiceworkList.size()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
                     break;
                 }
                 if (uid!=practiceworkList.get(i).getUid()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
                     continue;
                 }
             }
@@ -168,14 +178,19 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 if (i >= practiceworkList.size()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
                     break;
                 }
                 if (uid!=practiceworkList.get(i).getUid()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
                     continue;
                 }
             }
             dbSum.setPclass(pclassSum);
             dbSumDao.insertDbSum(dbSum);
+            System.out.println("pclassSum:"+pclassSum);
             rows.createCell(17).setCellValue(pclassSum);
         }
         String path = request.getSession().getServletContext().getRealPath("files");

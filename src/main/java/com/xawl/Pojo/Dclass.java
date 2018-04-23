@@ -8,8 +8,8 @@ public class Dclass {
     private Integer series;
     private String sdept;
     private java.sql.Timestamp startedDate;
-    private Integer pageNum;
-    private Integer pageSize;
+    //private Integer pageNum;
+    //private Integer pageSize;
 
 
     public Integer getId() {
@@ -65,7 +65,7 @@ public class Dclass {
         this.startedDate = startedDate;
     }
 
-    public Integer getPageNum() {
+  /*  public Integer getPageNum() {
         return pageNum;
     }
 
@@ -79,6 +79,6 @@ public class Dclass {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
-    }
+    }*/
 }
 

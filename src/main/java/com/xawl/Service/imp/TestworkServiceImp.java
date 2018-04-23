@@ -79,6 +79,7 @@ public class TestworkServiceImp implements TestworkService {
         for (int row = 1; row <= testworkList.size(); row++) {//控制行
             //  uid = testworkList.get(row - 1).getUid();
             rows = sheet.createRow(row);
+            System.out.println("testworkList.get(row - 1).uid:" + testworkList.get(row - 1).getUid());
             System.out.println("User.name:" + testworkList.get(row - 1).getUser().getName());
             rows.createCell(0).setCellValue(testworkList.get(row - 1).getUser().getName());//当前用户姓名
             rows.createCell(1).setCellValue(testworkList.get(row - 1).getUser().getLevel());//当前用户职称

@@ -1,21 +1,17 @@
 package com.xawl.Service.imp;
 
-import com.github.pagehelper.PageHelper;
 import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Dao.LessonworkDao;
-import com.xawl.Dao.UserDao;
 import com.xawl.Pojo.DbSum;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Lessonwork;
-import com.xawl.Pojo.User;
 import com.xawl.Service.LessonworkService;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -37,7 +33,8 @@ public class LessonworkServiceImp implements LessonworkService {
 
     @Override
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
-        PageHelper.startPage(lessonwork.getPageNum(),lessonwork.getPageSize());
+        //if(lessonwork.getPageNum()!=null&&lessonwork.getPageSize()!=null)
+        //PageHelper.startPage(lessonwork.getPageNum(),lessonwork.getPageSize());
         List<Lessonwork> lessonworksList=lessonworkDao.getLessonwork(lessonwork);
         System.out.println("lessonworksList.size()"+lessonworksList.size());
         //if(lessonworksList.size()==0) return null;
@@ -117,11 +114,21 @@ public class LessonworkServiceImp implements LessonworkService {
         System.out.println("lessonworkList.size():" + lessonworkList.size());
         int i = 0;//控制lessonList的行
         int uid=0;
-        for (int row = 1; row <= lessonworkList.size(); row++) {//控制行
+        for (int row = 1; row <=lessonworkList.size(); row++) {//控制行
             Double pclassSum = 0.0;//总课时
+
+            DbSum dbSum=new DbSum();//给总表插入数据
+            dbSum.setUid(lessonworkList.get(i).getUid());
+            System.out.println("1111111111111111111111111");
+            dbSum.setPass(1);
+            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
+            dbSum.setType(0+lessonwork.getTerm());
+
             uid=lessonworkList.get(i).getUid();
             rows = sheet.createRow(row);
-            System.out.println("User.name:" + lessonworkList.get(i).getUser().getName());
+            System.out.println("lessonworkList.get(i):"+i);
+            System.out.println("lessonworkList.get(i).getUser()"+lessonworkList.get(i).getUser());
+            System.out.println("User.name:" + lessonworkList.get(i).getUid());
             rows.createCell(0).setCellValue(lessonworkList.get(i).getUser().getName());//当前用户姓名
             rows.createCell(1).setCellValue(lessonworkList.get(i).getUser().getLevel());//当前用户职称
             System.out.println("dclassName:" + lessonworkList.get(i).getCname());
@@ -142,6 +149,9 @@ public class LessonworkServiceImp implements LessonworkService {
                 pclassSum+= lessonworkList.get(i).getClasshours();
                 i++;
                 if (i >= lessonworkList.size()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(14).setCellValue(pclassSum);
                     // row = i;
                     break;
                 }
@@ -159,6 +169,9 @@ public class LessonworkServiceImp implements LessonworkService {
                 pclassSum += lessonworkList.get(i).getClasshours();
                 i++;
                 if (i >= lessonworkList.size()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(14).setCellValue(pclassSum);
                     break;
                 }
                 if (uid!=lessonworkList.get(i).getUid()) {
@@ -166,22 +179,19 @@ public class LessonworkServiceImp implements LessonworkService {
                     continue;
                 }
             }
-            DbSum dbSum=new DbSum();//给总表插入数据
-            dbSum.setUid(lessonworkList.get(i).getUid());
-            dbSum.setPass(1);
-            dbSum.setPclass(pclassSum);
-            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
-            dbSum.setType(0+lessonwork.getTerm());
+
+            dbSum.setPclass(pclassSum);//这里执行的误区是break后不执行
             dbSumDao.insertDbSum(dbSum);
             rows.createCell(14).setCellValue(pclassSum);
         }
+
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
         try {
             File xlsFile = new File(path, fileName);
             FileOutputStream xlsStream = new FileOutputStream(xlsFile);
             workbook.write(xlsStream);
-            lessonworkDao.updateLessonworkByPass(4);
+            //lessonworkDao.updateLessonworkByPass(4);
         } catch (Exception e) {
             e.printStackTrace();
         }

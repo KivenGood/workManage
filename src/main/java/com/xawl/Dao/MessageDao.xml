@@ -23,7 +23,7 @@
         update db_message
         <set>
             <if test="data!=null and data">data=#{data},</if>
-            <if test="type!=null and type!='' ">type=#{type},</if>
+            <if test="type!=null and type!='' ">type=#{type}</if>
         </set>
         where id=#{id}
     </update>

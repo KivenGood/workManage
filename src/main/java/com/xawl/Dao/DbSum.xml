@@ -24,7 +24,7 @@
     <update id="updateDbSumByPass" parameterType="java.lang.Integer">
         update db_lessonwork
         <set>
-            <if test="_parameter !=null and _parameter >=0">pass=#{pass},</if>
+            <if test="_parameter !=null and _parameter >=0">pass=#{pass}</if>
         </set>
         where pass=1
     </update>

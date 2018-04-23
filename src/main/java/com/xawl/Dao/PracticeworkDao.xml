@@ -38,14 +38,14 @@
         update db_practicework
         <set>
             <if test="lname!=null and lname!=''">lname=#{lname},</if>
-            <if test="type!=null and type>0">and type=#{type},</if>
-            <if test="cid!=null and cid>0">and cid=#{cid},</if>
-            <if test="num!=null and num>0">and num=#{num},</if>
-            <if test="classhours!=null and classhours!=''">and classhours=#{classhours},</if>
-            <if test="pass!=null and pass>=0">and pass=#{pass}</if>
-            <if test="term!=null and term>0">and term=#{term}</if>
-            <if test="snum!=null and snum>0">and snum=#{snum}</if>
-            <if test="note!=null and term!=''">and note=#{note}</if>
+            <if test="type!=null and type>0">type=#{type},</if>
+            <if test="cid!=null and cid>0">cid=#{cid},</if>
+            <if test="num!=null and num>0">num=#{num},</if>
+            <if test="classhours!=null and classhours!=''">classhours=#{classhours},</if>
+            <if test="pass!=null and pass>=0">pass=#{pass},</if>
+            <if test="term!=null and term>0">term=#{term},</if>
+            <if test="snum!=null and snum>0">snum=#{snum},</if>
+            <if test="note!=null and term!=''">note=#{note},</if>
         </set>
         where id=#{id}
     </update>

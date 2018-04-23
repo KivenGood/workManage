@@ -1,20 +1,16 @@
 package com.xawl.Service.imp;
 
-import com.github.pagehelper.PageHelper;
+
 import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.TestworkDao;
-import com.xawl.Dao.UserDao;
-import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.DbSum;
 import com.xawl.Pojo.Testwork;
-import com.xawl.Pojo.User;
 import com.xawl.Service.TestworkService;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -32,7 +28,8 @@ public class TestworkServiceImp implements TestworkService {
     DbSumDao dbSumDao;
     @Override
     public List<Testwork> getTestwork(Testwork testwork) {
-        PageHelper.startPage(testwork.getPageNum(),testwork.getPageSize());
+       // if(testwork.getPageNum()!=null&&testwork.getPageSize()!=null)
+         //   PageHelper.startPage(testwork.getPageNum(),testwork.getPageSize());
         return testworkDao.getTestwork(testwork);
     }
 

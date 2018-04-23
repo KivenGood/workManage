@@ -1,6 +1,5 @@
 package com.xawl.Service.imp;
 
-import com.github.pagehelper.PageHelper;
 import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Dao.PracticeworkDao;
@@ -34,7 +33,8 @@ public class PracticeworkServiceImp implements PracticeworkService {
 
     @Override
     public List<Practicework> getPracticework(Practicework practicework) {
-        PageHelper.startPage(practicework.getPageNum(),practicework.getPageSize());
+//        if(practicework.getPageNum()!=null&&practicework.getPageSize()!=null)
+  //          PageHelper.startPage(practicework.getPageNum(),practicework.getPageSize());
         List<Practicework> practiceworkList = practiceworkDao.getPracticework(practicework);
         for (int i = 0; i < practiceworkList.size(); i++) {
             if (practiceworkList.get(i).getType() != 3) {
@@ -101,11 +101,21 @@ public class PracticeworkServiceImp implements PracticeworkService {
         for (int row = 1; row <= practiceworkList.size(); row++) {
             rows = sheet.createRow(row);
             Double pclassSum = 0.0;//总课时
+
+            DbSum dbSum=new DbSum();//给总表插入数据
+            dbSum.setUid(practiceworkList.get(i).getUid());
+            dbSum.setPass(1);
+            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
+            dbSum.setType(2+practicework.getTerm());
+
             uid=practiceworkList.get(i).getUid();
             if (practiceworkList.get(i).getType() == 3) {
                 i++;
-                if (i >= practiceworkList.size())
+                if (i >= practiceworkList.size()){
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
                     break;
+                }
             }
             System.out.println("User.name:" + practiceworkList.get(i).getUser().getName());
             rows.createCell(0).setCellValue(practiceworkList.get(i).getUser().getName());//当前用户姓名
@@ -120,6 +130,8 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 pclassSum += practiceworkList.get(i).getClasshours();
                 i++;
                 if (i >= practiceworkList.size()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
                     break;
                 }
                 if (uid!=practiceworkList.get(i).getUid()) {
@@ -136,6 +148,8 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 pclassSum += practiceworkList.get(i).getClasshours();
                 i++;
                 if (i >= practiceworkList.size()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
                     break;
                 }
                 if (uid!=practiceworkList.get(i).getUid()) {
@@ -152,18 +166,15 @@ public class PracticeworkServiceImp implements PracticeworkService {
                 pclassSum += practiceworkList.get(i).getClasshours();
                 i++;
                 if (i >= practiceworkList.size()) {
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
                     break;
                 }
                 if (uid!=practiceworkList.get(i).getUid()) {
                     continue;
                 }
             }
-            DbSum dbSum=new DbSum();//给总表插入数据
-            dbSum.setUid(practiceworkList.get(i).getUid());
-            dbSum.setPass(1);
             dbSum.setPclass(pclassSum);
-            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
-            dbSum.setType(2+practicework.getTerm());
             dbSumDao.insertDbSum(dbSum);
             rows.createCell(17).setCellValue(pclassSum);
         }

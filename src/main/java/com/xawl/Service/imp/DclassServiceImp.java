@@ -1,25 +1,20 @@
 package com.xawl.Service.imp;
 
-import com.github.pagehelper.PageHelper;
 import com.xawl.Dao.DclassDao;
-import com.xawl.Dao.UserDao;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Service.DclassService;
-import com.xawl.Vo.ResultData;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import com.github.pagehelper.PageInfo;
 @Service
 public class DclassServiceImp implements DclassService {
     @Resource
@@ -27,7 +22,8 @@ public class DclassServiceImp implements DclassService {
 
     @Override
     public List<Dclass> getDclass(Dclass dclass) {
-       PageHelper.startPage(dclass.getPageNum(),dclass.getPageSize());
+       // if(dclass.getPageNum()!=null&&dclass.getPageSize()!=null)
+           // PageHelper.startPage(dclass.getPageNum(),dclass.getPageSize());
         List<Dclass> DclassList = dclassDao.getDclass(dclass);
         return DclassList;
     }

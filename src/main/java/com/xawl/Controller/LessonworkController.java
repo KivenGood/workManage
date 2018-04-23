@@ -33,8 +33,8 @@ public class LessonworkController {
     ResultData getLessonwork(Lessonwork lessonwork, HttpSession session) {
         if((Integer) session.getAttribute("type")==1)
             lessonwork.setUid((Integer) session.getAttribute("uid"));
-        PageInfo page = new PageInfo(lessonworkService.getLessonwork(lessonwork));
-        return new ResultData(1,page );
+        //PageInfo page = new PageInfo(lessonworkService.getLessonwork(lessonwork));
+        return new ResultData(1,lessonworkService.getLessonwork(lessonwork) );
     }
     @RequestMapping("/user/insertLesswork.action")
     @ResponseBody

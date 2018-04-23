@@ -26,9 +26,9 @@ public class DclassController {
     ResultData getDclass(Dclass dclass){
 
 
-        List<Dclass> dclassList= dclassService.getDclass(dclass);
-        PageInfo page = new PageInfo(dclassList);
-        return  new ResultData(1,page);
+    //    List<Dclass> dclassList= dclassService.getDclass(dclass);
+      //  PageInfo page = new PageInfo(dclassList);
+        return  new ResultData(1,dclassService.getDclass(dclass));
     }
     @RequestMapping("/admin/updateDclass.action")
     @ResponseBody

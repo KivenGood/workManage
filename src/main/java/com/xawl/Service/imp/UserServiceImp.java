@@ -1,17 +1,14 @@
 package com.xawl.Service.imp;
 
-import com.github.pagehelper.PageHelper;
 import com.xawl.Dao.UserDao;
 import com.xawl.Pojo.User;
 import com.xawl.Service.UserService;
-import com.xawl.Vo.ResultData;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -29,7 +26,8 @@ public class UserServiceImp implements UserService {
     UserDao userDao;
 
     public List<User> getUser(User user) {
-        PageHelper.startPage(user.getPageNum(),user.getPageSize());
+       // if(user.getPageNum()!=null&&user.getPageSize()!=null)
+         //   PageHelper.startPage(user.getPageNum(),user.getPageSize());
         return userDao.getUser(user);
     }
 

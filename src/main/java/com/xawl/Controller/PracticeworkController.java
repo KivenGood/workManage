@@ -30,8 +30,8 @@ public class PracticeworkController {
     ResultData getLessonwork(Practicework practicework, HttpSession session) {
         if ((Integer) session.getAttribute("type") == 1)
             practicework.setUid((Integer) session.getAttribute("uid"));
-        PageInfo page = new PageInfo(practiceworkService.getPracticework(practicework));
-        return new ResultData(1, page);
+       // PageInfo page = new PageInfo(practiceworkService.getPracticework(practicework));
+        return new ResultData(1, practiceworkService.getPracticework(practicework));
     }
 
     @RequestMapping("/user/insertPracticework.action")

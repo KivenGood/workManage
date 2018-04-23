@@ -187,8 +187,8 @@ public class TestworkController {
     ResultData getTestwork(Testwork testwork, HttpSession session) {
         if((Integer) session.getAttribute("type")==1)
             testwork.setUid((Integer) session.getAttribute("uid"));
-        PageInfo page = new PageInfo(testworkService.getTestwork(testwork));
-        return new ResultData(1,page);
+        //PageInfo page = new PageInfo(testworkService.getTestwork(testwork));
+        return new ResultData(1,testworkService.getTestwork(testwork));
     }
 
     @RequestMapping("/admin/deleteTestworkById.action")

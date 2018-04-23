@@ -124,11 +124,11 @@ public class UserController {
         List<User> userList = new ArrayList();
         User user = new User();
         user.setType(1);
-        userList = userService.getUser(user);
+      //  userList = ;
      /*   for (int i = 0; i < userList.size(); i++)
             userList.get(i).setPass(null);*/
-        PageInfo page = new PageInfo(userList);
-        return new ResultData(1, page);
+       // PageInfo page = new PageInfo(userList);
+        return new ResultData(1, userService.getUser(user));
     }
 
     @RequestMapping("/admin/delectUserById.action")

@@ -13,6 +13,8 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.util.SystemOutLogger;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -35,7 +37,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
     @Override
     public List<Practicework> getPracticework(Practicework practicework) {
 //        if(practicework.getPageNum()!=null&&practicework.getPageSize()!=null)
-  //          PageHelper.startPage(practicework.getPageNum(),practicework.getPageSize());
+        //          PageHelper.startPage(practicework.getPageNum(),practicework.getPageSize());
         List<Practicework> practiceworkList = practiceworkDao.getPracticework(practicework);
         for (int i = 0; i < practiceworkList.size(); i++) {
             if (practiceworkList.get(i).getType() != 3) {
@@ -66,15 +68,59 @@ public class PracticeworkServiceImp implements PracticeworkService {
     }
 
     @Override
+    @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     public String exportPracticework(HttpServletRequest request, Practicework practicework) {
         practicework.setPass(2);
-        List<Practicework> practiceworkList =getPracticework(practicework);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + practicework.getTerm() + "学期实践工作量统计.xls";
         HSSFWorkbook workbook = new HSSFWorkbook();
-        // 创建工作表
-        HSSFSheet sheet = workbook.createSheet("sheet1");
+        workbook = makePracticeworkExcl(workbook, practicework);
+
+        String path = request.getSession().getServletContext().getRealPath("files");
+        System.out.println("path：" + path);
+        try {
+            File xlsFile = new File(path, fileName);
+            FileOutputStream xlsStream = new FileOutputStream(xlsFile);
+            workbook.write(xlsStream);
+            xlsStream.close();
+            //  practiceworkDao.updatePassByPassAndType(4,3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "files/" + fileName;
+    }
+
+    @Override
+    @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
+    public String exportThesisework(HttpServletRequest request) {
+        Practicework practicework = new Practicework();
+        practicework.setPass(2);
+        practicework.setType(3);
+
+        Calendar a = Calendar.getInstance();
+        System.out.println(a.get(Calendar.YEAR));
+        String fileName = a.get(Calendar.YEAR) + "第" + 2 + "学期毕设工作量统计.xls";
+        HSSFWorkbook workbook = new HSSFWorkbook();
+        workbook=makePracticeworkExcl(workbook,practicework);
+        String path = request.getSession().getServletContext().getRealPath("files");
+        System.out.println("path：" + path);
+        try {
+            File xlsFile = new File(path, fileName);
+            FileOutputStream xlsStream = new FileOutputStream(xlsFile);
+            workbook.write(xlsStream);
+            xlsStream.close();
+            //  practiceworkDao.updatePassByPassAndType(4,3);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "files/" + fileName;
+    }
+
+    @Transactional
+    public HSSFWorkbook makePracticeworkExcl(HSSFWorkbook workbook, Practicework practicework) {//excl的具体创建，分开是因为方便做总表时的创建；
+        List<Practicework> practiceworkList = getPracticework(practicework);
+        HSSFSheet sheet = workbook.createSheet("实践" + practicework.getTerm());
         HSSFRow rows = sheet.createRow(0);
         rows.createCell(0).setCellValue("姓名");
         rows.createCell(1).setCellValue("职称");
@@ -98,21 +144,21 @@ public class PracticeworkServiceImp implements PracticeworkService {
         System.out.println("practiceworkList.size():" + practiceworkList.size());
         //Integer uid = null;//用户id，控制excl何时进行下一行
         int i = 0;//控制lessonList的行
-        int uid=0;
+        int uid = 0;
         for (int row = 1; row <= practiceworkList.size(); row++) {
             rows = sheet.createRow(row);
             Double pclassSum = 0.0;//总课时
 
-            DbSum dbSum=new DbSum();//给总表插入数据
+            DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(practiceworkList.get(i).getUid());
             dbSum.setPass(1);
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
-            dbSum.setType(2+practicework.getTerm());
+            dbSum.setType(2 + practicework.getTerm());
 
-            uid=practiceworkList.get(i).getUid();
+            uid = practiceworkList.get(i).getUid();
             if (practiceworkList.get(i).getType() == 3) {
                 i++;
-                if (i >= practiceworkList.size()){
+                if (i >= practiceworkList.size()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
                     rows.createCell(17).setCellValue(pclassSum);
@@ -137,7 +183,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
                     rows.createCell(17).setCellValue(pclassSum);
                     break;
                 }
-                if (uid!=practiceworkList.get(i).getUid()) {
+                if (uid != practiceworkList.get(i).getUid()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
                     rows.createCell(17).setCellValue(pclassSum);
@@ -159,7 +205,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
                     rows.createCell(17).setCellValue(pclassSum);
                     break;
                 }
-                if (uid!=practiceworkList.get(i).getUid()) {
+                if (uid != practiceworkList.get(i).getUid()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
                     rows.createCell(17).setCellValue(pclassSum);
@@ -181,7 +227,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
                     rows.createCell(17).setCellValue(pclassSum);
                     break;
                 }
-                if (uid!=practiceworkList.get(i).getUid()) {
+                if (uid != practiceworkList.get(i).getUid()) {
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);
                     rows.createCell(17).setCellValue(pclassSum);
@@ -190,35 +236,19 @@ public class PracticeworkServiceImp implements PracticeworkService {
             }
             dbSum.setPclass(pclassSum);
             dbSumDao.insertDbSum(dbSum);
-            System.out.println("pclassSum:"+pclassSum);
+            System.out.println("pclassSum:" + pclassSum);
             rows.createCell(17).setCellValue(pclassSum);
         }
-        String path = request.getSession().getServletContext().getRealPath("files");
-        System.out.println("path：" + path);
-        try {
-            File xlsFile = new File(path, fileName);
-            FileOutputStream xlsStream = new FileOutputStream(xlsFile);
-            workbook.write(xlsStream);
-            //  practiceworkDao.updatePassByPassAndType(4,3);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "files/"+fileName;
+        practiceworkDao.updatePassByPassAndType(4,3);
+        return workbook;
     }
 
-    @Override
-    public String exportThesisework(HttpServletRequest request) {
-        Practicework practicework = new Practicework();
-        practicework.setPass(2);
-        practicework.setType(3);
-        List<Practicework> practiceworkList =getPracticework(practicework);
+    @Transactional
+    public HSSFWorkbook makeThesiseworkExcl(HSSFWorkbook workbook, Practicework practicework) {
+        List<Practicework> practiceworkList = getPracticework(practicework);
         System.out.println("practiceworkList.size():" + practiceworkList.size());
-        Calendar a = Calendar.getInstance();
-        System.out.println(a.get(Calendar.YEAR));
-        String fileName = a.get(Calendar.YEAR) + "第" +2+ "学期毕设工作量统计.xls";
-        HSSFWorkbook workbook = new HSSFWorkbook();
         // 创建工作表
-        HSSFSheet sheet = workbook.createSheet("sheet1");
+        HSSFSheet sheet = workbook.createSheet("毕设");
         HSSFRow rows = sheet.createRow(0);
         rows.createCell(0).setCellValue("姓名");
         rows.createCell(1).setCellValue("职称");
@@ -242,7 +272,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
                     Coe.thesisGuide + practiceworkList.get(row - 1).getSnum() * Coe.thesisGuideL);//论文课时总数
             rows.createCell(5).setCellValue(practiceworkList.get(row - 1).getNum());//指导答辩人数
             rows.createCell(6).setCellValue(practiceworkList.get(row - 1).getNum() * Coe.thesisReply);//答辩课时
-            DbSum dbSum=new DbSum();//给总表插入数据
+            DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(practiceworkList.get(row - 1).getUid());
             dbSum.setPass(1);
             dbSum.setPclass(practiceworkList.get(row - 1).getClasshours());
@@ -251,17 +281,8 @@ public class PracticeworkServiceImp implements PracticeworkService {
             dbSumDao.insertDbSum(dbSum);
             rows.createCell(7).setCellValue(practiceworkList.get(row - 1).getClasshours());//标准课时
         }
-        String path = request.getSession().getServletContext().getRealPath("files");
-        System.out.println("path：" + path);
-        try {
-            File xlsFile = new File(path, fileName);
-            FileOutputStream xlsStream = new FileOutputStream(xlsFile);
-            workbook.write(xlsStream);
-            //  practiceworkDao.updatePassByPassAndType(4,3);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "files/"+fileName;
+      //  practiceworkDao.updatePassByPassAndType(4,3);
+        return workbook;
     }
 
 }

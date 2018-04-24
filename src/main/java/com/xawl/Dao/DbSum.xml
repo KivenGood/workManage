@@ -6,8 +6,15 @@
     <!-- 在select标签中编写查询的SQL语句， 设置select标签的id属性为getUser，id属性值必须是唯一的，不能够重复 使用parameterType属性指明查询时使用的参数类型，resultType属性指明查询返回的结果集类型
         resultType="me.gacl.domain.User"就表示将查询结果封装成一个User类的对象返回 User类就是users表所对应的实体类 -->
     <!-- 根据id查询得到一个user对象 -->
-
-    <select id="getDbSum" parameterType="com.xawl.Pojo.DbSum" resultType="com.xawl.Pojo.DbSum">
+    <resultMap id="DbSumResult" type="com.xawl.Pojo.DbSum">
+        <id column="uid" property="uid" javaType="int"/>
+        <association property="user" column="uid"  select="queryUser" />
+    </resultMap>
+    <select id="queryUser" parameterType="int" resultType="com.xawl.Pojo.DbSum">
+        SELECT NAME ,LEVEL,techno FROM db_user
+        WHERE id = #{uid}
+    </select>
+    <select id="getDbSum" parameterType="com.xawl.Pojo.DbSum" resultMap ="DbSumResult">
         select *
         from db_Sum
         <where>

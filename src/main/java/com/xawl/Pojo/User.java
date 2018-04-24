@@ -4,16 +4,16 @@ public class User {
 
     private Integer id;
     private String techno;
+    private String name;
+    private String level;
     private String emil;
     private String phone;
     private String pass;
     private String head;
     private Integer sex;
-    private String name;
     private java.sql.Timestamp startedDate;
     private Integer type;
     private String sdept;
-    private String level;
     private String _2;
     // private Integer pageNum;
     //private Integer pageSize;

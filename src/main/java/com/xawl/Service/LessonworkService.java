@@ -6,8 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface LessonworkService {
-
-
     List<Lessonwork> getLessonwork(Lessonwork lessonwork);
     void insertLessonwork(Lessonwork lessonwork);
     void updateLessonworkById(Lessonwork lessonwork);

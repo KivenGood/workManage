@@ -11,6 +11,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -26,10 +27,11 @@ public class TestworkServiceImp implements TestworkService {
     TestworkDao testworkDao;
     @Resource
     DbSumDao dbSumDao;
+
     @Override
     public List<Testwork> getTestwork(Testwork testwork) {
-       // if(testwork.getPageNum()!=null&&testwork.getPageSize()!=null)
-         //   PageHelper.startPage(testwork.getPageNum(),testwork.getPageSize());
+        // if(testwork.getPageNum()!=null&&testwork.getPageSize()!=null)
+        //   PageHelper.startPage(testwork.getPageNum(),testwork.getPageSize());
         return testworkDao.getTestwork(testwork);
     }
 
@@ -48,18 +50,35 @@ public class TestworkServiceImp implements TestworkService {
         testworkDao.deleteTestworkById(id);
     }
 
-    @Transactional
+    @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     @Override
     public String exportTestwork(HttpServletRequest request, Testwork testwork) {
         testwork.setPass(2);
-        List<Testwork> testworkList = testworkDao.getTestwork(testwork);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + testwork.getTerm() + "学期考试工作量统计.xls";
         // 创建工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
         // 创建工作表
-        HSSFSheet sheet = workbook.createSheet("sheet1");
+        workbook = makeThesiseworkExcl(workbook, testwork);
+        String path = request.getSession().getServletContext().getRealPath("files");
+        System.out.println("path：" + path);
+        try {
+            File xlsFile = new File(path, fileName);
+            FileOutputStream xlsStream = new FileOutputStream(xlsFile);
+            workbook.write(xlsStream);
+            workbook.close();
+            //  testworkDao.updateTestworkByPass(4);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "files/" + fileName;
+    }
+
+    @Transactional
+    public HSSFWorkbook makeThesiseworkExcl(HSSFWorkbook workbook, Testwork testwork) {
+        HSSFSheet sheet = workbook.createSheet("考试" + testwork.getTerm());
+        List<Testwork> testworkList = testworkDao.getTestwork(testwork);
         HSSFRow rows = sheet.createRow(0);
         rows.createCell(0).setCellValue("姓名");
         rows.createCell(1).setCellValue("命题科目名");
@@ -102,28 +121,20 @@ public class TestworkServiceImp implements TestworkService {
             rows.createCell(9).setCellValue(testworkList.get(row - 1).getQpaperNum());
             rows.createCell(10).setCellValue(testworkList.get(row - 1).getPaperSum());
             rows.createCell(11).setCellValue(testworkList.get(row - 1).getPaperPclass());
-            DbSum dbSum=new DbSum();//给总表插入数据
+            DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(testworkList.get(row - 1).getUid());
             dbSum.setPass(1);
             dbSum.setPclass(testworkList.get(row - 1).getPclassNum());
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
-            dbSum.setType(4+testwork.getTerm());
+            dbSum.setType(4 + testwork.getTerm());
             dbSumDao.insertDbSum(dbSum);
             rows.createCell(12).setCellValue(testworkList.get(row - 1).getPclassNum());
 
         }
-        String path = request.getSession().getServletContext().getRealPath("files");
-        System.out.println("path：" + path);
-        try {
-            File xlsFile = new File(path, fileName);
-            FileOutputStream xlsStream = new FileOutputStream(xlsFile);
-            workbook.write(xlsStream);
-            testworkDao.updateTestworkByPass(4);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "files/"+fileName;
+        // testworkDao.updateTestworkByPass(4);
+        return workbook;
     }
+
 }
 /*
 *

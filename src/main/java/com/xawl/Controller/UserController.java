@@ -114,8 +114,8 @@ public class UserController {
             return new ResultData(23);
        // User user = new User();
       //  List<User> list = userList.getList();
-
-        return new ResultData(1, userService.batchUsers((List<User>) userList));
+        List<User> userList1=(List<User>)userList.getList();
+        return new ResultData(1, userService.batchUsers(userList1));
     }
 
     @RequestMapping("/admin/SelectUsers.action")

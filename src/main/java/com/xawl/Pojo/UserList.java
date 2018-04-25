@@ -1,7 +1,6 @@
 package com.xawl.Pojo;
 
-import com.xawl.Pojo.User;
-
+//import com.xawl.Pojo.User;
 import java.util.List;
 
 public class UserList {

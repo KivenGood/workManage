@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class DbSumController {
@@ -20,7 +21,7 @@ public class DbSumController {
     @RequestMapping("/admin/exportDbSum.action")
     @ResponseBody
     @Transactional
-    ResultData getDclass(){
-        return  new ResultData(1);
+    ResultData getDclass(HttpServletRequest request){
+        return  new ResultData(1,dbSumService.exportDbSum(request));
     }
 }

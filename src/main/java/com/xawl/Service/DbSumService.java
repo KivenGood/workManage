@@ -10,5 +10,5 @@ public interface DbSumService {
     void insertDbSum(DbSum dbSum);
     void updateDbDbSumById(DbSum dbSum);
     void deleteDbDbSumById(Integer id);*/
-    String exportDbSum(HttpServletRequest request, DbSum dbSum);
+    String exportDbSum(HttpServletRequest request);
 }

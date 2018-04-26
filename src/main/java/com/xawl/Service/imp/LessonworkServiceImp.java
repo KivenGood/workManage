@@ -36,6 +36,8 @@ public class LessonworkServiceImp implements LessonworkService {
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
         //if(lessonwork.getPageNum()!=null&&lessonwork.getPageSize()!=null)
         //PageHelper.startPage(lessonwork.getPageNum(),lessonwork.getPageSize());
+        System.out.println("lessonwork.getPass()"+lessonwork.getPass());
+        System.out.println("lessonwork.getTerm()"+lessonwork.getTerm());
         List<Lessonwork> lessonworksList = lessonworkDao.getLessonwork(lessonwork);
         System.out.println("lessonworksList.size()" + lessonworksList.size());
         //if(lessonworksList.size()==0) return null;
@@ -112,6 +114,8 @@ public class LessonworkServiceImp implements LessonworkService {
     public HSSFWorkbook makeTestworkExcl(HSSFWorkbook workbook, Lessonwork lessonwork) {//excl的具体创建，分开是因为方便做总表时的创建；
         HSSFSheet sheet = workbook.createSheet("课堂" + lessonwork.getTerm());
         List<Lessonwork> lessonworkList = getLessonwork(lessonwork);
+        if(lessonworkList==null)
+            return null;
         HSSFRow rows = sheet.createRow(0);
         rows.createCell(0).setCellValue("姓名");
         rows.createCell(1).setCellValue("职称");
@@ -140,6 +144,7 @@ public class LessonworkServiceImp implements LessonworkService {
             dbSum.setPass(1);
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
             dbSum.setType(0 + lessonwork.getTerm());
+
             uid = lessonworkList.get(i).getUid();
             rows = sheet.createRow(row);
             System.out.println("lessonworkList.get(i):" + i);

@@ -11,7 +11,7 @@ public interface DbSumDao {
 
     void insertDbSum(DbSum dbSum);
 
-    void updateDbSumByPass(DbSum dbSum);
+    void updateDbSumByPass(Integer id);
 
     void deleteDbSumById(Integer id);
 }

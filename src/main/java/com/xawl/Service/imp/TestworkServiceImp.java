@@ -60,7 +60,7 @@ public class TestworkServiceImp implements TestworkService {
         // 创建工作薄
         HSSFWorkbook workbook = new HSSFWorkbook();
         // 创建工作表
-        workbook = makeThesiseworkExcl(workbook, testwork);
+        workbook = makeTestworkExcl(workbook, testwork);
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
         try {
@@ -76,7 +76,7 @@ public class TestworkServiceImp implements TestworkService {
     }
 
     @Transactional
-    public HSSFWorkbook makeThesiseworkExcl(HSSFWorkbook workbook, Testwork testwork) {
+    public HSSFWorkbook makeTestworkExcl(HSSFWorkbook workbook, Testwork testwork) {
         HSSFSheet sheet = workbook.createSheet("考试" + testwork.getTerm());
         List<Testwork> testworkList = testworkDao.getTestwork(testwork);
         HSSFRow rows = sheet.createRow(0);

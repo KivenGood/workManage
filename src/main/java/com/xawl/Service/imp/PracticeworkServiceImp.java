@@ -94,15 +94,11 @@ public class PracticeworkServiceImp implements PracticeworkService {
     @Override
     @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     public String exportThesisework(HttpServletRequest request) {
-        Practicework practicework = new Practicework();
-        practicework.setPass(2);
-        practicework.setType(3);
-
-        Calendar a = Calendar.getInstance();
+            Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + 2 + "学期毕设工作量统计.xls";
         HSSFWorkbook workbook = new HSSFWorkbook();
-        workbook=makePracticeworkExcl(workbook,practicework);
+        workbook=makeThesiseworkExcl(workbook);
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
         try {
@@ -244,7 +240,10 @@ public class PracticeworkServiceImp implements PracticeworkService {
     }
 
     @Transactional
-    public HSSFWorkbook makeThesiseworkExcl(HSSFWorkbook workbook, Practicework practicework) {
+    public HSSFWorkbook makeThesiseworkExcl(HSSFWorkbook workbook) {
+        Practicework practicework = new Practicework();
+        practicework.setPass(2);
+        practicework.setType(3);
         List<Practicework> practiceworkList = getPracticework(practicework);
         System.out.println("practiceworkList.size():" + practiceworkList.size());
         // 创建工作表

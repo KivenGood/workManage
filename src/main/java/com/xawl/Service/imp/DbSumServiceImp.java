@@ -6,6 +6,9 @@ import com.xawl.Pojo.Lessonwork;
 import com.xawl.Pojo.Practicework;
 import com.xawl.Pojo.Testwork;
 import com.xawl.Service.DbSumService;
+import com.xawl.Service.LessonworkService;
+import com.xawl.Service.PracticeworkService;
+import com.xawl.Service.TestworkService;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -16,7 +19,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -25,37 +27,44 @@ public class DbSumServiceImp implements DbSumService {
     @Resource
     DbSumDao dbSumDao;
 
+    @Resource
+    LessonworkService lessonworkService;
+    @Resource
+    PracticeworkService practiceworkService;
+    @Resource
+    TestworkService testworkService;
+
     @Transactional
     @Override
     public String exportDbSum(HttpServletRequest request) {
-        DbSum dbSum=new DbSum();
+        DbSum dbSum = new DbSum();
         dbSum.setPass(1);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = "信工" + a.get(Calendar.YEAR) + "年" + "工作量统计.xls";
         HSSFWorkbook workbook = new HSSFWorkbook();
-        LessonworkServiceImp lessonworkServiceImp=new LessonworkServiceImp();
-        Lessonwork lessonwork= new Lessonwork();
+        //LessonworkServiceImp lessonworkServiceImp=new LessonworkServiceImp();
+        Lessonwork lessonwork = new Lessonwork();
         lessonwork.setPass(2);
         lessonwork.setTerm(1);
-        lessonworkServiceImp.makeTestworkExcl(workbook,lessonwork);
+        lessonworkService.makeTestworkExcl(workbook, lessonwork);
         lessonwork.setTerm(2);
-        lessonworkServiceImp.makeTestworkExcl(workbook,lessonwork);
-        PracticeworkServiceImp practiceworkServiceImp=new PracticeworkServiceImp();
-        Practicework practicework=new Practicework();
+        lessonworkService.makeTestworkExcl(workbook, lessonwork);
+        //  PracticeworkServiceImp practiceworkServiceImp=new PracticeworkServiceImp();
+        Practicework practicework = new Practicework();
         practicework.setPass(2);
         practicework.setTerm(1);
-        practiceworkServiceImp.makePracticeworkExcl(workbook,practicework);
+        practiceworkService.makePracticeworkExcl(workbook, practicework);
         practicework.setTerm(2);
-        practiceworkServiceImp.makePracticeworkExcl(workbook,practicework);
-        practiceworkServiceImp.makeThesiseworkExcl(workbook);
-        TestworkServiceImp testworkServiceImp=new TestworkServiceImp();
-        Testwork testwork= new Testwork();
+        practiceworkService.makePracticeworkExcl(workbook, practicework);
+        practiceworkService.makeThesiseworkExcl(workbook);
+        // TestworkServiceImp testworkServiceImp=new TestworkServiceImp();
+        Testwork testwork = new Testwork();
         testwork.setPass(2);
         testwork.setTerm(1);
-        testworkServiceImp.makeTestworkExcl(workbook,testwork);
+        testworkService.makeTestworkExcl(workbook, testwork);
         testwork.setTerm(2);
-        testworkServiceImp.makeTestworkExcl(workbook,testwork);
+        testworkService.makeTestworkExcl(workbook, testwork);
         HSSFSheet sheet = workbook.createSheet("汇总");
         HSSFRow rows = sheet.createRow(0);
         rows.createCell(0).setCellValue("职工号");
@@ -76,22 +85,29 @@ public class DbSumServiceImp implements DbSumService {
         int uid = 0;//控制表格的换行
         int i = 0;//控制dbSumList的行
         for (int row = 1; row <= dbSumList.size(); row++) {
+            System.out.println("i:" + i);
+            System.out.println("uid:" + dbSumList.get(i).getUid());
+            System.out.println();
             Double pclassSum = 0.0;//总课时
             uid = dbSumList.get(i).getUid();
             rows = sheet.createRow(row);
-            rows.createCell(0).setCellValue(dbSumList.get(i).getTechno());//当前用户职工号
-            rows.createCell(0).setCellValue(dbSumList.get(i).getName());//当前用户姓名
-            rows.createCell(0).setCellValue(dbSumList.get(i).getLevel());//当前用户职称
-            while(uid==dbSumList.get(i).getUid()){
+            rows.createCell(0).setCellValue(dbSumList.get(i).getUser().getTechno());//当前用户职工号
+            rows.createCell(1).setCellValue(dbSumList.get(i).getUser().getName());//当前用户姓名
+            rows.createCell(2).setCellValue(dbSumList.get(i).getUser().getLevel());//当前用户职称
+            while (uid == dbSumList.get(i).getUid()) {
+                System.out.println("dbSumList.get(i):" + i);
+                System.out.println("dbSumList.get(i).getType()：" + dbSumList.get(i).getType());
                 rows.createCell(2 + dbSumList.get(i).getType()).setCellValue(dbSumList.get(i).getPclass());
                 pclassSum += dbSumList.get(i).getPclass();
+                rows.createCell(10).setCellValue(pclassSum);
                 i++;
+                if (i >= dbSumList.size()) {
+                    break;
+                }
             }
-            rows.createCell(11).setCellValue(pclassSum);
             if (i >= dbSumList.size()) {
                 break;
             }
-            System.out.println("dbSumList.get(i):" + i);
         }
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
@@ -100,11 +116,13 @@ public class DbSumServiceImp implements DbSumService {
             FileOutputStream xlsStream = new FileOutputStream(xlsFile);
             workbook.write(xlsStream);
             xlsStream.close();
-           // dbSumDao.updateDbSumByPass(2);
+            // dbSumDao.updateDbSumByPass(2);
             //lessonworkDao.updateLessonworkByPass(4);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return "files/" + fileName;
     }
+
+
 }

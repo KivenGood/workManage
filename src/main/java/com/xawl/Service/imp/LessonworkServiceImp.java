@@ -36,8 +36,8 @@ public class LessonworkServiceImp implements LessonworkService {
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
         //if(lessonwork.getPageNum()!=null&&lessonwork.getPageSize()!=null)
         //PageHelper.startPage(lessonwork.getPageNum(),lessonwork.getPageSize());
-        System.out.println("lessonwork.getPass()"+lessonwork.getPass());
-        System.out.println("lessonwork.getTerm()"+lessonwork.getTerm());
+        System.out.println("11:"+lessonwork);
+
         List<Lessonwork> lessonworksList = lessonworkDao.getLessonwork(lessonwork);
         System.out.println("lessonworksList.size()" + lessonworksList.size());
         //if(lessonworksList.size()==0) return null;

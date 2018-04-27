@@ -173,4 +173,25 @@ public class Lessonwork {
         this.startedDate = startedDate;
     }
 
+    @Override
+    public String toString() {
+        return "Lessonwork{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", cid=" + cid +
+                ", type=" + type +
+                ", lname='" + lname + '\'' +
+                ", pclasshours=" + pclasshours +
+                ", part='" + part + '\'' +
+                ", coe=" + coe +
+                ", classhours=" + classhours +
+                ", pass=" + pass +
+                ", startedDate=" + startedDate +
+                ", term=" + term +
+                ", user=" + user +
+                ", Cname='" + Cname + '\'' +
+                ", Cnum=" + Cnum +
+                ", note=" + note +
+                '}';
+    }
 }

@@ -235,7 +235,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
             System.out.println("pclassSum:" + pclassSum);
             rows.createCell(17).setCellValue(pclassSum);
         }
-        practiceworkDao.updatePassByPassAndType(4,3);
+//        practiceworkDao.updatePassByPassAndType(4,3);
         return workbook;
     }
 

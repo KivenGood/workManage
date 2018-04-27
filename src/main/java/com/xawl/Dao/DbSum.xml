@@ -10,8 +10,8 @@
         <id column="uid" property="uid" javaType="int"/>
         <association property="user" column="uid"  select="queryUser" />
     </resultMap>
-    <select id="queryUser" parameterType="int" resultType="com.xawl.Pojo.DbSum">
-        SELECT NAME ,LEVEL,techno FROM db_user
+    <select id="queryUser" parameterType="int" resultType="com.xawl.Pojo.User">
+        SELECT name ,level,techno FROM db_user
         WHERE id = #{uid}
     </select>
     <select id="getDbSum" parameterType="com.xawl.Pojo.DbSum" resultMap ="DbSumResult">
@@ -22,6 +22,7 @@
             <if test="pass!=null and cname>0">and pass=#{pass}</if>
             <if test="type!=null and type>0">and type=#{type}</if>
         </where>
+        order BY
         uid ASC ,type ASC,db_Sum.startedDate DESC
     </select>
     <insert id="insertDbSum" parameterType="com.xawl.Pojo.DbSum">

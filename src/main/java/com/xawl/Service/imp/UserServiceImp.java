@@ -58,7 +58,7 @@ public class UserServiceImp implements UserService {
                 return i + 1 + "Level is null";
             }
             if (userList.get(i).getName() == null && userList.get(i).getName() == "") {
-                return i + 1 + "Name is null";
+                    return i + 1 + "Name is null";
             }
             userList.get(i).setPass(userList.get(i).getTechno());
             userList.get(i).setStarteddate(new Timestamp(new Date().getTime()));
@@ -66,7 +66,7 @@ public class UserServiceImp implements UserService {
             System.out.println("userList.get(i):" + userList.get(i));
             userDao.insertUser(userList.get(i));
         }
-        return "";
+        return "1";
     }
 
 

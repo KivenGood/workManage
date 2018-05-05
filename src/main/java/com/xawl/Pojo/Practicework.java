@@ -9,29 +9,12 @@ public class Practicework {
     private Integer num;
     private String lname;
     private Double classhours;
-        private java.sql.Timestamp startedDate;
+    private java.sql.Timestamp startedDate;
     private Integer pass;
     private Integer term;
     private User user;
     private Integer snum;//实际指导人数
     private Integer note;//错误信息
-    //private Integer pageNum;
-    //private Integer pageSize;
- /*   public Integer getPageNum() {
-        return pageNum;
-    }
-
-    public void setPageNum(Integer pageNum) {
-        this.pageNum = pageNum;
-    }
-
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }*/
     public Integer getNote() {
         return note;
     }

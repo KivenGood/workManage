@@ -80,7 +80,14 @@ public class UserController {
         return new ResultData(1);
 
     }
-
+    @RequestMapping("/user/getUserInfo.action")
+    @ResponseBody
+    ResultData getUserInfo(HttpSession session){
+        User user=new User();
+        user.setName((String)session.getAttribute("uname"));
+        user.setType((Integer) session.getAttribute("type"));
+        return new ResultData(1,user);
+    }
     @RequestMapping("/root/insertAdmin.action")
     @ResponseBody
     ResultData insertAdmin(User user) {

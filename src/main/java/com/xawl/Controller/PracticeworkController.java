@@ -36,7 +36,7 @@ public class PracticeworkController {
 
     @RequestMapping("/user/insertPracticework.action")
     @ResponseBody
-    ResultData insertLesswork(Practicework practicework, HttpSession session) {
+    ResultData insertPracticework(Practicework practicework, HttpSession session) {
         if (practicework == null)
             return new ResultData(23);
         System.out.println("practicework:" + practicework);
@@ -59,7 +59,7 @@ public class PracticeworkController {
         //查询是否已经插入过
         System.out.println("lessonwork.getType():" + practicework.getType());
         Practicework practicework1 = new Practicework();
-        practicework1.setUid(practicework.getUid());
+        practicework1.setUid((Integer) session.getAttribute("uid"));
         practicework1.setType(practicework.getType());
         practicework1.setCid(practicework.getCid());
         practicework1.setTerm(practicework.getTerm());

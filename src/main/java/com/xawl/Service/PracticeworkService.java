@@ -1,6 +1,7 @@
 package com.xawl.Service;
 
 import com.xawl.Pojo.Practicework;
+import com.xawl.Pojo.User;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,4 +18,6 @@ public interface PracticeworkService {
     HSSFWorkbook makePracticeworkExcl(HSSFWorkbook workbook, Practicework practicework);
 
     HSSFWorkbook makeThesiseworkExcl(HSSFWorkbook workbook);
+
+    List<User> PracticeUUser();
 }

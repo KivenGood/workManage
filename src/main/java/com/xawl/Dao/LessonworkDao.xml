@@ -14,6 +14,12 @@
         SELECT NAME ,LEVEL FROM db_user
         WHERE id = #{uid}
     </select>
+    <select id="getUidbyLesson"  resultType="Integer">
+        select DISTINCT  uid
+        from db_lessonwork WHERE pass=0
+        ORDER BY
+        uid
+    </select>
     <select id="getLessonwork" parameterType="com.xawl.Pojo.Lessonwork" resultMap="LessonworkResult">
         select *
         from db_lessonwork

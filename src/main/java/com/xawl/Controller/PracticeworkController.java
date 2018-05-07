@@ -151,8 +151,11 @@ public class PracticeworkController {
     @RequestMapping("/admin/exportThesisework.action")
     @ResponseBody
     ResultData exportThesisework(HttpServletRequest request) {
-
         return new ResultData(1, practiceworkService.exportThesisework(request));
-
+    }
+    @RequestMapping("/admin/PracticeUUser.action")//考试工作量未未提交用户
+    @ResponseBody
+    ResultData PracticeUUser() {
+        return new ResultData(1,  practiceworkService.PracticeUUser());
     }
 }

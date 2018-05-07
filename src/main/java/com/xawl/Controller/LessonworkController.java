@@ -28,6 +28,12 @@ public class LessonworkController {
     @Resource
     DclassService dclassService;
 
+
+    @RequestMapping("/admin/LessonworkUUser.action")//考试工作量未未提交用户
+    @ResponseBody
+    ResultData LessonworkUUser() {
+        return new ResultData(1,  lessonworkService.LessonworkUUser());
+    }
     @RequestMapping("/user/getLessonwork.action")
     @ResponseBody
     ResultData getLessonwork(Lessonwork lessonwork, HttpSession session) {

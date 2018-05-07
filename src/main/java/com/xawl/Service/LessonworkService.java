@@ -1,6 +1,7 @@
 package com.xawl.Service;
 
 import com.xawl.Pojo.Lessonwork;
+import com.xawl.Pojo.User;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,4 +15,6 @@ public interface LessonworkService {
     String exportTestwork(HttpServletRequest request, Lessonwork lessonwork);
 
     HSSFWorkbook makeTestworkExcl(HSSFWorkbook workbook, Lessonwork lessonwork);
+
+    List<User> LessonworkUUser();
 }

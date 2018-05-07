@@ -30,6 +30,13 @@
         ORDER BY
         uid ASC ,db_practicework.startedDate	DESC
     </select>
+    <select id="getUidbyPractice"  resultType="Integer">
+        select DISTINCT  uid
+        from db_practicework
+        WHERE pass=0
+        ORDER BY
+        uid
+    </select>
     <insert id="insertPracticework" parameterType="com.xawl.Pojo.Practicework">
         insert into db_practicework (uid,cid,type,lname,num,classhours,pass,startedDate,term,snum)
         values(#{uid},#{cid},#{type},#{lname},#{num},#{classhours},#{pass},#{startedDate},#{term},#{snum})

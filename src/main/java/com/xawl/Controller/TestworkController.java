@@ -212,5 +212,10 @@ public class TestworkController {
 
         return new ResultData(1,  testworkService.exportTestwork(request,testwork));
     }
+    @RequestMapping("/admin/TestworkUUser.action")//考试工作量未未提交用户
+    @ResponseBody
+    ResultData TestworkUUser() {
+       return new ResultData(1,  testworkService.TestworkUUser());
+    }
 }
 

@@ -13,4 +13,5 @@ public interface PracticeworkDao {
    // void updatePracticeworkByPass(Integer pass);
     void updatePassByPassAndType(Integer pass,Integer type);
 
+    List getUidbyPractice();
 }

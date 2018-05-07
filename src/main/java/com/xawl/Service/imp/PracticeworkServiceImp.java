@@ -3,10 +3,8 @@ package com.xawl.Service.imp;
 import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Dao.PracticeworkDao;
-import com.xawl.Pojo.Coe;
-import com.xawl.Pojo.DbSum;
-import com.xawl.Pojo.Dclass;
-import com.xawl.Pojo.Practicework;
+import com.xawl.Dao.UserDao;
+import com.xawl.Pojo.*;
 import com.xawl.Service.PracticeworkService;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -33,6 +31,8 @@ public class PracticeworkServiceImp implements PracticeworkService {
     DclassDao dclassDao;
     @Resource
     DbSumDao dbSumDao;
+    @Resource
+    UserDao userDao;
 
     @Override
     public List<Practicework> getPracticework(Practicework practicework) {
@@ -282,6 +282,22 @@ public class PracticeworkServiceImp implements PracticeworkService {
         }
       //  practiceworkDao.updatePassByPassAndType(4,3);
         return workbook;
+    }
+
+    @Override
+    public List<User> PracticeUUser() {
+        User user = new User();
+        List<User> userList = userDao.getUser(user);
+        List list = practiceworkDao.getUidbyPractice();
+        for (int i = 0; i < userList.size(); i++) {
+            for (int i1 = 0; i1 < list.size(); i1++) {
+                if (userList.get(i).getId() == list.get(i1)) {
+                    userList.remove(i);
+                    continue;
+                }
+            }
+        }
+        return userList;
     }
 
 }

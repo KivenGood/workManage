@@ -11,4 +11,6 @@ public interface LessonworkDao {
     void updateLessonworkById(Lessonwork lessonwork);
     void deleteLessonworkById(Integer id);
     void updateLessonworkByPass(Integer pass);
+
+    List getUidbyLesson();
 }

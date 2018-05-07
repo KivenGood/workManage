@@ -11,4 +11,5 @@ public interface TestworkDao {
     void updateTestworkById(Testwork testwork);
     void deleteTestworkById(Integer id);
     void updateTestworkByPass(Integer pass);
+    List getUidbyTest();
 }

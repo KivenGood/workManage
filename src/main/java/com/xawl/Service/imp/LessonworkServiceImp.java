@@ -3,9 +3,11 @@ package com.xawl.Service.imp;
 import com.xawl.Dao.DbSumDao;
 import com.xawl.Dao.DclassDao;
 import com.xawl.Dao.LessonworkDao;
+import com.xawl.Dao.UserDao;
 import com.xawl.Pojo.DbSum;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Lessonwork;
+import com.xawl.Pojo.User;
 import com.xawl.Service.LessonworkService;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -31,6 +33,8 @@ public class LessonworkServiceImp implements LessonworkService {
     DclassDao dclassDao;
     @Resource
     DbSumDao dbSumDao;
+    @Resource
+    UserDao userDao;
 
     @Override
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
@@ -220,5 +224,21 @@ public class LessonworkServiceImp implements LessonworkService {
         }
         //lessonworkDao.updateLessonworkByPass(4);
         return workbook;
+    }
+
+    @Override
+    public List<User> LessonworkUUser() {
+        User user = new User();
+        List<User> userList = userDao.getUser(user);
+        List list = lessonworkDao.getUidbyLesson();
+        for (int i = 0; i <userList.size(); i++) {
+            for (int i1 = 0; i1 < list.size(); i1++) {
+                if (userList.get(i).getId() == list.get(i1)) {
+                    userList.remove(i);
+                    continue;
+                }
+            }
+        }
+        return userList;
     }
 }

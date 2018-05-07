@@ -14,6 +14,9 @@
         SELECT NAME ,LEVEL FROM db_user
         WHERE id = #{uid}
     </select>
+    <select id="getUidbyTest"  resultType="Integer">
+        select uid from db_testwork WHERE pass=0 ORDER BY uid
+    </select>
     <select id="getTestwork" parameterType="com.xawl.Pojo.Testwork" resultMap="TestworkResult">
         select *
         from db_testwork

@@ -64,10 +64,11 @@ public class DclassController {
     }
     @RequestMapping("/admin/batchDclassExcl.action")
     @ResponseBody
-    ResultData batchUsersExcl(MultipartFile file) throws Exception {
+    ResultData batchDclassExcl(MultipartFile file) throws Exception {
         //dclassService.batchDclassExcl(path);
 
         return new ResultData(1, dclassService.batchDclassExcl("C:\\Users\\Kiven\\Desktop\\批量导入班级样表.xlsx"));
 
     }
+
 }

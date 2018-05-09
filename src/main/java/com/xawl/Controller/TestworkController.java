@@ -37,7 +37,7 @@ public class TestworkController {
         testwork.setPass(0);
         testwork.setStatedDate(new Timestamp(new Date().getTime()));
         List<Testwork> testworkList = testworkService.getTestwork(testwork1);//查询此用户之前是否插入过考试工作量的数据,在同一学期
-        if (testworkList != null && testworkList.size() > 0 && testworkList.get(0).getPass() != 4) {
+        if (testworkList != null && testworkList.size() > 0 && testworkList.get(0).getPass() != 1) {
             if (testworkList.get(0).getJnum() != null && testworkList.get(0).getJnum() > 0)
                 return new ResultData(24, "existed");
             else {//如果已存在课程名插入就得更新总学时了
@@ -104,7 +104,7 @@ public class TestworkController {
                 System.out.println("testworksList.get(0).getPass():" + testworksList.get(0).getPass());
                 if (testwork.getLname() == testworksList.get(0).getLname() || testwork.getLname().equals(testworksList.get(0).getLname())) {
                     System.out.println("1111");
-                    if (testworksList.get(0).getPass() != 4) {
+                    if (testworksList.get(0).getPass() != 1) {
                         System.out.println("222");
                         return new ResultData(24, "existed");
                     }

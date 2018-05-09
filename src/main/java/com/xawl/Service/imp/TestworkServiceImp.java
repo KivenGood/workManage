@@ -57,7 +57,7 @@ public class TestworkServiceImp implements TestworkService {
     @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     @Override
     public String exportTestwork(HttpServletRequest request, Testwork testwork) {
-        testwork.setPass(2);
+        testwork.setPass(0);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + testwork.getTerm() + "学期考试工作量统计.xls";
@@ -72,7 +72,6 @@ public class TestworkServiceImp implements TestworkService {
             FileOutputStream xlsStream = new FileOutputStream(xlsFile);
             workbook.write(xlsStream);
             workbook.close();
-            //  testworkDao.updateTestworkByPass(4);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,7 +142,7 @@ public class TestworkServiceImp implements TestworkService {
             rows.createCell(11).setCellValue(testworkList.get(row - 1).getPaperPclass());
             DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(testworkList.get(row - 1).getUid());
-            dbSum.setPass(1);
+            dbSum.setPass(0);
             dbSum.setPclass(testworkList.get(row - 1).getPclassNum());
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
             dbSum.setType(4 + testwork.getTerm());
@@ -151,7 +150,7 @@ public class TestworkServiceImp implements TestworkService {
             rows.createCell(12).setCellValue(testworkList.get(row - 1).getPclassNum());
 
         }
-        // testworkDao.updateTestworkByPass(4);
+        // testworkDao.updateTestworkByPass(1);
         return workbook;
     }
 

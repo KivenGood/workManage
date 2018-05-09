@@ -34,7 +34,7 @@
         <set>
             <if test="_parameter !=null and _parameter >=0">pass=#{pass}</if>
         </set>
-        where pass=1
+        where pass=0
     </update>
 
     <delete id="deleteDbSumById" parameterType="Integer">

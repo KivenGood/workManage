@@ -64,7 +64,7 @@ public class PracticeworkController {
         practicework1.setCid(practicework.getCid());
         practicework1.setTerm(practicework.getTerm());
         List<Practicework> practiceworksList = practiceworkService.getPracticework(practicework1);
-        if (practiceworksList != null && practiceworksList.size() > 0 && practiceworksList.get(0).getPass() != 4)
+        if (practiceworksList != null && practiceworksList.size() > 0 && practiceworksList.get(0).getPass() != 1)
             return new ResultData(24, "existed");
 
         practicework.setPass(0);

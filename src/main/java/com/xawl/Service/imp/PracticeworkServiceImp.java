@@ -70,7 +70,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
     @Override
     @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     public String exportPracticework(HttpServletRequest request, Practicework practicework) {
-        practicework.setPass(2);
+        practicework.setPass(0);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + practicework.getTerm() + "学期实践工作量统计.xls";
@@ -147,7 +147,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
 
             DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(practiceworkList.get(i).getUid());
-            dbSum.setPass(1);
+            dbSum.setPass(0);
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
             dbSum.setType(2 + practicework.getTerm());
 
@@ -235,14 +235,17 @@ public class PracticeworkServiceImp implements PracticeworkService {
             System.out.println("pclassSum:" + pclassSum);
             rows.createCell(17).setCellValue(pclassSum);
         }
-//        practiceworkDao.updatePassByPassAndType(4,3);
+        //如果最后没有把表分开制表，只是总表制表，则可以和别的类写成一样，直接改；
+//        practiceworkDao.updatePassByPassAndType(1,1);
+  //      practiceworkDao.updatePassByPassAndType(1,2);
+    //    practiceworkDao.updatePassByPassAndType(1,4);
         return workbook;
     }
 
     @Transactional
     public HSSFWorkbook makeThesiseworkExcl(HSSFWorkbook workbook) {
         Practicework practicework = new Practicework();
-        practicework.setPass(2);
+        practicework.setPass(0);
         practicework.setType(3);
         List<Practicework> practiceworkList = getPracticework(practicework);
         System.out.println("practiceworkList.size():" + practiceworkList.size());
@@ -273,14 +276,14 @@ public class PracticeworkServiceImp implements PracticeworkService {
             rows.createCell(6).setCellValue(practiceworkList.get(row - 1).getNum() * Coe.thesisReply);//答辩课时
             DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(practiceworkList.get(row - 1).getUid());
-            dbSum.setPass(1);
+            dbSum.setPass(0);
             dbSum.setPclass(practiceworkList.get(row - 1).getClasshours());
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
             dbSum.setType(7);
             dbSumDao.insertDbSum(dbSum);
             rows.createCell(7).setCellValue(practiceworkList.get(row - 1).getClasshours());//标准课时
         }
-      //  practiceworkDao.updatePassByPassAndType(4,3);
+      //  practiceworkDao.updatePassByPassAndType(1,3);
         return workbook;
     }
 

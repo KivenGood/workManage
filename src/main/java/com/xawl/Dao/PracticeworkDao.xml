@@ -25,7 +25,7 @@
             <if test="lname!=null and lname!=''">and lname=#{lname}</if>
            <if test="pass!=null and pass>=0">and pass=#{pass}</if>
             <if test="term!=null and term>0">and term=#{term}</if>
-            <if test="pass==null">and pass!=4</if>
+            <if test="pass==null">and pass!=1</if>
         </where>
         ORDER BY
         uid ASC ,db_practicework.startedDate	DESC
@@ -60,9 +60,9 @@
     <update id="updatePracticeworkByPass" parameterType="java.lang.Integer">
         update db_practicework
         <set>
-            <if test="_parameter !=null and _parameter >=0">pass=#{pass},</if>
+            <if test="_parameter !=null and _parameter >=0">pass=#{pass}</if>
         </set>
-        where pass=2
+        where pass=0
     </update>
 
     <update id="updatePassByPassAndType" parameterType="java.lang.Integer">
@@ -70,7 +70,7 @@
         <set>
             <if test="_parameter !=null and _parameter >=0">pass=#{pass},</if>
         </set>
-        where pass=2
+        where pass=0
         <where>
             <if test="type!=null and type>0">and type=#{type}</if>
         </where>

@@ -1,7 +1,5 @@
 package com.xawl.Controller;
 
-import com.github.pagehelper.PageInfo;
-import com.xawl.Dao.DclassDao;
 import com.xawl.Pojo.Coe;
 import com.xawl.Pojo.Dclass;
 import com.xawl.Pojo.Lessonwork;
@@ -11,7 +9,6 @@ import com.xawl.Vo.ResultData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +31,7 @@ public class LessonworkController {
     ResultData LessonworkUUser() {
         return new ResultData(1,  lessonworkService.LessonworkUUser());
     }
+
     @RequestMapping("/user/getLessonwork.action")
     @ResponseBody
     ResultData getLessonwork(Lessonwork lessonwork, HttpSession session) {
@@ -42,6 +40,7 @@ public class LessonworkController {
         //PageInfo page = new PageInfo(lessonworkService.getLessonwork(lessonwork));
         return new ResultData(1,lessonworkService.getLessonwork(lessonwork) );
     }
+
     @RequestMapping("/user/insertLesswork.action")
     @ResponseBody
     ResultData insertLesswork(Lessonwork lessonwork, HttpSession session) {
@@ -59,7 +58,7 @@ public class LessonworkController {
         lessonwork1.setLname(lessonwork.getLname());
         // lessonwork1.setPart(lessonwork.getPart());
         List<Lessonwork> lessonworksList = lessonworkService.getLessonwork(lessonwork1);
-        if (lessonworksList != null && lessonworksList.size() > 0&&lessonworksList.get(0).getPass()!=4)
+        if (lessonworksList != null && lessonworksList.size() > 0&&lessonworksList.get(0).getPass()!=1)
             return new ResultData(24, "existed");
         if (lessonwork.getCid() == null || lessonwork.getCid() <= 0)
             return new ResultData(23, "Cid is null or worong");

@@ -43,14 +43,13 @@ public class DbSumServiceImp implements DbSumService {
         System.out.println(a.get(Calendar.YEAR));
         String fileName = "信工" + a.get(Calendar.YEAR) + "年" + "工作量统计.xls";
         HSSFWorkbook workbook = new HSSFWorkbook();
-        //LessonworkServiceImp lessonworkServiceImp=new LessonworkServiceImp();
         Lessonwork lessonwork = new Lessonwork();
         lessonwork.setPass(2);
         lessonwork.setTerm(1);
         lessonworkService.makeTestworkExcl(workbook, lessonwork);
         lessonwork.setTerm(2);
         lessonworkService.makeTestworkExcl(workbook, lessonwork);
-        //  PracticeworkServiceImp practiceworkServiceImp=new PracticeworkServiceImp();
+
         Practicework practicework = new Practicework();
         practicework.setPass(2);
         practicework.setTerm(1);
@@ -58,7 +57,7 @@ public class DbSumServiceImp implements DbSumService {
         practicework.setTerm(2);
         practiceworkService.makePracticeworkExcl(workbook, practicework);
         practiceworkService.makeThesiseworkExcl(workbook);
-        // TestworkServiceImp testworkServiceImp=new TestworkServiceImp();
+
         Testwork testwork = new Testwork();
         testwork.setPass(2);
         testwork.setTerm(1);
@@ -116,8 +115,7 @@ public class DbSumServiceImp implements DbSumService {
             FileOutputStream xlsStream = new FileOutputStream(xlsFile);
             workbook.write(xlsStream);
             xlsStream.close();
-            // dbSumDao.updateDbSumByPass(2);
-            //lessonworkDao.updateLessonworkByPass(4);
+            //dbSumDao.updateDbSumByPass(1);
         } catch (Exception e) {
             e.printStackTrace();
         }

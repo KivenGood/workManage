@@ -93,7 +93,7 @@ public class LessonworkServiceImp implements LessonworkService {
     @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     @Override
     public String exportTestwork(HttpServletRequest request, Lessonwork lessonwork) {
-        lessonwork.setPass(2);
+        lessonwork.setPass(0);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + lessonwork.getTerm() + "学期课程工作量统计.xls";
@@ -106,7 +106,6 @@ public class LessonworkServiceImp implements LessonworkService {
             FileOutputStream xlsStream = new FileOutputStream(xlsFile);
             workbook.write(xlsStream);
             xlsStream.close();
-            //lessonworkDao.updateLessonworkByPass(4);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -144,7 +143,7 @@ public class LessonworkServiceImp implements LessonworkService {
             DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(lessonworkList.get(i).getUid());
             System.out.println("1111111111111111111111111");
-            dbSum.setPass(1);
+            dbSum.setPass(0);
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
             dbSum.setType(0 + lessonwork.getTerm());
 
@@ -222,7 +221,7 @@ public class LessonworkServiceImp implements LessonworkService {
             rows.createCell(14).setCellValue(pclassSum);
 
         }
-        //lessonworkDao.updateLessonworkByPass(4);
+        //lessonworkDao.updateLessonworkByPass(1);
         return workbook;
     }
 

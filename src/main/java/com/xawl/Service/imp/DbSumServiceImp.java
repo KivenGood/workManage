@@ -38,20 +38,21 @@ public class DbSumServiceImp implements DbSumService {
     @Override
     public String exportDbSum(HttpServletRequest request) {
         DbSum dbSum = new DbSum();
-        dbSum.setPass(1);
+        dbSum.setPass(0);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = "信工" + a.get(Calendar.YEAR) + "年" + "工作量统计.xls";
+
         HSSFWorkbook workbook = new HSSFWorkbook();
         Lessonwork lessonwork = new Lessonwork();
-        lessonwork.setPass(2);
+        lessonwork.setPass(0);
         lessonwork.setTerm(1);
         lessonworkService.makeTestworkExcl(workbook, lessonwork);
         lessonwork.setTerm(2);
         lessonworkService.makeTestworkExcl(workbook, lessonwork);
 
         Practicework practicework = new Practicework();
-        practicework.setPass(2);
+        practicework.setPass(0);
         practicework.setTerm(1);
         practiceworkService.makePracticeworkExcl(workbook, practicework);
         practicework.setTerm(2);
@@ -59,7 +60,7 @@ public class DbSumServiceImp implements DbSumService {
         practiceworkService.makeThesiseworkExcl(workbook);
 
         Testwork testwork = new Testwork();
-        testwork.setPass(2);
+        testwork.setPass(0);
         testwork.setTerm(1);
         testworkService.makeTestworkExcl(workbook, testwork);
         testwork.setTerm(2);

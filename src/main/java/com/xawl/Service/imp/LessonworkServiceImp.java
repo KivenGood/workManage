@@ -151,7 +151,7 @@ public class LessonworkServiceImp implements LessonworkService {
             rows = sheet.createRow(row);
             System.out.println("lessonworkList.get(i):" + i);
             System.out.println("lessonworkList.get(i).getUser()" + lessonworkList.get(i).getUser());
-            System.out.println("User.name:" + lessonworkList.get(i).getUid());
+            System.out.println("User.uid:" + lessonworkList.get(i).getUid());
             rows.createCell(0).setCellValue(lessonworkList.get(i).getUser().getName());//当前用户姓名
             rows.createCell(1).setCellValue(lessonworkList.get(i).getUser().getLevel());//当前用户职称
             System.out.println("dclassName:" + lessonworkList.get(i).getCname());

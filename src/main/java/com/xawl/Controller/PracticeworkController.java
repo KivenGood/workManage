@@ -63,10 +63,10 @@ public class PracticeworkController {
         practicework1.setType(practicework.getType());
         practicework1.setCid(practicework.getCid());
         practicework1.setTerm(practicework.getTerm());
+        System.out.println("practicework:"+practicework1.toString());
         List<Practicework> practiceworksList = practiceworkService.getPracticework(practicework1);
         if (practiceworksList != null && practiceworksList.size() > 0 && practiceworksList.get(0).getPass() != 1)
             return new ResultData(24, "existed");
-
         practicework.setPass(0);
         practicework.setStarteddate(new Timestamp(new Date().getTime()));
         //班级的人数

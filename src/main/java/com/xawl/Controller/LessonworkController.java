@@ -53,6 +53,7 @@ public class LessonworkController {
         Lessonwork lessonwork1 = new Lessonwork();
         lessonwork1.setUid(lessonwork.getUid());
         lessonwork1.setType(lessonwork.getType());
+        lessonwork1.setPart(lessonwork.getPart());
         lessonwork1.setCid(lessonwork.getCid());
         lessonwork1.setTerm(lessonwork.getTerm());
         lessonwork1.setLname(lessonwork.getLname());

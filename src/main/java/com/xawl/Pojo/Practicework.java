@@ -145,4 +145,24 @@ public class Practicework {
         this.startedDate = startedDate;
     }
 
+    @Override
+    public String toString() {
+        return "Practicework{" +
+                "id=" + id +
+                ", uid=" + uid +
+                ", type=" + type +
+                ", cid=" + cid +
+                ", num=" + num +
+                ", lname='" + lname + '\'' +
+                ", classhours=" + classhours +
+                ", startedDate=" + startedDate +
+                ", pass=" + pass +
+                ", term=" + term +
+                ", user=" + user +
+                ", snum=" + snum +
+                ", note=" + note +
+                ", Cname='" + Cname + '\'' +
+                ", Cnum=" + Cnum +
+                '}';
+    }
 }

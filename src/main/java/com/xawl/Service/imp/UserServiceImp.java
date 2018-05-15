@@ -79,19 +79,19 @@ public class UserServiceImp implements UserService {
     public String batchUsersExcl(String xlsPath) throws IOException {
         List<User> userList = new ArrayList();
         FileInputStream fileIn = new FileInputStream(xlsPath);
-//根据指定的文件输入流导入Excel从而产生Workbook对象
+        //根据指定的文件输入流导入Excel从而产生Workbook对象
         Workbook wb0 = new XSSFWorkbook(fileIn);
-//获取Excel文档中的第一个表单
+        //获取Excel文档中的第一个表单
         Sheet sht0 = wb0.getSheetAt(0);
-//对Sheet中的每一行进行迭代
+        //对Sheet中的每一行进行迭代
         for (Row r : sht0) {
             //如果当前行的行号（从0开始）未达到2（第三行）则从新循环
             if (r.getRowNum() < 1) {
                 continue;
             }
-//创建实体类
+            //创建实体类
             User user = new User();
-//取出当前行第1个单元格数据，并封装在info实体stuName属性上
+            //取出当前行第1个单元格数据，并封装在info实体stuName属性上
             user.setTechno(r.getCell(0).getStringCellValue());
             user.setName(r.getCell(1).getStringCellValue());
             user.setLevel(r.getCell(2).getStringCellValue());

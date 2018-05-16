@@ -62,6 +62,30 @@ public class DclassController {
             return new ResultData(23);
         return new ResultData(1,dclassService.batchDclass((List<Dclass>) dclassList.getList()));
     }
+    @RequestMapping("/user/insertDclass.action")
+    @ResponseBody
+    ResultData insertDclass(Dclass dclass){
+        if(dclass==null)
+            return new ResultData(23);
+        if(dclass.getSdept()==null||dclass.getSdept()=="")
+            return new ResultData(26,"所在系为空");
+        if(dclass.getSeries()==null||dclass.getSeries()<=0)
+            return new ResultData(26,"年级为空");
+        if(dclass.getPnum()==null||dclass.getPnum()<=0)
+            return new ResultData(26,"人数为空");
+
+        Dclass dclass1=new Dclass();//判重
+        dclass1.setSeries(dclass.getSeries());
+        dclass1.setCname(dclass.getCname());
+        List<Dclass> dclassList=dclassService.getDclass(dclass1);
+        System.out.println("dclassList.size():"+dclassList.size());
+        if(dclassList!=null&&dclassList.size()>0)
+            return new ResultData(26,"excisted");
+
+        dclass.setStarteddate(new Timestamp(new Date().getTime()));
+        dclassService.insertDclass(dclass);
+        return new ResultData(1);
+    }
     @RequestMapping("/admin/batchDclassExcl.action")
     @ResponseBody
     ResultData batchDclassExcl(String  path) throws Exception {

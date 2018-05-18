@@ -16,7 +16,7 @@
             <if test="series!=null and series!='' ">and series=#{series}</if>
             <if test="sdept!=null and sdept!=''">and sdept=#{sdept}</if>
         </where>
-        ORDER BY series,sdept
+        ORDER BY series,sdept,cname
     </select>
     <insert id="insertDclass" parameterType="com.xawl.Pojo.Dclass">
         insert into db_class (cname,pnum,series,sdept,startedDate)

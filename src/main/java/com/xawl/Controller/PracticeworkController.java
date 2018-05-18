@@ -41,12 +41,14 @@ public class PracticeworkController {
             return new ResultData(23);
         System.out.println("practicework:" + practicework);
         practicework.setUid((Integer) session.getAttribute("uid"));
-        if (practicework.getCid() == null || practicework.getCid() <= 0)
-            return new ResultData(23, "Cid is null or worong");
-        if (practicework.getSnum() == null || practicework.getSnum() < 0)
-            return new ResultData(23, "Cid is null or worong");
         if (practicework.getType() == null || practicework.getType() <= 0)
             return new ResultData(23, "Type is null or worong");
+        if (practicework.getType() == 3)
+            practicework.setTerm(2);
+        if ((practicework.getCid() == null || practicework.getCid() <= 0)&&practicework.getType()!=3)
+            return new ResultData(23, "Cid is null or worong");
+        if (practicework.getSnum() == null || practicework.getSnum() < 0)
+            return new ResultData(23, "Snum is null or worong");
         if (practicework.getTerm() == null || practicework.getTerm() <= 0)
             return new ResultData(23, "Term is null or worong");
         if (practicework.getNum() == null || practicework.getNum() <= 0)
@@ -54,8 +56,7 @@ public class PracticeworkController {
         if (practicework.getType() != 3 && (practicework.getLname() == null || practicework.getLname() == "")) {
             return new ResultData(23, "Lname is null");
         }
-        if (practicework.getType() == 3)
-            practicework.setTerm(2);
+
         //查询是否已经插入过
         System.out.println("lessonwork.getType():" + practicework.getType());
         Practicework practicework1 = new Practicework();

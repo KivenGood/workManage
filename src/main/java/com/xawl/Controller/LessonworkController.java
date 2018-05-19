@@ -83,30 +83,11 @@ public class LessonworkController {
             lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum * Coe.testClass);
             lessonwork.setCoe(Coe.testClass);
         } else {
-
-            //    lessonwork.setClasshours(calculateClasshours(pnum,lessonwork.getPart()));
             lessonwork.setCoe(calculateClasshours(pnum, lessonwork.getPart()));
             lessonwork.setClasshours(lessonwork.getCoe() * lessonwork.getPclasshours());
         }
-  /*      if (lessonwork.getType() == 2 || lessonwork.getType() == 1) {
-            //若不是合班课
-            if (lessonwork.getPart() == null || lessonwork.getPart() == "") {
-                if (pnum <= 50)
-                    lessonwork.setClasshours((double) lessonwork.getPclasshours());
-                else {
-                    lessonwork.setClasshours(calculateClasshours(pnum, lessonwork.getPclasshours()));
-                }
-            } else {//合班课
-                String[] pnums = lessonwork.getPart().split("/");
-                for (int i = 0; i < pnums.length; i++) {
-                    System.out.println("pnums[" + i + "]:" + pnums[i]);
-                    pnum += Integer.parseInt(pnums[i]);
-                    System.out.println("pnum:" + pnum);
-                }
-                lessonwork.setClasshours(calculateClasshours(pnum, lessonwork.getPclasshours(),lessonwork.getPart()));
-            }
-        }*/
-
+        System.out.println("Coe.testClass:"+Coe.testClass);
+        System.out.println(lessonwork.toString());
         lessonworkService.insertLessonwork(lessonwork);
         return new ResultData(1);
 

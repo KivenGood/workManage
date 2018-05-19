@@ -129,17 +129,28 @@ public class TestworkServiceImp implements TestworkService {
                 testworkList.get(row - 1).setJpclass(0.0);
             }
             System.out.println("aaa:" + row + ":" + testworkList.get(row - 1).getJpclass());
+            if(testworkList.get(row - 1).getLname()!=null)
             rows.createCell(1).setCellValue(testworkList.get(row - 1).getLname());
-            rows.createCell(2).setCellValue(testworkList.get(row - 1).getMpclass());
-            rows.createCell(3).setCellValue(testworkList.get(row - 1).getQpclass());
-            rows.createCell(4).setCellValue(testworkList.get(row - 1).getJnum());
-            rows.createCell(5).setCellValue(testworkList.get(row - 1).getJpclass());
-            rows.createCell(6).setCellValue(testworkList.get(row - 1).getPaperNum());
-            rows.createCell(7).setCellValue(testworkList.get(row - 1).getBpaperNum());
-            rows.createCell(8).setCellValue(testworkList.get(row - 1).getCpaperNum());
-            rows.createCell(9).setCellValue(testworkList.get(row - 1).getQpaperNum());
-            rows.createCell(10).setCellValue(testworkList.get(row - 1).getPaperSum());
-            rows.createCell(11).setCellValue(testworkList.get(row - 1).getPaperPclass());
+            if(testworkList.get(row - 1).getMpclass()!=null)
+                rows.createCell(2).setCellValue(testworkList.get(row - 1).getMpclass());
+            if(testworkList.get(row - 1).getQpclass()!=null)
+                rows.createCell(3).setCellValue(testworkList.get(row - 1).getQpclass());
+            if(testworkList.get(row - 1).getJnum()!=null)
+                rows.createCell(4).setCellValue(testworkList.get(row - 1).getJnum());
+            if(testworkList.get(row - 1).getJpclass()!=null)
+                rows.createCell(5).setCellValue(testworkList.get(row - 1).getJpclass());
+            if(testworkList.get(row - 1).getPaperNum()!=null)
+                rows.createCell(6).setCellValue(testworkList.get(row - 1).getPaperNum());
+            if(testworkList.get(row - 1).getBpaperNum()!=null)
+                rows.createCell(7).setCellValue(testworkList.get(row - 1).getBpaperNum());
+            if(testworkList.get(row - 1).getCpaperNum()!=null)
+                rows.createCell(8).setCellValue(testworkList.get(row - 1).getCpaperNum());
+            if(testworkList.get(row - 1).getQpaperNum()!=null)
+                rows.createCell(9).setCellValue(testworkList.get(row - 1).getQpaperNum());
+            if(testworkList.get(row - 1).getPaperSum()!=null)
+                rows.createCell(10).setCellValue(testworkList.get(row - 1).getPaperSum());
+            if(testworkList.get(row - 1).getPaperPclass()!=null)
+                rows.createCell(11).setCellValue(testworkList.get(row - 1).getPaperPclass());
             DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(testworkList.get(row - 1).getUid());
             dbSum.setPass(0);

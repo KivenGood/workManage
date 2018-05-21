@@ -36,7 +36,7 @@ public class DbSumServiceImp implements DbSumService {
 
     @Transactional
     @Override
-    public String exportDbSum(HttpServletRequest request) {
+    public String exportDbSum(HttpServletRequest request) {//此接口从实际来说每次只用一次，故调试时徐会给总表插入多次数据，须清理
         DbSum dbSum = new DbSum();
         dbSum.setPass(0);
         Calendar a = Calendar.getInstance();
@@ -44,12 +44,12 @@ public class DbSumServiceImp implements DbSumService {
         String fileName = "信工" + a.get(Calendar.YEAR) + "年" + "工作量统计.xls";
 
         HSSFWorkbook workbook = new HSSFWorkbook();
-        Lessonwork lessonwork = new Lessonwork();
+       /* Lessonwork lessonwork = new Lessonwork();
         lessonwork.setPass(0);
         lessonwork.setTerm(1);
-        lessonworkService.makeTestworkExcl(workbook, lessonwork);
+        lessonworkService.makeLessonworkExcl(workbook, lessonwork);
         lessonwork.setTerm(2);
-        lessonworkService.makeTestworkExcl(workbook, lessonwork);
+        lessonworkService.makeLessonworkExcl(workbook, lessonwork);
 
         Practicework practicework = new Practicework();
         practicework.setPass(0);
@@ -64,7 +64,8 @@ public class DbSumServiceImp implements DbSumService {
         testwork.setTerm(1);
         testworkService.makeTestworkExcl(workbook, testwork);
         testwork.setTerm(2);
-        testworkService.makeTestworkExcl(workbook, testwork);
+        testworkService.makeTestworkExcl(workbook, testwork);*/
+
         HSSFSheet sheet = workbook.createSheet("汇总");
         HSSFRow rows = sheet.createRow(0);
         rows.createCell(0).setCellValue("职工号");
@@ -94,12 +95,20 @@ public class DbSumServiceImp implements DbSumService {
             rows.createCell(0).setCellValue(dbSumList.get(i).getUser().getTechno());//当前用户职工号
             rows.createCell(1).setCellValue(dbSumList.get(i).getUser().getName());//当前用户姓名
             rows.createCell(2).setCellValue(dbSumList.get(i).getUser().getLevel());//当前用户职称
+            int type = 0;
+            Double pclass1 = 0.0;
             while (uid == dbSumList.get(i).getUid()) {
                 System.out.println("dbSumList.get(i):" + i);
                 System.out.println("dbSumList.get(i).getType()：" + dbSumList.get(i).getType());
+                if (type == dbSumList.get(i).getType()) {
+                    dbSumList.get(i).setPclass(dbSumList.get(i).getPclass() + pclass1);
+                    pclassSum-=pclass1;
+                }
+                pclass1 = dbSumList.get(i).getPclass();
                 rows.createCell(2 + dbSumList.get(i).getType()).setCellValue(dbSumList.get(i).getPclass());
                 pclassSum += dbSumList.get(i).getPclass();
                 rows.createCell(10).setCellValue(pclassSum);
+                type = dbSumList.get(i).getType();
                 i++;
                 if (i >= dbSumList.size()) {
                     break;

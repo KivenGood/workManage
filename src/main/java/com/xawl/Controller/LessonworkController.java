@@ -137,7 +137,7 @@ public class LessonworkController {
 
        // String path="files/"+;
         //System.out.println("pashh:"+path);
-        return new ResultData(1,lessonworkService.exportTestwork(request,lessonwork));
+        return new ResultData(1,lessonworkService.exportLessonwork(request,lessonwork));
     }
 
     /*

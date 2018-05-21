@@ -68,20 +68,20 @@ public class PracticeworkController {
         List<Practicework> practiceworksList = practiceworkService.getPracticework(practicework1);
         if (practiceworksList != null && practiceworksList.size() > 0 && practiceworksList.get(0).getPass() != 1)
             return new ResultData(24, "existed");
+
+
+
+
         practicework.setPass(0);
         practicework.setStarteddate(new Timestamp(new Date().getTime()));
-        //班级的人数
-        Integer pnum = practicework.getCid();//当type=3时，cid就是指导人数；
+
+
+        //实际指导人数
+        Integer pnum =practicework.getSnum(); ;//当type=3时，cid就是指导人数；
         Double pclass = 0.0;
         if (practicework.getType() == 3) {
             pclass = practicework.getSnum() * Coe.thesisGuideL;//type=3时，snum代表指导理工科不带实验的人数
-        }/* else {*//*(practicework.getType()==1||practicework.getType()==2||practicework.getType()==4)*//*
-            Dclass dclass = new Dclass();
-            dclass.setId(practicework.getCid());
-            System.out.println("dclass.getId():" + dclass.getId());
-            pnum = dclassService.getDclass(dclass).get(0).getPnum();//改正，此处只需传实际人数，导出表时才需要班级真正人数
-            System.out.println("cpnum:" + pnum);
-        }*/
+        }
         practicework.setClasshours(calculateClasshours(practicework.getNum(), pnum, practicework.getType()) + pclass);
         practiceworkService.insertPracticework(practicework);
         return new ResultData(1);
@@ -111,11 +111,6 @@ public class PracticeworkController {
             return new ResultData(23);
         if (practicework.getCid() != null && practicework.getNum() != null
                 && practicework.getSnum() != null && practicework.getType() != null) {
-           /* Dclass dclass = new Dclass();
-            dclass.setId(practicework.getCid());
-            Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
-            Practicework practicework1 = new Practicework();
-            practicework.setType(practiceworkService.getPracticework(practicework1).get(0).getType());*/
             Double pclass = 0.0;
             if (practicework.getType() == 3)
                 pclass = practicework.getSnum() * Coe.thesisGuideL + practicework.getCid() * Coe.thesisGuide;//指导论文课时(已包含理工科)

@@ -94,11 +94,11 @@ public class PracticeworkServiceImp implements PracticeworkService {
     @Override
     @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     public String exportThesisework(HttpServletRequest request) {
-            Calendar a = Calendar.getInstance();
+        Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + 2 + "学期毕设工作量统计.xls";
         HSSFWorkbook workbook = new HSSFWorkbook();
-        workbook=makeThesiseworkExcl(workbook);
+        workbook = makeThesiseworkExcl(workbook);
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
         try {
@@ -140,7 +140,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
         System.out.println("practiceworkList.size():" + practiceworkList.size());
         //Integer uid = null;//用户id，控制excl何时进行下一行
         int i = 0;//控制lessonList的行
-        int uid = 0;
+        int uid;
         for (int row = 1; row <= practiceworkList.size(); row++) {
             rows = sheet.createRow(row);
             Double pclassSum = 0.0;//总课时
@@ -150,95 +150,102 @@ public class PracticeworkServiceImp implements PracticeworkService {
             dbSum.setPass(0);
             dbSum.setStartedDate(new Timestamp(new Date().getTime()));
             dbSum.setType(2 + practicework.getTerm());
+            while (practiceworkList.get(i).getType() == 3) {
+                i++;
+                if (i >= practiceworkList.size()) {
+                    System.out.println("111");
+                    dbSum.setPclass(pclassSum);
+                    dbSumDao.insertDbSum(dbSum);
+                    rows.createCell(17).setCellValue(pclassSum);
+                    break;
+                }
+            }
+            if (practiceworkList.get(i).getType() != 3) {
+                uid = practiceworkList.get(i).getUid();
+                System.out.println("User.name:" + practiceworkList.get(i).getUser().getName());
+                System.out.println("practiceworkList.get(i).getType():" + practiceworkList.get(i).getType());
+                rows.createCell(0).setCellValue(practiceworkList.get(i).getUser().getName());//当前用户姓名
+                rows.createCell(1).setCellValue(practiceworkList.get(i).getUser().getLevel());//当前用户职称
 
-            uid = practiceworkList.get(i).getUid();
-            if (practiceworkList.get(i).getType() == 3) {
-                i++;
-                if (i >= practiceworkList.size()) {
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    rows.createCell(17).setCellValue(pclassSum);
-                    break;
+                if (practiceworkList.get(i).getType() == 1) {
+                    System.out.println("1");
+                    rows.createCell(2).setCellValue(practiceworkList.get(i).getLname());//实践名称
+                    rows.createCell(3).setCellValue(practiceworkList.get(i).getCname());//班级姓名
+                    rows.createCell(4).setCellValue(practiceworkList.get(i).getSnum());//实际指导人数
+                    rows.createCell(5).setCellValue(practiceworkList.get(i).getNum());
+                    rows.createCell(6).setCellValue(practiceworkList.get(i).getClasshours());//课时
+                    pclassSum += practiceworkList.get(i).getClasshours();
+                    i++;
+                    System.out.println("uid:" + uid);
+                    System.out.println("practiceworkList.get(i).getUid():" + practiceworkList.get(i).getUid());
+                    if (i >= practiceworkList.size()) {
+                        dbSum.setPclass(pclassSum);
+                        dbSumDao.insertDbSum(dbSum);
+                        rows.createCell(17).setCellValue(pclassSum);
+                        break;
+                    }
+                    if (uid != practiceworkList.get(i).getUid()) {
+                        System.out.println("aa");
+                        dbSum.setPclass(pclassSum);
+                        dbSumDao.insertDbSum(dbSum);
+                        rows.createCell(17).setCellValue(pclassSum);
+                        continue;
+                    }
                 }
+                if (practiceworkList.get(i).getType() == 2) {
+                    System.out.println("2");
+                    rows.createCell(7).setCellValue(practiceworkList.get(i).getLname());
+                    rows.createCell(8).setCellValue(practiceworkList.get(i).getCname());//班级姓名
+                    rows.createCell(9).setCellValue(practiceworkList.get(i).getSnum());//人数
+                    rows.createCell(10).setCellValue(practiceworkList.get(i).getNum());
+                    rows.createCell(11).setCellValue(practiceworkList.get(i).getClasshours());
+                    pclassSum += practiceworkList.get(i).getClasshours();
+                    i++;
+                    if (i >= practiceworkList.size()) {
+                        dbSum.setPclass(pclassSum);
+                        dbSumDao.insertDbSum(dbSum);
+                        rows.createCell(17).setCellValue(pclassSum);
+                        break;
+                    }
+                    if (uid != practiceworkList.get(i).getUid()) {
+                        dbSum.setPclass(pclassSum);
+                        dbSumDao.insertDbSum(dbSum);
+                        rows.createCell(17).setCellValue(pclassSum);
+                        continue;
+                    }
+                }
+                if (practiceworkList.get(i).getType() == 4) {
+                    System.out.println("4");
+                    rows.createCell(12).setCellValue(practiceworkList.get(i).getLname());
+                    rows.createCell(13).setCellValue(practiceworkList.get(i).getCname());
+                    rows.createCell(14).setCellValue(practiceworkList.get(i).getSnum());
+                    rows.createCell(15).setCellValue(practiceworkList.get(i).getNum());
+                    rows.createCell(16).setCellValue(practiceworkList.get(i).getClasshours());
+                    pclassSum += practiceworkList.get(i).getClasshours();
+                    i++;
+                    if (i >= practiceworkList.size()) {
+                        dbSum.setPclass(pclassSum);
+                        dbSumDao.insertDbSum(dbSum);
+                        rows.createCell(17).setCellValue(pclassSum);
+                        break;
+                    }
+                    if (uid != practiceworkList.get(i).getUid()) {
+                        dbSum.setPclass(pclassSum);
+                        dbSumDao.insertDbSum(dbSum);
+                        rows.createCell(17).setCellValue(pclassSum);
+                        continue;
+                    }
+                }
+                dbSum.setPclass(pclassSum);
+                dbSumDao.insertDbSum(dbSum);
+                System.out.println("pclassSum:" + pclassSum);
+                rows.createCell(17).setCellValue(pclassSum);
             }
-            System.out.println("User.name:" + practiceworkList.get(i).getUser().getName());
-            rows.createCell(0).setCellValue(practiceworkList.get(i).getUser().getName());//当前用户姓名
-            rows.createCell(1).setCellValue(practiceworkList.get(i).getUser().getLevel());//当前用户职称
-            if (practiceworkList.get(i).getType() == 1) {
-                rows.createCell(2).setCellValue(practiceworkList.get(i).getLname());//实践名称
-                rows.createCell(3).setCellValue(practiceworkList.get(i).getCname()
-                        + practiceworkList.get(i).getCnum());//班级姓名
-                rows.createCell(4).setCellValue(practiceworkList.get(i).getSnum());//实际指导人数
-                rows.createCell(5).setCellValue(practiceworkList.get(i).getNum());
-                rows.createCell(6).setCellValue(practiceworkList.get(i).getClasshours());//课时
-                pclassSum += practiceworkList.get(i).getClasshours();
-                i++;
-                if (i >= practiceworkList.size()) {
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    rows.createCell(17).setCellValue(pclassSum);
-                    break;
-                }
-                if (uid != practiceworkList.get(i).getUid()) {
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    rows.createCell(17).setCellValue(pclassSum);
-                    continue;
-                }
-            }
-            if (practiceworkList.get(i).getType() == 2) {
-                rows.createCell(7).setCellValue(practiceworkList.get(i).getLname());
-                rows.createCell(8).setCellValue(practiceworkList.get(i).getCname()
-                        + practiceworkList.get(i).getCnum());//班级姓名
-                rows.createCell(9).setCellValue(practiceworkList.get(i).getSnum());//人数
-                rows.createCell(10).setCellValue(practiceworkList.get(i).getNum());
-                rows.createCell(11).setCellValue(practiceworkList.get(i).getClasshours());
-                pclassSum += practiceworkList.get(i).getClasshours();
-                i++;
-                if (i >= practiceworkList.size()) {
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    rows.createCell(17).setCellValue(pclassSum);
-                    break;
-                }
-                if (uid != practiceworkList.get(i).getUid()) {
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    rows.createCell(17).setCellValue(pclassSum);
-                    continue;
-                }
-            }
-            if (practiceworkList.get(i).getType() == 4) {
-                rows.createCell(12).setCellValue(practiceworkList.get(i).getLname());
-                rows.createCell(13).setCellValue(practiceworkList.get(i).getCname()
-                        + practiceworkList.get(i).getCnum());
-                rows.createCell(14).setCellValue(practiceworkList.get(i).getSnum());
-                rows.createCell(15).setCellValue(practiceworkList.get(i).getNum());
-                rows.createCell(16).setCellValue(practiceworkList.get(i).getClasshours());
-                pclassSum += practiceworkList.get(i).getClasshours();
-                i++;
-                if (i >= practiceworkList.size()) {
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    rows.createCell(17).setCellValue(pclassSum);
-                    break;
-                }
-                if (uid != practiceworkList.get(i).getUid()) {
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    rows.createCell(17).setCellValue(pclassSum);
-                    continue;
-                }
-            }
-            dbSum.setPclass(pclassSum);
-            dbSumDao.insertDbSum(dbSum);
-            System.out.println("pclassSum:" + pclassSum);
-            rows.createCell(17).setCellValue(pclassSum);
         }
         //如果最后没有把表分开制表，只是总表制表，则可以和别的类写成一样，直接改；
 //        practiceworkDao.updatePassByPassAndType(1,1);
-  //      practiceworkDao.updatePassByPassAndType(1,2);
-    //    practiceworkDao.updatePassByPassAndType(1,4);
+        //      practiceworkDao.updatePassByPassAndType(1,2);
+        //    practiceworkDao.updatePassByPassAndType(1,4);
         return workbook;
     }
 
@@ -283,7 +290,7 @@ public class PracticeworkServiceImp implements PracticeworkService {
             dbSumDao.insertDbSum(dbSum);
             rows.createCell(7).setCellValue(practiceworkList.get(row - 1).getClasshours());//标准课时
         }
-      //  practiceworkDao.updatePassByPassAndType(1,3);
+        //  practiceworkDao.updatePassByPassAndType(1,3);
         return workbook;
     }
 

@@ -12,9 +12,9 @@ public interface LessonworkService {
     void insertLessonwork(Lessonwork lessonwork);
     void updateLessonworkById(Lessonwork lessonwork);
     void deleteLessonworkById(Integer id);
-    String exportTestwork(HttpServletRequest request, Lessonwork lessonwork);
+    String exportLessonwork(HttpServletRequest request, Lessonwork lessonwork);
 
-    HSSFWorkbook makeTestworkExcl(HSSFWorkbook workbook, Lessonwork lessonwork);
+    HSSFWorkbook makeLessonworkExcl(HSSFWorkbook workbook, Lessonwork lessonwork);
 
     List<User> LessonworkUUser();
 }

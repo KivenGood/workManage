@@ -22,7 +22,7 @@ public class CORSFilter implements Filter {
         res.setHeader("Access-Control-Allow-Headers",
                 "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma," +
                         " Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
-        res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");//119.29.150.141//localhost
+        res.setHeader("Access-Control-Allow-Origin", "http://119.29.150.141:3000");//119.29.150.141//localhost
         logger.info("请求的IP：" + getIpAddress(req));
         Integer uid= (Integer) req.getSession().getAttribute("uid");
         logger.info("获取到sesssion的uid："+uid);

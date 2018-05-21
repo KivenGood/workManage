@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class LessonworkServiceImp implements LessonworkService {
     public List<Lessonwork> getLessonwork(Lessonwork lessonwork) {
         //if(lessonwork.getPageNum()!=null&&lessonwork.getPageSize()!=null)
         //PageHelper.startPage(lessonwork.getPageNum(),lessonwork.getPageSize());
-        System.out.println("11:"+lessonwork);
+        System.out.println("11:" + lessonwork);
         List<Lessonwork> lessonworksList = lessonworkDao.getLessonwork(lessonwork);
         System.out.println("lessonworksList.size()" + lessonworksList.size());
         //if(lessonworksList.size()==0) return null;
@@ -92,13 +93,13 @@ public class LessonworkServiceImp implements LessonworkService {
 
     @Transactional//这里加事物注解的原因是，同一个类中，无事物注解的方法中调用有事物注解的方法，事物不执行
     @Override
-    public String exportTestwork(HttpServletRequest request, Lessonwork lessonwork) {
+    public String exportLessonwork(HttpServletRequest request, Lessonwork lessonwork) {
         lessonwork.setPass(0);
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = a.get(Calendar.YEAR) + "第" + lessonwork.getTerm() + "学期课程工作量统计.xls";
         HSSFWorkbook workbook = new HSSFWorkbook();
-        workbook = makeTestworkExcl(workbook, lessonwork);
+        workbook = makeLessonworkExcl(workbook, lessonwork);
         String path = request.getSession().getServletContext().getRealPath("files");
         System.out.println("path：" + path);
         try {
@@ -113,10 +114,10 @@ public class LessonworkServiceImp implements LessonworkService {
     }
 
     @Transactional
-    public HSSFWorkbook makeTestworkExcl(HSSFWorkbook workbook, Lessonwork lessonwork) {//excl的具体创建，分开是因为方便做总表时的创建；
+    public HSSFWorkbook makeLessonworkExcl(HSSFWorkbook workbook, Lessonwork lessonwork) {//excl的具体创建，分开是因为方便做总表时的创建；
         HSSFSheet sheet = workbook.createSheet("课堂" + lessonwork.getTerm());
         List<Lessonwork> lessonworkList = getLessonwork(lessonwork);
-        if(lessonworkList==null)
+        if (lessonworkList == null)
             return null;
         HSSFRow rows = sheet.createRow(0);
         rows.createCell(0).setCellValue("姓名");
@@ -139,7 +140,6 @@ public class LessonworkServiceImp implements LessonworkService {
         int uid = 0;//控制表格的换行
         for (int row = 1; row <= lessonworkList.size(); row++) {//控制行
             Double pclassSum = 0.0;//总课时
-
             DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(lessonworkList.get(i).getUid());
             System.out.println("1111111111111111111111111");
@@ -230,7 +230,7 @@ public class LessonworkServiceImp implements LessonworkService {
         User user = new User();
         List<User> userList = userDao.getUser(user);
         List list = lessonworkDao.getUidbyLesson();
-        for (int i = 0; i <userList.size(); i++) {
+        for (int i = 0; i < userList.size(); i++) {
             for (int i1 = 0; i1 < list.size(); i1++) {
                 if (userList.get(i).getId() == list.get(i1)) {
                     userList.remove(i);

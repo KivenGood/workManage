@@ -70,6 +70,7 @@ public class LessonworkServiceImp implements LessonworkService {
                 }
             }
         }
+
         return lessonworksList;
     }
 
@@ -112,6 +113,36 @@ public class LessonworkServiceImp implements LessonworkService {
         }
         return "files/" + fileName;
     }
+
+ /*   public List pxsf(List<Lessonwork> list) {
+        System.out.println("------------------------------------");
+        List<Lessonwork> list2 = new ArrayList();
+        int flaguid = 1;
+        int flagtype = 0;
+        int lv = 0;
+        int lv2 = 0;
+        while (list.size() > 0 || list.size() > lv) {
+            if (lv == list.size() || list.get(lv).getUid() > flaguid ||
+                    (list.get(lv).getType() < flagtype) && (flaguid != list.get(0).getUid())) {
+                flagtype = 0;
+                lv = 0;
+            } else {
+                if (flaguid == (list.get(0)).getType()) {
+                    flaguid++;
+                    flagtype = 0;
+                    lv = 0;
+                }
+            }
+            if (list.get(lv).getType() > flagtype) {
+                list2.add(list.get(lv));
+                list.remove(lv);
+                flagtype++;
+            } else
+                lv++;
+        }
+        list.clear();
+        return list2;
+    }*/
 
     @Transactional
     public HSSFWorkbook makeLessonworkExcl(HSSFWorkbook workbook, Lessonwork lessonwork) {//excl的具体创建，分开是因为方便做总表时的创建；

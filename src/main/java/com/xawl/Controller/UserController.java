@@ -61,6 +61,7 @@ public class UserController {
         } else return new ResultData(-20, "pass is wrong");
     }
 
+
     @RequestMapping("/user/updateUser.action")
     @ResponseBody
     ResultData updateUser(HttpSession session, User user) {

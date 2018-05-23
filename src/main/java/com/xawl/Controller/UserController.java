@@ -8,6 +8,8 @@ import com.xawl.Vo.ResultData;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.nio.cs.US_ASCII;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -61,13 +63,12 @@ public class UserController {
 
     @RequestMapping("/user/updatePass.action")
     @ResponseBody
-    ResultData updatePass(HttpSession session, String pass) {
+    ResultData updatePass(HttpSession session, User user) {
         Integer uid = (Integer) session.getAttribute("uid");
-        if (pass == null || pass == "")
+        if(user ==null){
             return new ResultData(23);
-        User user = new User();
+        }
         user.setId(uid);
-        user.setPass(pass);
         userService.updateUserById(user);
         return new ResultData(1);
     }
@@ -84,10 +85,12 @@ public class UserController {
     @ResponseBody
     ResultData getUserInfo(HttpSession session){
         User user=new User();
-        user.setName((String)session.getAttribute("uname"));
-        user.setType((Integer) session.getAttribute("type"));
-        return new ResultData(1,user);
+        user.setId((Integer) session.getAttribute("uid"));
+        user=userService.getUser(user).get(0);
+        user.setPass(null);
+        return new ResultData(1, user );
     }
+
     @RequestMapping("/root/insertAdmin.action")
     @ResponseBody
     ResultData insertAdmin(User user) {

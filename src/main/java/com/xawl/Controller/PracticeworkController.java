@@ -80,7 +80,7 @@ public class PracticeworkController {
         Integer pnum =practicework.getSnum(); ;//当type=3时，cid就是指导人数；
         Double pclass = 0.0;
         if (practicework.getType() == 3) {
-            pclass = practicework.getSnum() * Coe.thesisGuideL;//type=3时，snum代表指导理工科不带实验的人数
+            pclass = practicework.getSnum() * Coe.thesisGuideL+practicework.getCid()*Coe.thesisGuide;//type=3时，snum代表指导理工科不带实验的人数
         }
         practicework.setClasshours(calculateClasshours(practicework.getNum(), pnum, practicework.getType()) + pclass);
         practiceworkService.insertPracticework(practicework);

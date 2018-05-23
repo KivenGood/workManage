@@ -44,7 +44,7 @@ public class DbSumServiceImp implements DbSumService {
         String fileName = "信工" + a.get(Calendar.YEAR) + "年" + "工作量统计.xls";
 
         HSSFWorkbook workbook = new HSSFWorkbook();
-       /* Lessonwork lessonwork = new Lessonwork();
+        Lessonwork lessonwork = new Lessonwork();
         lessonwork.setPass(0);
         lessonwork.setTerm(1);
         lessonworkService.makeLessonworkExcl(workbook, lessonwork);
@@ -64,7 +64,7 @@ public class DbSumServiceImp implements DbSumService {
         testwork.setTerm(1);
         testworkService.makeTestworkExcl(workbook, testwork);
         testwork.setTerm(2);
-        testworkService.makeTestworkExcl(workbook, testwork);*/
+        testworkService.makeTestworkExcl(workbook, testwork);
 
         HSSFSheet sheet = workbook.createSheet("汇总");
         HSSFRow rows = sheet.createRow(0);

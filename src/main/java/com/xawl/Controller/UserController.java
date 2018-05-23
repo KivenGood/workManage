@@ -61,9 +61,9 @@ public class UserController {
         } else return new ResultData(-20, "pass is wrong");
     }
 
-    @RequestMapping("/user/updatePass.action")
+    @RequestMapping("/user/updateUser.action")
     @ResponseBody
-    ResultData updatePass(HttpSession session, User user) {
+    ResultData updateUser(HttpSession session, User user) {
         Integer uid = (Integer) session.getAttribute("uid");
         if(user ==null){
             return new ResultData(23);

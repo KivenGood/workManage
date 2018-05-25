@@ -10,4 +10,5 @@ public interface DclassDao {
     void updateDclassById(Dclass dclass);
     void deleteDclassById(Integer id);
     void deleteDclassByType(Integer type);
+    List<Dclass> getDclassBy4Series(Integer series);
 }

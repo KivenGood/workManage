@@ -18,6 +18,18 @@
         </where>
         ORDER BY series,sdept,cname
     </select>
+    <select id="getDclassBy4Series" parameterType="int" resultType="com.xawl.Pojo.Dclass">
+        select *
+        from db_class
+        <where>
+            series=#{series}
+           or series=series-1
+            or series=series-2
+            or series=series-3
+            or series=series-4/*如果最后是9学份之前则*/
+        </where>
+        ORDER BY series,sdept,cname
+    </select>
     <insert id="insertDclass" parameterType="com.xawl.Pojo.Dclass">
         insert into db_class (cname,pnum,series,sdept,startedDate)
         values(#{cname},#{pnum},#{series},#{sdept},#{startedDate})

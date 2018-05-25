@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import java.io.FileInputStream;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -24,6 +25,10 @@ public class DclassServiceImp implements DclassService {
     public List<Dclass> getDclass(Dclass dclass) {
        // if(dclass.getPageNum()!=null&&dclass.getPageSize()!=null)
            // PageHelper.startPage(dclass.getPageNum(),dclass.getPageSize());
+        Calendar a = Calendar.getInstance();
+        int year=a.get(Calendar.YEAR);
+        System.out.println("year:"+year);
+        dclassDao.getDclassBy4Series(year);
         List<Dclass> DclassList = dclassDao.getDclass(dclass);
         return DclassList;
     }

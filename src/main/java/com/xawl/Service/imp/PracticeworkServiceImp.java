@@ -160,6 +160,13 @@ public class PracticeworkServiceImp implements PracticeworkService {
                     break;
                 }
             }
+            if (i >= practiceworkList.size()) {
+                System.out.println("111");
+                dbSum.setPclass(pclassSum);
+                dbSumDao.insertDbSum(dbSum);
+                rows.createCell(17).setCellValue(pclassSum);
+                break;
+            }
             if (practiceworkList.get(i).getType() != 3) {
                 uid = practiceworkList.get(i).getUid();
                 System.out.println("User.name:" + practiceworkList.get(i).getUser().getName());

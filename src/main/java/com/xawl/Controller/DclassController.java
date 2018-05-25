@@ -26,8 +26,6 @@ public class DclassController {
     @RequestMapping("/getDclass.action")
     @ResponseBody
     ResultData getDclass(Dclass dclass){
-
-
     //    List<Dclass> dclassList= dclassService.getDclass(dclass);
       //  PageInfo page = new PageInfo(dclassList);
         return  new ResultData(1,dclassService.getDclass(dclass));

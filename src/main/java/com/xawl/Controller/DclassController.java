@@ -81,7 +81,7 @@ public class DclassController {
         System.out.println("dclassList.size():"+dclassList.size());
         if(dclassList!=null&&dclassList.size()>0)
             return new ResultData(26,"excisted");
-
+        dclass.setType(1);
         dclass.setStarteddate(new Timestamp(new Date().getTime()));
         dclassService.insertDclass(dclass);
         return new ResultData(1);

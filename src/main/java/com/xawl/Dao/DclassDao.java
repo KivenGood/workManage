@@ -9,4 +9,5 @@ public interface DclassDao {
     void insertDclass(Dclass dclass);
     void updateDclassById(Dclass dclass);
     void deleteDclassById(Integer id);
+    void deleteDclassByType(Integer type);
 }

@@ -8,6 +8,15 @@ public class Dclass {
     private Integer series;
     private String sdept;
     private java.sql.Timestamp startedDate;
+    private int type;//用来清空老师自己添加的班级
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
     //private Integer pageNum;
     //private Integer pageSize;
 

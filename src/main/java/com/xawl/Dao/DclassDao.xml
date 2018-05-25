@@ -24,18 +24,20 @@
     </insert>
     <update id="updateDclassById" parameterType="com.xawl.Pojo.Dclass">
         update db_class
-         <set>
-             <if test="cname!=null and cname!=''">cname=#{cname},</if>
-             <if test="pnum!=null and pnum>0">pnum=#{pnum},</if>
-             <if test="series!=null and series!='' ">series=#{series},</if>
-             <if test="sdept!=null and sdept!=''">sdept=#{sdept},</if>
-         </set>
-         where id=#{id}
+        <set>
+            <if test="cname!=null and cname!=''">cname=#{cname},</if>
+            <if test="pnum!=null and pnum>0">pnum=#{pnum},</if>
+            <if test="series!=null and series!='' ">series=#{series},</if>
+            <if test="sdept!=null and sdept!=''">sdept=#{sdept},</if>
+        </set>
+        where id=#{id}
     </update>
 
 
     <delete id="deleteDclassById" parameterType="Integer">
-        DELETE from db_class WHERE id = #{id}
+    DELETE from db_class WHERE id = #{id}
+</delete>
+    <delete id="deleteDclassByType" parameterType="Integer">
+        DELETE FROM db_class WHERE type=#{type}
     </delete>
-
 </mapper>

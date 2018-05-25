@@ -1,10 +1,8 @@
 package com.xawl.Service.imp;
 
 import com.xawl.Dao.DbSumDao;
-import com.xawl.Pojo.DbSum;
-import com.xawl.Pojo.Lessonwork;
-import com.xawl.Pojo.Practicework;
-import com.xawl.Pojo.Testwork;
+import com.xawl.Dao.DclassDao;
+import com.xawl.Pojo.*;
 import com.xawl.Service.DbSumService;
 import com.xawl.Service.LessonworkService;
 import com.xawl.Service.PracticeworkService;
@@ -26,7 +24,8 @@ import java.util.List;
 public class DbSumServiceImp implements DbSumService {
     @Resource
     DbSumDao dbSumDao;
-
+    @Resource
+    DclassDao dclassDao;
     @Resource
     LessonworkService lessonworkService;
     @Resource
@@ -129,6 +128,7 @@ public class DbSumServiceImp implements DbSumService {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        //dclassDao.deleteDclassByType(1);
         return "files/" + fileName;
     }
 

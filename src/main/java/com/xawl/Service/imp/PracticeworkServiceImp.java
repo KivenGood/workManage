@@ -153,6 +153,10 @@ public class PracticeworkServiceImp implements PracticeworkService {
             while (practiceworkList.get(i).getType() == 3) {
                 i++;
                 if (i >= practiceworkList.size()) {
+                    /*
+                    * 会存在一个问题就是当practicework表中只
+                    * 有type=3的数据时，会往sum表中插入两个
+                    * type=4的pclass为0的数据；*/
                     System.out.println("111");
                     dbSum.setPclass(pclassSum);
                     dbSumDao.insertDbSum(dbSum);

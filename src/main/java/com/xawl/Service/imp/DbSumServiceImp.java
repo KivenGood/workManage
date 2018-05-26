@@ -80,9 +80,9 @@ public class DbSumServiceImp implements DbSumService {
         rows.createCell(4).setCellValue("课程2");
         rows.createCell(5).setCellValue("实践1");
         rows.createCell(6).setCellValue("实践2");
-        rows.createCell(7).setCellValue("毕业设计");
-        rows.createCell(8).setCellValue("考务1");
-        rows.createCell(9).setCellValue("考务2");
+        rows.createCell(7).setCellValue("考务1");
+        rows.createCell(8).setCellValue("考务2");
+        rows.createCell(9).setCellValue("毕业设计");
         rows.createCell(10).setCellValue("合计");
         rows.createCell(11).setCellValue("签字");
         rows.createCell(11).setCellValue("备注");

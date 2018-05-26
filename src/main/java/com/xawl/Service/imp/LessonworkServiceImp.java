@@ -171,6 +171,7 @@ public class LessonworkServiceImp implements LessonworkService {
         int uid = 0;//控制表格的换行
         for (int row = 1; row <= lessonworkList.size(); row++) {//控制行
             Double pclassSum = 0.0;//总课时
+
             DbSum dbSum = new DbSum();//给总表插入数据
             dbSum.setUid(lessonworkList.get(i).getUid());
             System.out.println("1111111111111111111111111");

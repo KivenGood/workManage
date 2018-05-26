@@ -41,6 +41,12 @@ public class DbSumServiceImp implements DbSumService {
         Calendar a = Calendar.getInstance();
         System.out.println(a.get(Calendar.YEAR));
         String fileName = "信工" + a.get(Calendar.YEAR) + "年" + "工作量统计.xls";
+        String path = request.getSession().getServletContext().getRealPath("files");
+        File file=new File(path+'/'+fileName);
+        if (file.exists()) {//用于第二次不用制表直接返回
+            System.out.println("exist");
+            return "files/" + fileName;
+        }
 
         HSSFWorkbook workbook = new HSSFWorkbook();
         Lessonwork lessonwork = new Lessonwork();
@@ -117,7 +123,7 @@ public class DbSumServiceImp implements DbSumService {
                 break;
             }
         }
-        String path = request.getSession().getServletContext().getRealPath("files");
+
         System.out.println("path：" + path);
         try {
             File xlsFile = new File(path, fileName);

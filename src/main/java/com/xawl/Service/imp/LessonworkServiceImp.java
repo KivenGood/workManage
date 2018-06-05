@@ -188,7 +188,7 @@ public class LessonworkServiceImp implements LessonworkService {
             rows.createCell(1).setCellValue(lessonworkList.get(i).getUser().getLevel());//当前用户职称
             System.out.println("dclassName:" + lessonworkList.get(i).getCname());
             System.out.println("dclassPNum:" + lessonworkList.get(i).getCnum());
-            if (lessonworkList.get(i).getType() == 1 || lessonworkList.get(i).getType() == 2) {//如果不是实验课
+            if (lessonworkList.get(i).getType() == 1 ) {//如果不是实验课
                 rows.createCell(2).setCellValue(lessonworkList.get(i).getLname());//课程名
                 rows.createCell(5).setCellValue("拆班");
                 System.out.println("lessonworkList.get(" + i + ").getPart():" + lessonworkList.get(i).getPart());
@@ -221,7 +221,7 @@ public class LessonworkServiceImp implements LessonworkService {
                     continue;
                 }
             }
-            if (lessonworkList.get(i).getType() == 3) {
+            if (lessonworkList.get(i).getType() == 2) {
                 rows.createCell(9).setCellValue(lessonworkList.get(i).getLname());//课程名
                 rows.createCell(10).setCellValue(lessonworkList.get(i).getCname());//任课班级
                 rows.createCell(11).setCellValue(lessonworkList.get(i).getCnum());//班级人数

@@ -290,11 +290,11 @@ public class LessonworkServiceImp implements LessonworkService {
         int j = 0;//控制lessonList2的行
 
         // int uid = 0;//控制表格的换行
-        for (int row = 1; row <= lessonworkList1.size(); row++) {//控制行
+        int row=1;
+        for (; row <= lessonworkList1.size()+lessonworkList2.size(); row++) {//控制行
             Double pclassSum = 0.0;//总课时
 
             DbSum dbSum = new DbSum();//给总表插入数据
-
 
             //   uid = lessonworkList1.get(i).getUid();
             rows = sheet.createRow(row);
@@ -326,15 +326,6 @@ public class LessonworkServiceImp implements LessonworkService {
                 rows.createCell(7).setCellValue(lessonworkList1.get(i).getCoe());//系数
                 rows.createCell(8).setCellValue(lessonworkList1.get(i).getClasshours());//标准学时
                 pclassSum += lessonworkList1.get(i).getClasshours();
-                if (i >= lessonworkList1.size()) {
-                    rows.createCell(14).setCellValue(pclassSum);
-//                    System.out.println("lessonworkList.get(i).getUser().getName():"+lessonworkList.get(i).getUser().getName());
-                    System.out.println("break pclassSum:" + pclassSum);
-                    // row = i;
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    break;
-                }
              /* if (uid != lessonworkList1.get(i).getUid()) {
                   // row = i;
                   System.out.println("break pclassSum:" + pclassSum);
@@ -342,10 +333,11 @@ public class LessonworkServiceImp implements LessonworkService {
                   continue;
               }*/
             }
-            System.out.println("1lessonworkList1.get(i).getUid():" + lessonworkList1.get(i).getUid());
+            System.out.println("lessonworkList1.get(i).getUid():" + lessonworkList1.get(i).getUid());
 //          System.out.println("1lessonworkList2.get(j).getUid():" + lessonworkList2.get(j).getUid());
-            if (j < lessonworkList2.size() && (int) lessonworkList1.get(i).getUid() == (int) lessonworkList2.get(j).getUid()) {
-
+            if (j < lessonworkList2.size() && (int) lessonworkList1.get(i).getUid()
+                    == (int) lessonworkList2.get(j).getUid())
+            {
                 dbSum.setUid(lessonworkList2.get(j).getUid());
                 dbSum.setPass(0);
                 dbSum.setStartedDate(new Timestamp(new Date().getTime()));
@@ -359,15 +351,17 @@ public class LessonworkServiceImp implements LessonworkService {
                 rows.createCell(13).setCellValue(lessonworkList2.get(j).getClasshours());//标准课时
                 pclassSum += lessonworkList2.get(j).getClasshours();
                 j++;
-                if (j >= lessonworkList2.size()) {
-                    System.out.println("break lessonworkList2");
-                    rows.createCell(14).setCellValue(pclassSum);
-                    dbSum.setPclass(pclassSum);
-                    dbSumDao.insertDbSum(dbSum);
-                    break;
-                }
             }
             i++;
+            if (i >= lessonworkList1.size()) {
+                rows.createCell(14).setCellValue(pclassSum);
+//                    System.out.println("lessonworkList.get(i).getUser().getName():"+lessonworkList.get(i).getUser().getName());
+                System.out.println("break pclassSum:" + pclassSum);
+                // row = i;
+                dbSum.setPclass(pclassSum);
+                dbSumDao.insertDbSum(dbSum);
+                break;
+            }
             System.out.println("pclassSum:" + pclassSum);
             rows.createCell(14).setCellValue(pclassSum);
             dbSum.setPclass(pclassSum);//这里执行的误区是break和continue后不执行
@@ -406,6 +400,52 @@ public class LessonworkServiceImp implements LessonworkService {
                     }
                 }
             }
+
+            dbSumDao.insertDbSum(dbSum);
+            System.out.println("i:" + i);
+            System.out.println("j:" + j);
+        }
+        while(i<lessonworkList1.size()||j < lessonworkList2.size()){
+            //防止出现普通课程break实验课程还剩
+
+            DbSum dbSum=new DbSum();
+            System.out.println("防止出现普通课程break实验课程还剩");
+            dbSum.setUid(lessonworkList2.get(j).getUid());
+            dbSum.setPass(0);
+            dbSum.setStartedDate(new Timestamp(new Date().getTime()));
+            dbSum.setType(0 + lessonwork.getTerm());
+
+            if (j < lessonworkList2.size() && i < lessonworkList1.size() &&(int) lessonworkList1.get(i).getUid()
+                    == (int) lessonworkList2.get(j).getUid()){
+                System.out.println("aaa");
+                rows.createCell(9).setCellValue(lessonworkList2.get(j).getLname());//课程名
+                rows.createCell(10).setCellValue(lessonworkList2.get(j).getCname());//任课班级
+                rows.createCell(11).setCellValue(lessonworkList2.get(j).getCnum());//班级人数
+                rows.createCell(12).setCellValue(lessonworkList2.get(j).getPclasshours());//实验课时
+                rows.createCell(13).setCellValue(lessonworkList2.get(j).getClasshours());//标准课时
+                j++;
+                if (j >= lessonworkList2.size()) {
+                    System.out.println("break lessonworkList2");
+                    rows.createCell(14).setCellValue(lessonworkList2.get(j).getClasshours()+lessonworkList1.get(i-1).getPclasshours());
+                    dbSum.setPclass(lessonworkList2.get(j).getClasshours());//不是总的，要不然后面总表加的时候就容易重复
+                    dbSumDao.insertDbSum(dbSum);
+                    break;
+                }
+
+            }
+
+            row++;
+            rows = sheet.createRow(row);
+            rows.createCell(0).setCellValue(lessonworkList2.get(j).getUser().getName());//当前用户姓名
+            rows.createCell(1).setCellValue(lessonworkList2.get(j).getUser().getLevel());//当前用户职称
+            rows.createCell(9).setCellValue(lessonworkList2.get(j).getLname());//课程名
+            rows.createCell(10).setCellValue(lessonworkList2.get(j).getCname());//任课班级
+            rows.createCell(11).setCellValue(lessonworkList2.get(j).getCnum());//班级人数
+            rows.createCell(12).setCellValue(lessonworkList2.get(j).getPclasshours());//实验课时
+            rows.createCell(13).setCellValue(lessonworkList2.get(j).getClasshours());//标准课时
+            rows.createCell(14).setCellValue(lessonworkList2.get(j).getClasshours());
+            dbSum.setPclass(lessonworkList2.get(j).getClasshours());
+            j++;
             dbSumDao.insertDbSum(dbSum);
         }
         //lessonworkDao.updateLessonworkByPass(1);

@@ -35,7 +35,7 @@
             <if test="pass==null">and pass!=1</if>
         </where>
         ORDER BY
-        uid ASC ,type ASC,db_lessonwork.startedDate	DESC
+        uid ASC,db_lessonwork.startedDate	DESC
     </select>
     <insert id="insertLessonwork" parameterType="com.xawl.Pojo.Lessonwork">
         insert into db_lessonwork (uid,cid,type,lname,pclasshours,part,coe,classhours,pass,startedDate,term)

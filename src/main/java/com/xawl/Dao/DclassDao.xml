@@ -16,7 +16,7 @@
             <if test="series!=null and series!='' ">and series=#{series}</if>
             <if test="sdept!=null and sdept!=''">and sdept=#{sdept}</if>
         </where>
-        ORDER BY series,sdept,cname
+        ORDER BY TYPE ,series,sdept,cname
     </select>
     <select id="getDclassBy4Series" parameterType="int" resultType="com.xawl.Pojo.Dclass">
         select *
@@ -31,8 +31,8 @@
         ORDER BY series,sdept,cname
     </select>
     <insert id="insertDclass" parameterType="com.xawl.Pojo.Dclass">
-        insert into db_class (cname,pnum,series,sdept,startedDate)
-        values(#{cname},#{pnum},#{series},#{sdept},#{startedDate})
+        insert into db_class (cname,pnum,series,sdept,startedDate,type)
+        values(#{cname},#{pnum},#{series},#{sdept},#{startedDate},#{type})
     </insert>
     <update id="updateDclassById" parameterType="com.xawl.Pojo.Dclass">
         update db_class

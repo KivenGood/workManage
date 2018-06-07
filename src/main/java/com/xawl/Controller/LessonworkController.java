@@ -79,7 +79,7 @@ public class LessonworkController {
         Integer pnum = dclassService.getDclass(dclass).get(0).getPnum();//班级的人数
         System.out.println("pnum3" + pnum);
         //实验课,实验课没有合班课
-        if (lessonwork.getType() == 3) {
+        if (lessonwork.getType() == 2) {
             lessonwork.setClasshours(lessonwork.getPclasshours() * (double) pnum * Coe.testClass);
             lessonwork.setCoe(Coe.testClass);
         } else {
@@ -90,8 +90,6 @@ public class LessonworkController {
         System.out.println(lessonwork.toString());
         lessonworkService.insertLessonwork(lessonwork);
         return new ResultData(1);
-
-
     }
 
     @RequestMapping("/user/updateLessworkById.action")

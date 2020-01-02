@@ -14,9 +14,10 @@
     <!--配置数据源-->
     <bean id="jdbcDataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://119.29.150.141/workmanage?useUnicode=true&amp;characterEncoding=UTF-8"/>
-        <property name="username" value="admin"/>
-        <property name="password" value="admin"/>
+        <property name="url" value="jdbc:mysql://localhost/workmanage?useUnicode=true&amp;characterEncoding=UTF-8&amp;useSSL=false
+&amp;serverTimezone=GMT%2B8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="lz1349500382"/>
     </bean>
     <!--配置sessionFactory-->
     <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -36,6 +37,7 @@
                         <value>
                             helperDialect=mysql
                             reasonable=true
+                            useSSL = false
                             supportMethodsArguments=true
                             params=count=countSql
                             autoRuntimeDialect=true
